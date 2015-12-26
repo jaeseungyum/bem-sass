@@ -8,18 +8,10 @@ describe("BEM helpers", function() {
     sassaby = new Sassaby(path.resolve("lib/helpers", "_bem.scss"));
   }); 
 
-  describe("BLOCK", function() {
+  it("creates block level selector", function() {
+    var block = sassaby.standaloneMixin("BLOCK"); 
+    block.calledWithBlockAndArgs("color: red;", "block1").createsSelector(".b-block1");
+    block.calledWithBlockAndArgs("color: red;", "block2").createsSelector(".b-block2");
+  }); 
 
-    var block;
-    beforeEach(function() {
-      block = sassaby.standaloneMixin("BLOCK"); 
-    });
-
-    it("creates block level selector", function() {
-      block.calledWithBlockAndArgs("color: red;", "block1").createsSelector(".b-block1");
-      block.calledWithBlockAndArgs("color: red;", "block2").createsSelector(".b-block2");
-    });
-  });
-
-});
-
+}); 
