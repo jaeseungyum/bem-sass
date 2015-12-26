@@ -13,11 +13,21 @@
   }
 }
 
-// Create element
+// Create an element
 // @param { String } element name 
 @mixin ELEM($element) {
   @at-root {
     #{find-root-block(&)}__#{$element} {
+      @content;
+    }
+  }
+}
+
+// Create a modifier
+// @param { String } modifier name
+@mixin MOD($modifier) {
+  @at-root {
+    #{find-root-block(&)}_#{$modifier} {
       @content;
     }
   }
