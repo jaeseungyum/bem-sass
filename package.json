@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/jsng/scss-BEM-helpers",
   "devDependencies": {
-    "jasmine-node": "^1.14.5",
+    "expect.js": "^0.3.1",
     "sassaby": "^2.1.1"
   }
 }
