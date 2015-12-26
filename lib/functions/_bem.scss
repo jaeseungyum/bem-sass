@@ -12,7 +12,7 @@
     @return $selector;
   } 
 
-  @return str-slice(
+  @return unquote(str-slice(
     inspect($selector), 
     index-of-block(
       inspect($selector)
@@ -20,7 +20,7 @@
     index-of-sep(
       inspect($selector)
     )
-  );
+  ));
 }
 
 @function is-root-block($selector) {
@@ -28,7 +28,7 @@
 }
 
 @function index-of-block($selector-string) {
-  @return str-index($selector-string, "b-");
+  @return str-index($selector-string, ".");
 }
 
 @function index-of-sep($selector-string) {

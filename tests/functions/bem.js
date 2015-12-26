@@ -23,8 +23,14 @@ describe("BEM functions", function() {
     });
 
     it("returns block level selector from given selector string", function() {
-      func.calledWithArgs("b-block_elem").equals("b-block");
-      func.calledWithArgs("b-block").equals("b-block");
+
+      func.calledWithArgs(
+        "unquote('.' + b-block_mod)"
+      ).equals(".b-block");
+
+      func.calledWithArgs(
+        "unquote('.' + b-block)"
+      ).equals(".b-block");
     }); 
   }); 
 }); 
