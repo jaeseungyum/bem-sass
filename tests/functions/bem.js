@@ -42,11 +42,34 @@ describe("BEM functions", function() {
     });
 
     it("tests selector string is a modifier or not", function() {
+
       func.calledWithArgs(
         "unquote('.' + b-block)"
       ).isFalse();
+
+      func.calledWithArgs(
+        "unquote('.' + b-block_mod)"
+      ).isTrue();
     });
 
+  });
+
+  describe("#is-element", function() {
+    var func;
+    beforeEach(function() {
+      func = sassaby.func("is-element");
+    });
+
+    it("tests selector string is an element or not", function() {
+
+      func.calledWithArgs(
+        "unquote('.' + b-block)"
+      ).isFalse();
+
+      func.calledWithArgs(
+        "unquote('.' + b-block__elem)"
+      ).isTrue();
+    });
   });
 }); 
 

@@ -35,12 +35,12 @@
 // @param { String } modifier name
 @mixin MOD($modifier, $value: null) {
   @at-root {
-    @if ($value) {
-      #{find-root-block(&)}_#{$modifier}_#{$value} {
+    @if is-element(&) {
+      #{&}_#{$modifier}#{if($value, "_#{$value}", "")} {
         @content;
       }
     } @else {
-      #{find-root-block(&)}_#{$modifier} {
+      #{find-root-block(&)}_#{$modifier}#{if($value, "_#{$value}", "")} {
         @content;
       }
     }

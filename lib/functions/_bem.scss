@@ -44,3 +44,10 @@
   }
   @return false;
 }
+
+@function is-element($selector) {
+  @if (str-index(inspect($selector), "__")) {
+    @return true;
+  }
+  @return false;
+}

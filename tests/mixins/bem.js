@@ -45,6 +45,13 @@ describe("BEM mixins", function() {
     ).createsSelector(".b-block-name_mod .b-block-name__elem");
   });
 
+  it("creates modifier of element", function() { 
+    blockMixin.calledWithBlockAndArgs(
+      "@include ELEM(elem) { @include MOD(mod) { color: red; } }", 
+      "block-name"
+    ).createsSelector(".b-block-name__elem_mod");
+  });
+
   it("creates boolean modifier", function() {
     blockMixin.calledWithBlockAndArgs(
       "@include MOD(mod) { color: red; }",
