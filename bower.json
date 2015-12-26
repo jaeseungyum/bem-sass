@@ -1,0 +1,22 @@
+{
+  "name": "scss-BEM-helpers",
+  "version": "0.0.0",
+  "homepage": "https://github.com/jsng/scss-BEM-helpers",
+  "authors": [
+    "Yum Jaeseung <ym.jsng@gmail.com>"
+  ],
+  "description": "scss helpers for BEM convention",
+  "main": "scss-BEM-helpers.scss",
+  "keywords": [
+    "scss",
+    "BEM"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
