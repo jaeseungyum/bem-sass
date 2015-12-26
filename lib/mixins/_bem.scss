@@ -12,3 +12,13 @@
     @content;
   }
 }
+
+// Create element
+// @param { String } element name 
+@mixin ELEM($element) {
+  @at-root {
+    #{find-root-block(&)}__#{$element} {
+      @content;
+    }
+  }
+}

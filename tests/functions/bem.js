@@ -15,15 +15,16 @@ describe("BEM functions", function() {
     );
   }); 
 
-  describe("#find-block", function() {
+  describe("#find-root-block", function() {
 
     var func;
     beforeEach(function() {
-      func = sassaby.func("find-block");
+      func = sassaby.func("find-root-block");
     });
 
     it("returns block level selector from given selector string", function() {
       func.calledWithArgs("b-block_elem").equals("b-block");
+      func.calledWithArgs("b-block").equals("b-block");
     }); 
   }); 
 }); 

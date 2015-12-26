@@ -5,19 +5,35 @@
 // ============================== 
 
 // Find block level selector from given selector string
-// @param { String } selector string 
-@function find-block($selector-string) {
+// @param { Selector } selector string 
+@function find-root-block($selector) {
+
+  @if is-root-block($selector) {
+    @return $selector;
+  } 
+
   @return str-slice(
-    $selector-string, 
-    index-of-block-start($selector-string), 
-    index-of-modifier-start($selector-string)
+    inspect($selector), 
+    index-of-block(
+      inspect($selector)
+    ), 
+    index-of-sep(
+      inspect($selector)
+    )
   );
 }
 
-@function index-of-block-start($selector-string) {
+@function is-root-block($selector) {
+  @return type-of(index-of-sep(inspect($selector))) == "null";
+}
+
+@function index-of-block($selector-string) {
   @return str-index($selector-string, "b-");
 }
 
-@function index-of-modifier-start($selector-string) {
-  @return str-index($selector-string, "_") - 1;
+@function index-of-sep($selector-string) {
+  @if (str-index($selector-string, "_")) {
+    @return str-index($selector-string, "_") - 1;
+  }
+  @return null; 
 }
