@@ -18,8 +18,5 @@
     "bower_components",
     "test",
     "tests"
-  ],
-  "devDependencies": {
-    "true": "2.0.3"
-  }
+  ]
 }
