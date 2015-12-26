@@ -1,0 +1,23 @@
+// ==============================
+// 
+//        Functions - BEM
+//
+// ============================== 
+
+// Find block level selector from given selector string
+// @param { String } selector string 
+@function find-block($selector-string) {
+  @return str-slice(
+    $selector-string, 
+    index-of-block-start($selector-string), 
+    index-of-modifier-start($selector-string)
+  );
+}
+
+@function index-of-block-start($selector-string) {
+  @return str-index($selector-string, "b-");
+}
+
+@function index-of-modifier-start($selector-string) {
+  @return str-index($selector-string, "_") - 1;
+}

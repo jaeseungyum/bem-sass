@@ -1,11 +1,11 @@
 var path = require("path");
 var Sassaby = require("sassaby");
 
-describe("BEM helpers", function() {
+describe("BEM mixins", function() {
 
   var sassaby;
   beforeEach(function() {
-    sassaby = new Sassaby(path.resolve("lib/helpers", "_bem.scss"));
+    sassaby = new Sassaby(path.resolve("lib/mixins", "_bem.scss"));
   }); 
 
   it("creates block level selector", function() {

@@ -1,8 +1,0 @@
-// Create a block level selector
-// @param { String } block name
-
-@mixin BLOCK($block) {
-  .b-#{$block} {
-    @content;
-  }
-}
