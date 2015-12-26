@@ -18,52 +18,60 @@ describe("BEM mixins", function() {
     elementMixin = sassaby.standaloneMixin("ELEM"); 
   }); 
 
-  it("creates block", function() {
-    blockMixin.calledWithBlockAndArgs(
-      "color: red;", 
-      "block-name"
-    ).createsSelector(".b-block-name");
+  describe("#BLOCK", function() {
+    it("creates block level selector", function() {
+      blockMixin.calledWithBlockAndArgs(
+        "color: red;", 
+        "block-name"
+      ).createsSelector(".b-block-name");
 
-    blockMixin.calledWithBlockAndArgs(
-      "color: red;", 
-      "another-block-name"
-    ).createsSelector(".b-another-block-name");
+      blockMixin.calledWithBlockAndArgs(
+        "color: red;", 
+        "another-block-name"
+      ).createsSelector(".b-another-block-name");
+    }); 
+  });
+
+  describe("#ELEM", function() {
+    it("creates element level selector", function() {
+      blockMixin.calledWithBlockAndArgs(
+        "@include ELEM(elem) { color: red; }", 
+        "block-name"
+      ).createsSelector(".b-block-name__elem");
+    }); 
   }); 
 
+  describe("#MOD", function() {
+    it("creates boolean modifier", function() {
+      blockMixin.calledWithBlockAndArgs(
+        "@include MOD(mod) { color: red; }",
+        "block-name"
+      ).createsSelector(".b-block-name_mod");
+    });
 
-  it("creates element", function() {
-    blockMixin.calledWithBlockAndArgs(
-      "@include ELEM(elem) { color: red; }", 
-      "block-name"
-    ).createsSelector(".b-block-name__elem");
+    it("creates key-value modifier", function() {
+      blockMixin.calledWithBlockAndArgs(
+        "@include MOD(mod, value) { color: red; }",
+        "block-name"
+      ).createsSelector(".b-block-name_mod_value");
+    });
+  });
+
+  describe("#ELEM in #MOD", function() {
+    it("creates element level selector inside modifier", function() { 
+      blockMixin.calledWithBlockAndArgs(
+        "@include MOD(mod) { @include ELEM(elem) { color: red; } }", 
+        "block-name"
+      ).createsSelector(".b-block-name_mod .b-block-name__elem");
+    });
+  });
+
+  describe("#MOD in #ELEM", function() {
+    it("creates modifier of element level selector", function() { 
+      blockMixin.calledWithBlockAndArgs(
+        "@include ELEM(elem) { @include MOD(mod) { color: red; } }", 
+        "block-name"
+      ).createsSelector(".b-block-name__elem_mod");
+    }); 
   }); 
-
-  it("creates element inside modifier", function() { 
-    blockMixin.calledWithBlockAndArgs(
-      "@include MOD(mod) { @include ELEM(elem) { color: red; } }", 
-      "block-name"
-    ).createsSelector(".b-block-name_mod .b-block-name__elem");
-  });
-
-  it("creates modifier of element", function() { 
-    blockMixin.calledWithBlockAndArgs(
-      "@include ELEM(elem) { @include MOD(mod) { color: red; } }", 
-      "block-name"
-    ).createsSelector(".b-block-name__elem_mod");
-  });
-
-  it("creates boolean modifier", function() {
-    blockMixin.calledWithBlockAndArgs(
-      "@include MOD(mod) { color: red; }",
-      "block-name"
-    ).createsSelector(".b-block-name_mod");
-  });
-
-  it("creates key-value modifier", function() {
-    blockMixin.calledWithBlockAndArgs(
-      "@include MOD(mod, value) { color: red; }",
-      "block-name"
-    ).createsSelector(".b-block-name_mod_value");
-  });
-
 }); 
