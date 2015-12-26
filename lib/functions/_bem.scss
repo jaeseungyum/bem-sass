@@ -37,3 +37,10 @@
   }
   @return null; 
 }
+
+@function is-modifier($selector) {
+  @if (str-index(inspect($selector), "_")) {
+    @return true;
+  }
+  @return false;
+}

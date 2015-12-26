@@ -17,8 +17,16 @@
 // @param { String } element name 
 @mixin ELEM($element) {
   @at-root {
-    #{find-root-block(&)}__#{$element} {
-      @content;
+    @if is-modifier(&) {
+      & {
+        #{find-root-block(&)}__#{$element} {
+          @content;
+        }
+      }
+    } @else {
+      #{find-root-block(&)}__#{$element} {
+        @content;
+      }
     }
   }
 }

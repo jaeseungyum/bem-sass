@@ -33,5 +33,20 @@ describe("BEM functions", function() {
       ).equals(".b-block");
     }); 
   }); 
+
+  describe("#is-modifier", function() {
+
+    var func;
+    beforeEach(function() {
+      func = sassaby.func("is-modifier");
+    });
+
+    it("tests selector string is a modifier or not", function() {
+      func.calledWithArgs(
+        "unquote('.' + b-block)"
+      ).isFalse();
+    });
+
+  });
 }); 
 

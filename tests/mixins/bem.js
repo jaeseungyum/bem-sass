@@ -38,16 +38,9 @@ describe("BEM mixins", function() {
     ).createsSelector(".b-block-name__elem");
   }); 
 
-  it("creates element inside modifier", function() {
-    console.log(
-      blockMixin.calledWithBlockAndArgs(
-        "@include ELEM(elem) { @include ELEM(elem2) { color: red; } }", 
-        "block-name"
-      ).ast.stylesheet.rules
-    );
-
+  it("creates element inside modifier", function() { 
     blockMixin.calledWithBlockAndArgs(
-      "@include MOD(elem) { @include ELEM(elem2) { color: red; } }", 
+      "@include MOD(mod) { @include ELEM(elem) { color: red; } }", 
       "block-name"
     ).createsSelector(".b-block-name_mod .b-block-name__elem");
   });
