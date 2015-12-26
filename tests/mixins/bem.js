@@ -45,11 +45,18 @@ describe("BEM mixins", function() {
     ).createsSelector(".b-block-name_mod .b-block-name__elem");
   });
 
-  it("creates modifier", function() {
+  it("creates boolean modifier", function() {
     blockMixin.calledWithBlockAndArgs(
       "@include MOD(mod) { color: red; }",
       "block-name"
     ).createsSelector(".b-block-name_mod");
+  });
+
+  it("creates key-value modifier", function() {
+    blockMixin.calledWithBlockAndArgs(
+      "@include MOD(mod, value) { color: red; }",
+      "block-name"
+    ).createsSelector(".b-block-name_mod_value");
   });
 
 }); 
