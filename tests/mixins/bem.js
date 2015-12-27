@@ -9,7 +9,6 @@ describe("in BEM mixins", function() {
       path.resolve("lib/mixins", "_bem.scss"),
       {
         dependencies: [
-          path.resolve("lib/functions", "_str.scss"),
           path.resolve("lib/functions", "_bem.scss")
         ]
       }
