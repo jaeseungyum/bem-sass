@@ -15,33 +15,34 @@ describe("BEM functions", function() {
     );
   }); 
 
-  describe("#find-root-block", function() {
+  describe("find-root-block", function() {
 
     var func;
     beforeEach(function() {
       func = sassaby.func("find-root-block");
     });
 
-    it("returns block level selector from given selector string", function() {
+    it("extracts BEM block selector from given selector string", function() {
 
       func.calledWithArgs(
-        "unquote('.' + b-block_mod)"
+        "unquote('.' + b-block_mod)" // given .b-block_mod
       ).equals(".b-block");
 
       func.calledWithArgs(
-        "unquote('.' + b-block)"
+        "unquote('.' + b-block)" // given .b-block
       ).equals(".b-block");
     }); 
   }); 
 
-  describe("#is-modifier", function() {
+
+  describe("is-modifier", function() {
 
     var func;
     beforeEach(function() {
       func = sassaby.func("is-modifier");
     });
 
-    it("tests selector string is a modifier or not", function() {
+    it("tests whether a given selector is a BEM modifier or not", function() {
 
       func.calledWithArgs(
         "unquote('.' + b-block)"
@@ -54,13 +55,15 @@ describe("BEM functions", function() {
 
   });
 
-  describe("#is-element", function() {
+
+  describe("is-element", function() {
+
     var func;
     beforeEach(function() {
       func = sassaby.func("is-element");
     });
 
-    it("tests selector string is an element or not", function() {
+    it("tests whether a given selector is a BEM element or not", function() {
 
       func.calledWithArgs(
         "unquote('.' + b-block)"
@@ -72,4 +75,3 @@ describe("BEM functions", function() {
     });
   });
 }); 
-

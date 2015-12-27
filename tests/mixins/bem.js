@@ -1,7 +1,7 @@
 var path    = require("path");
 var Sassaby = require("sassaby");
 
-describe("BEM mixins", function() {
+describe("in BEM mixins", function() {
 
   var sassaby, blockMixin, elementMixin;
   beforeEach(function() {
@@ -18,58 +18,58 @@ describe("BEM mixins", function() {
     elementMixin = sassaby.standaloneMixin("ELEM"); 
   }); 
 
-  describe("#BLOCK", function() {
-    it("creates block level selector", function() {
+  describe("BLOCK mixin", function() {
+    it("creates BEM block", function() {
       blockMixin.calledWithBlockAndArgs(
-        "color: red;", 
+        "content: 'whatever';", 
         "block-name"
       ).createsSelector(".b-block-name");
 
       blockMixin.calledWithBlockAndArgs(
-        "color: red;", 
+        "content: 'whatever';", 
         "another-block-name"
       ).createsSelector(".b-another-block-name");
     }); 
   });
 
-  describe("#ELEM", function() {
-    it("creates element level selector", function() {
+  describe("ELEM mixin", function() {
+    it("creates BEM element", function() {
       blockMixin.calledWithBlockAndArgs(
-        "@include ELEM(elem) { color: red; }", 
+        "@include ELEM(elem) { content: 'whatever'; }", 
         "block-name"
       ).createsSelector(".b-block-name__elem");
     }); 
   }); 
 
-  describe("#MOD", function() {
-    it("creates boolean modifier", function() {
+  describe("MOD mixin", function() {
+    it("creates BEM modifier(boolean) with single arg", function() {
       blockMixin.calledWithBlockAndArgs(
-        "@include MOD(mod) { color: red; }",
+        "@include MOD(mod) { content: 'whatever'; }",
         "block-name"
       ).createsSelector(".b-block-name_mod");
     });
 
-    it("creates key-value modifier", function() {
+    it("creates BEM modifier(key-value) with 2 args", function() {
       blockMixin.calledWithBlockAndArgs(
-        "@include MOD(mod, value) { color: red; }",
+        "@include MOD(mod, value) { content: 'whatever'; }",
         "block-name"
       ).createsSelector(".b-block-name_mod_value");
     });
   });
 
-  describe("#ELEM in #MOD", function() {
-    it("creates element level selector inside modifier", function() { 
+  describe("ELEM mixin in MOD mixin", function() {
+    it("creates BEM element in the given MOD context", function() { 
       blockMixin.calledWithBlockAndArgs(
-        "@include MOD(mod) { @include ELEM(elem) { color: red; } }", 
+        "@include MOD(mod) { @include ELEM(elem) { content: 'whatever'; } }", 
         "block-name"
       ).createsSelector(".b-block-name_mod .b-block-name__elem");
     });
   });
 
-  describe("#MOD in #ELEM", function() {
-    it("creates modifier of element level selector", function() { 
+  describe("MOD mixin in ELEM mixin", function() {
+    it("creates BEM modifier of the given BEM element", function() { 
       blockMixin.calledWithBlockAndArgs(
-        "@include ELEM(elem) { @include MOD(mod) { color: red; } }", 
+        "@include ELEM(elem) { @include MOD(mod) { content: 'whatever'; } }", 
         "block-name"
       ).createsSelector(".b-block-name__elem_mod");
     }); 
