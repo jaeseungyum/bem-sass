@@ -3,6 +3,21 @@
 //        Functions - BEM
 //
 // ============================== 
+/// Replace `$search` with `$replace` in `$string`
+/// @author Hugo Giraudel
+/// @param {String} $string - Initial string
+/// @param {String} $search - Substring to replace
+/// @param {String} $replace ('') - New value
+/// @return {String} - Updated string
+@function str-replace($string, $search, $replace: '') {
+  $index: str-index($string, $search);
+  
+  @if $index {
+    @return str-slice($string, 1, $index - 1) + $replace + str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
+  }
+  
+  @return $string;
+}
 
 // Get BEM block selector(e.g "b-block") 
 // from given selector list
@@ -11,14 +26,55 @@
 @function get-BEM-block($selector) {
 
   @if is-BEM-block($selector) {
-    @return $selector;
+    @return selector-to-string($selector);
   } 
 
   @return (
     slice-off-BEM-block(
-      inspect($selector)
+      selector-to-string($selector)
     )
   )
+}
+
+// Convert selector to unquoted string
+// @param { List } the selector
+// @param { Unquoted String } the selector as unquoted string
+//
+// This ensures a given selector is valid string like below:
+//
+//  (.selector) -> .selector #unquoted string
+//
+// @note
+// Just using 'inspect' function doesn't meet the demand 
+// since ruby-sass keeps list parenthesis / comma
+@function selector-to-string($selector) {
+  @return(
+    unquote(
+      remove-parenthesis(
+        remove-comma(
+          inspect($selector)
+        )
+      )
+    )
+  );
+}
+
+@function remove-comma($string) {
+  @return str-replace($string, ",", "");
+}
+
+@function remove-parenthesis($string) {
+  @return(
+    str-replace(
+      str-replace(
+        $string, 
+        "(", 
+        ""
+      ),
+      ")",
+      ""
+    )
+  );
 }
 
 // Extract BEM block 
