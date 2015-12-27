@@ -3,3 +3,4 @@ node_modules/
 public/
 demo/
 .sass-cache/
+run_test.sh
