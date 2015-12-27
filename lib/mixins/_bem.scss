@@ -5,10 +5,8 @@
 // ==============================
 
 
-// Create a block level selector
-// @param { String } block name 
-@mixin BLOCK($block) {
-  .b-#{$block} {
+@mixin make-BEM-block($name, $prefix: "b-") {
+  .#{$prefix}#{$name} {
     @content;
   }
 }
