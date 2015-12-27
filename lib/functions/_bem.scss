@@ -6,7 +6,7 @@
 
 // Get BEM block selector(e.g "b-block") 
 // from given selector list
-// @param { List } the given selector list
+// @param { List } the selector list
 // @return { List | Unquoted String } the BEM block selector
 @function get-BEM-block($selector) {
 
@@ -21,9 +21,9 @@
   )
 }
 
-// Extract root block string 
+// Extract BEM block 
 // from given selector string
-// @param   { String } selector as string
+// @param   { String } the selector as string
 // @return  { Unquoted String } selector as unquoted string
 @function slice-off-BEM-block($selector-string) {
   @return (
@@ -37,18 +37,10 @@
   )
 }
 
-// Check if the given selector is a BEM block or not
-// @param  { List } the given selector
-// @return { Boolean }
-@function is-BEM-block($selector) {
-  @return (
-    not(is-BEM-mod($selector) or is-BEM-elem($selector))
-  )
-} 
 
-// Get the separator index of 
-// the given selector string(BEM element / modifier)
-// @param   { String } the selector string
+// Get an index of the first elem/modifier separator
+// from a given selector string
+// @param   { String } the selector as string
 // @return  { Number } index of the separator
 @function sep-start-point($selector-string) {
   @if (str-index($selector-string, "_")) {
@@ -57,8 +49,19 @@
   @return null; 
 }
 
-// Check if the given selector is a BEM modifier or not
-// @param  { List } the given selector
+
+// Check if a given selector is a BEM block or not
+// @param  { List } the selector
+// @return { Boolean }
+@function is-BEM-block($selector) {
+  @return (
+    not(is-BEM-mod($selector) or is-BEM-elem($selector))
+  )
+} 
+
+
+// Check if a given selector is a BEM modifier or not
+// @param  { List } the selector
 // @return { Boolean }
 @function is-BEM-mod($selector) {
   @if (str-index(inspect($selector), "_")) {
@@ -67,8 +70,9 @@
   @return false;
 }
 
-// Check if the given selector is a BEM element or not
-// @param  { List } the given selector
+
+// Check if a given selector is a BEM element or not
+// @param  { List } the selector
 // @return { Boolean }
 @function is-BEM-elem($selector) {
   @if (str-index(inspect($selector), "__")) {
