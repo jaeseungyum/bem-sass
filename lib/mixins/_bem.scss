@@ -17,14 +17,14 @@
 // @param { String } element name 
 @mixin ELEM($element) {
   @at-root {
-    @if is-modifier(&) {
+    @if is-BEM-mod(&) {
       & {
-        #{find-root-block(&)}__#{$element} {
+        #{get-BEM-block(&)}__#{$element} {
           @content;
         }
       }
     } @else {
-      #{find-root-block(&)}__#{$element} {
+      #{get-BEM-block(&)}__#{$element} {
         @content;
       }
     }
@@ -35,12 +35,12 @@
 // @param { String } modifier name
 @mixin MOD($modifier, $value: null) {
   @at-root {
-    @if is-element(&) {
+    @if is-BEM-elem(&) {
       #{&}_#{$modifier}#{if($value, "_#{$value}", "")} {
         @content;
       }
     } @else {
-      #{find-root-block(&)}_#{$modifier}#{if($value, "_#{$value}", "")} {
+      #{get-BEM-block(&)}_#{$modifier}#{if($value, "_#{$value}", "")} {
         @content;
       }
     }

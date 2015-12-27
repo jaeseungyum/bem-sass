@@ -10,11 +10,11 @@ describe("BEM functions", function() {
     );
   }); 
 
-  describe("find-root-block", function() {
+  describe("get-BEM-block", function() {
 
     var func;
     beforeEach(function() {
-      func = sassaby.func("find-root-block");
+      func = sassaby.func("get-BEM-block");
     });
 
     it("extracts BEM block selector from given selector string", function() {
@@ -30,11 +30,11 @@ describe("BEM functions", function() {
   }); 
 
 
-  describe("is-modifier", function() {
+  describe("is-BEM-mod", function() {
 
     var func;
     beforeEach(function() {
-      func = sassaby.func("is-modifier");
+      func = sassaby.func("is-BEM-mod");
     });
 
     it("tests whether a given selector is a BEM modifier or not", function() {
@@ -51,11 +51,11 @@ describe("BEM functions", function() {
   });
 
 
-  describe("is-element", function() {
+  describe("is-BEM-elem", function() {
 
     var func;
     beforeEach(function() {
-      func = sassaby.func("is-element");
+      func = sassaby.func("is-BEM-elem");
     });
 
     it("tests whether a given selector is a BEM element or not", function() {
