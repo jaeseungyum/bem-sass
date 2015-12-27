@@ -11,21 +11,21 @@
 @function get-BEM-block($selector) {
 
   @if is-BEM-block($selector) {
-    @return $selector; //TODO
+    @return $selector;
   } 
 
   @return (
-    extract-root-block(
+    slice-off-BEM-block(
       inspect($selector)
     )
   )
 }
 
 // Extract root block string 
-// from given selector string using slice
+// from given selector string
 // @param   { String } selector as string
 // @return  { Unquoted String } selector as unquoted string
-@function extract-root-block($selector-string) {
+@function slice-off-BEM-block($selector-string) {
   @return (
     unquote(
       str-slice(
