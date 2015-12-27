@@ -35,6 +35,7 @@ BEM 선언에 사용할 사용자 mixin을 아래와 같이 정의한다.
 ```
 정의한 mixin은 scss에서 아래와 같이 활용할 수 있다
 ```scss
+// Menu block
 @include block(menu) {
   /*...CSS declarations here...*/
 
