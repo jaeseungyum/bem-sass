@@ -31,7 +31,7 @@
       str-slice(
         $selector-string,
         1,
-        sep-start-point($selector-string)
+        sep-start-at($selector-string)
       )
     )
   )
@@ -42,7 +42,7 @@
 // from a given selector string
 // @param   { String } the selector as string
 // @return  { Number } index of the separator
-@function sep-start-point($selector-string) {
+@function sep-start-at($selector-string) {
   @if (str-index($selector-string, "_")) {
     @return str-index($selector-string, "_") - 1;
   }
