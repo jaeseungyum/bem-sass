@@ -57,7 +57,7 @@
         sep-start-at($selector-string)
       )
     )
-  )
+  );
 }
 
 
@@ -79,7 +79,7 @@
 @function is-BEM-block($selector) {
   @return (
     not(is-BEM-mod($selector) or is-BEM-elem($selector))
-  )
+  );
 } 
 
 
