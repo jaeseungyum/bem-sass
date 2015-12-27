@@ -3,21 +3,6 @@
 //        Functions - BEM
 //
 // ============================== 
-/// Replace `$search` with `$replace` in `$string`
-/// @author Hugo Giraudel
-/// @param {String} $string - Initial string
-/// @param {String} $search - Substring to replace
-/// @param {String} $replace ('') - New value
-/// @return {String} - Updated string
-@function str-replace($string, $search, $replace: '') {
-  $index: str-index($string, $search);
-  
-  @if $index {
-    @return str-slice($string, 1, $index - 1) + $replace + str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
-  }
-  
-  @return $string;
-}
 
 // Get BEM block selector(e.g "b-block") 
 // from given selector list
@@ -33,7 +18,7 @@
     slice-off-BEM-block(
       selector-to-string($selector)
     )
-  )
+  );
 }
 
 // Convert selector to unquoted string
@@ -50,32 +35,14 @@
 @function selector-to-string($selector) {
   @return(
     unquote(
-      remove-parenthesis(
-        remove-comma(
+      str-rm-parenthesis(
+        str-rm-comma(
           inspect($selector)
         )
       )
     )
   );
-}
-
-@function remove-comma($string) {
-  @return str-replace($string, ",", "");
-}
-
-@function remove-parenthesis($string) {
-  @return(
-    str-replace(
-      str-replace(
-        $string, 
-        "(", 
-        ""
-      ),
-      ")",
-      ""
-    )
-  );
-}
+} 
 
 // Extract BEM block 
 // from given selector string

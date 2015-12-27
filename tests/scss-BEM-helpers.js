@@ -9,6 +9,10 @@ describe("scss-BEM-helpers", function() {
     );
   }); 
 
+  it("imports str functions", function() {
+    sassaby.imports("lib/functions/str");
+  }); 
+
   it("imports bem functions", function() {
     sassaby.imports("lib/functions/bem");
   }); 
