@@ -3,4 +3,5 @@ node_modules/
 public/
 demo/
 .sass-cache/
-run_test.sh
+.test.sh
+README.PRIVATE.md
