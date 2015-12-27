@@ -1,12 +1,12 @@
 # scss-BEM-helpers
 BEM helpers for scss projects
 
-## Objectives
+## What does it do?
 - scss에 BEM(Block-Element-Modifier)을 적용할 때, 가독성이 좋은 코드를 만들기 위함
 - 프로젝트의 요구사항에 따라 BEM 스타일의 convention을 추가/변경/삭제 가능
 - libsass, rubysass 모두 호환 
 
-## Installation
+## Install
 
 ```sh
 bower install scss-BEM-helpers
@@ -61,3 +61,10 @@ BEM 선언에 사용할 사용자 mixin들을 아래와 같이 정의한다.
   /*...CSS declarations here...*/
 }
 ```
+## Extended Details
+### ...TODO: boolean modifier, key-value modifier
+### ...TODO: element inside modifier
+### ...TODO: 연속선택자
+
+## See Also
++ https://en.bem.info/
