@@ -13,8 +13,8 @@ bower install scss-BEM-helpers
 ```
 
 ## Usage
-아래 예시처럼 BEM 선언에 사용할 mixin을 정의한다.
-```sh 
+BEM 선언에 사용할 사용자 mixin을 아래와 같이 정의한다.
+```scss
 // 'block'을 BEM block 선언에 사용할 mixin으로 하고, 
 // 컴파일될 접두사를 'b-'로 정한다.
 @mixin block($name) {
@@ -33,30 +33,30 @@ bower install scss-BEM-helpers
   @include make-BEM-element($name, $sep: "_");
 }
 ```
-아래는 실제 사용과 컴파일된 css의 예시다.
-```sh 
-// scss 
-// 직접 정의한 BEM mixin을 실제 선언에서 아래와 같이 사용한다
-
+정의한 mixin은 scss에서 아래와 같이 활용할 수 있다
+```scss
 @include block(menu) {
-  //...declarations...
+  /*...CSS declarations here...*/
 
   @include elem(item) {
-    //...declarations...
+    /*...CSS declarations here...*/
   }
   @include mod(horiz) {
-    //...declarations...
+    /*...CSS declarations here...*/
   }
 }
-
-// css 
-// 아래와 같이 css로 컴파일된다
+```
+이것은 아래와 같이 css로 컴파일된다
+```css
 .b-menu {
+  /*...CSS declarations here...*/
 }
 
 .b-menu__item {
+  /*...CSS declarations here...*/
 }
 
 .b-menu_horiz {
+  /*...CSS declarations here...*/
 }
 ```
