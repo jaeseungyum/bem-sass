@@ -1,5 +1,5 @@
 # scss-BEM-helpers
-SCSS 작업 시 BEM(Block-Element-Modifier)를 효과적으로 적용하기 위해 만들었다. 비슷한 도구가 없는 것은 아니지만, 프로젝트에 따라 BEM 스타일의 convention을 부작용 없이 추가/변경/삭제 가능하도록 하고, libsass, ruby-sass에서 모두 문제 없이 호환되도록 하기 위해 다시 만든 것.
+SCSS 작업 시 BEM(Block-Element-Modifier)을 좀 더 효과적으로 적용하기 위해 만들었다. 유사한 도구가 없는 것은 아니지만, 프로젝트에 따라 부작용 없이 BEM 선언 mixin을 추가/변경/삭제 가능하도록 하고, Ruby Sass, LibSass에서 모두 문제 없이 컴파일링 되도록 한다-는 요구사항을 충족시키기 위해 만든 것.
 
 ## Install
 
