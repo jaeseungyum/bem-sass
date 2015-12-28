@@ -15,6 +15,7 @@ describe("BEM functions", function() {
     );
   }); 
 
+
   describe("get-BEM-block", function() {
 
     var func;

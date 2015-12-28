@@ -31,7 +31,7 @@
 //
 // @note
 // Just using 'inspect' function doesn't meet the demand 
-// since ruby-sass keeps list parenthesis / comma
+// since ruby-sass keeps parenthesis / comma in list
 @function selector-to-string($selector) {
   @return(
     unquote(
@@ -44,10 +44,12 @@
   );
 } 
 
-// Extract BEM block 
+// Slice off BEM block string
 // from given selector string
 // @param   { String } the selector as string
 // @return  { Unquoted String } selector as unquoted string
+// @example
+//    slice-off-BEM-block(".b-block_mod") //=> ".b-block"
 @function slice-off-BEM-block($selector-string) {
   @return (
     unquote(
@@ -65,6 +67,7 @@
 // from a given selector string
 // @param   { String } the selector as string
 // @return  { Number } index of the separator
+// @TODO 미리 정한 element, modifier 구분자 중 가장 먼저나오는 것을 식별할 수 있어야
 @function sep-start-at($selector-string) {
   @if (str-index($selector-string, "_")) {
     @return str-index($selector-string, "_") - 1;
@@ -76,6 +79,7 @@
 // Check if a given selector is a BEM block or not
 // @param  { List } the selector
 // @return { Boolean }
+// @TODO element, modifier가 아닐 뿐 아니라, block인 것도 확실히 해야할 필요가. 
 @function is-BEM-block($selector) {
   @return (
     not(is-BEM-mod($selector) or is-BEM-elem($selector))
@@ -86,6 +90,7 @@
 // Check if a given selector is a BEM modifier or not
 // @param  { List } the selector
 // @return { Boolean }
+// @TODO 온전히 modifier 구분자(*_*)를 찾을 방안을 마련해야
 @function is-BEM-mod($selector) {
   @if (str-index(inspect($selector), "_")) {
     @return true;
@@ -97,6 +102,7 @@
 // Check if a given selector is a BEM element or not
 // @param  { List } the selector
 // @return { Boolean }
+// @TODO 온전히 element 구분자(*_*)를 찾을 방안을 마련해야
 @function is-BEM-elem($selector) {
   @if (str-index(inspect($selector), "__")) {
     @return true;
