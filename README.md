@@ -7,8 +7,8 @@ SCSS에서 BEM 컨벤션을 좀 더 편리하게 적용하기 위해 만들었�
 bower install scss-BEM-helpers
 ```
 
-## Basic Usage
-BEM 선언에 사용할 사용자 mixin들을 아래와 같이 정의한다.
+## Configurations
+BEM 선언에 사용할 사용자 mixin들은 아래와 같이 정의한다.
 ```scss
 // BEM element와 BEM modifier 각각의 기본 separator를 설정한다
 @include config-BEM-seps {
@@ -38,6 +38,7 @@ BEM 선언에 사용할 사용자 mixin들을 아래와 같이 정의한다.
   };
 }
 ```
+## Basic Usages
 정의한 mixin들은 scss에서 아래와 같이 활용할 수 있다
 ```scss
 // Menu block
@@ -67,8 +68,8 @@ BEM 선언에 사용할 사용자 mixin들을 아래와 같이 정의한다.
 }
 ```
 ## Extended Details
-### Boolean modifier vs Key-value modifier
-modifier를 선언하는 방식에 따라 boolean modifier와 key-value modifier를 모두 표현할 수 있다.
+### Boolean modifier & Key-value modifier
+modifier를 선언하는 방식에 따라 boolean modifier와 key-value modifier를 모두 표현할 수 있다. https://en.bem.info/method/naming-convention/#block-modifier
 ```scss
 @include block(menu) {
   /* Boolean modifier */
@@ -105,6 +106,7 @@ modifier를 선언하는 방식에 따라 boolean modifier와 key-value modifier
 
 ### Element modifier
 element 또한 block과 같은 방식으로 modifier를 가질 수 있다
+https://en.bem.info/method/naming-convention/#element-modifier
 ```scss
 @include block(menu) {
   @include elem(item) {
