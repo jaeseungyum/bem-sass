@@ -139,7 +139,7 @@ element 또한 block과 같은 방식으로 modifier를 가질 수 있다.
 }
 ```
 ### Using cascades in BEM
-BEM이 specificity에서 벗어나기 위한 방책으로 만들어진 것은 사실이나, CSS 본연의 cascading을 활용하는 경우가 있다. 특히 block에 적용된 mod(theme, state, ...)에 따라 변경되는 element를 표현할 때 사용되는데, 이것은 아래 방식으로 선언할 수 있다.
+BEM이 specificity 문제에서 벗어나기 위해 고안된 것은 사실이나 CSS 본연의 cascading을 활용하는 경우가 있다. 예를 들면 block에 적용된 mod(theme, state, ...)에 따라 변경되는 element를 표현할 때 cascading이 사용되는데, 이것은 아래 방식으로 선언할 수 있다.
 ```scss
 // @see https://en.bem.info/method/solved-problems/#using-cascades-in-bem
 
