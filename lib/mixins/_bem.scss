@@ -5,6 +5,7 @@
 // ==============================
 
 // Config BEM separators 
+// @param { map } a BEM separator map (e.g (element: "__", modifier: "_"))
 @mixin config-BEM-seps($map) {
   $__BEM-element-sep__: map-get($map, "element") !global;
   $__BEM-modifier-sep__: map-get($map, "modifier") !global;
@@ -37,16 +38,8 @@
 //    }
 @mixin make-BEM-element($element) {
   @at-root {
-    @if is-BEM-mod(&) {
-      & {
-        #{get-BEM-block(&)}#{get-BEM-element-sep()}#{$element} {
-          @content;
-        }
-      }
-    } @else {
-      #{get-BEM-block(&)}#{get-BEM-element-sep()}#{$element} {
-        @content;
-      }
+    #{make-BEM-element-selector($element)} {
+      @content;
     }
   }
 }
@@ -63,14 +56,8 @@
 //    }
 @mixin make-BEM-modifier($modifier, $value: null) {
   @at-root {
-    @if is-BEM-elem(&) {
-      #{&}#{get-BEM-modifier-sep()}#{$modifier}#{if($value, "#{get-BEM-modifier-sep()}#{$value}", "")} {
-        @content;
-      }
-    } @else {
-      #{get-BEM-block(&)}#{get-BEM-modifier-sep()}#{$modifier}#{if($value, "#{get-BEM-modifier-sep()}#{$value}", "")} {
-        @content;
-      }
+    #{make-BEM-modifier-selector($modifier, $value)} {
+      @content;
     }
   }
 }

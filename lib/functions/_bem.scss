@@ -21,6 +21,70 @@
   );
 }
 
+// Construct BEM element selector string
+// @param { String } the element name
+// @return { String } the constructed BEM element selector string
+@function make-BEM-element-selector($name) {
+
+  @if (in-BEM-modifier()) {
+    @return (
+      & + " " + get-BEM-block(&) + get-BEM-element-sep() + $name
+    );
+  }
+
+  @return (
+    get-BEM-block(&) + get-BEM-element-sep() + $name
+  );
+}
+
+@function in-BEM-modifier() {
+  @return is-BEM-mod(&);
+}
+
+
+// Construct BEM modifier selector string
+// @param { String } the modifier name
+// @return { String } the constructed BEM modifier selector string
+@function make-BEM-modifier-selector($name, $value: null) {
+
+  @if ($value == null) {
+    @return (
+      make-basic-BEM-modifier-selector($name) 
+    );
+  }
+
+  @return (
+    add-BEM-modifier-value(make-basic-BEM-modifier-selector($name), $value)
+  );
+}
+
+@function make-basic-BEM-modifier-selector($name) {
+
+  @if (in-BEM-element()) {
+    @return (
+      & + get-BEM-modifier-sep() + $name 
+    );
+  }
+
+  @return (
+    get-BEM-block(&) + get-BEM-modifier-sep() + $name 
+  );
+}
+
+@function in-BEM-element() {
+  @return is-BEM-elem(&);
+}
+
+// Add a value string to given BEM modifier selector string
+// @param { String } the modifier name
+// @param { String } the value 
+// @return { String } a value attached BEM modifier
+@function add-BEM-modifier-value($BEM-modifier-selector-string, $value) {
+  @return ( 
+    $BEM-modifier-selector-string + get-BEM-modifier-sep() + $value
+  );
+}
+
 // Convert selector to unquoted string
 // @param { List } the selector
 // @param { Unquoted String } the selector as unquoted string
