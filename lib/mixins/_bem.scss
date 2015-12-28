@@ -11,9 +11,7 @@
   }
 }
 
-// Create an element
-// @param { String } element name 
-@mixin ELEM($element) {
+@mixin make-BEM-element($element) {
   @at-root {
     @if is-BEM-mod(&) {
       & {
@@ -29,9 +27,7 @@
   }
 }
 
-// Create a modifier
-// @param { String } modifier name
-@mixin MOD($modifier, $value: null) {
+@mixin make-BEM-modifier($modifier, $value: null) {
   @at-root {
     @if is-BEM-elem(&) {
       #{&}_#{$modifier}#{if($value, "_#{$value}", "")} {
