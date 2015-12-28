@@ -11,7 +11,10 @@ describe("BEM mixins", function() {
         dependencies: [
           path.resolve("lib/functions", "_str.scss"),
           path.resolve("lib/functions", "_bem.scss")
-        ]
+        ],
+        variables: {
+          "__BEM-element-sep__": "__"
+        }
       }
     );
     mixin = sassaby.standaloneMixin("make-BEM-block");
