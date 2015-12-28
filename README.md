@@ -1,5 +1,5 @@
 # scss-BEM-helpers
-SCSS 작업 시 BEM(Block-Element-Modifier)을 좀 더 효과적으로 적용하기 위해 만들었다. 유사한 도구가 없는 것은 아니지만, 프로젝트에 부작용 없이 BEM 선언용 mixin들을 추가할 수 있도록 하고 Ruby Sass(>=3.4), LibSass(>=3.3)에서 모두 문제 없이 컴파일링 되도록 하기 위해 만든 것.
+SCSS에서 BEM 컨벤션을 좀 더 편리하게 적용하기 위해 만들었다. 프로젝트에 부작용 없이 BEM 선언용 mixin들을 추가할 수 있도록 하고, Ruby Sass(>=3.4), LibSass(>=3.3)에서 모두 문제 없이 컴파일링 되도록 하는 것을 목적으로 했다.
 
 ## Install
 
@@ -67,7 +67,40 @@ BEM 선언에 사용할 사용자 mixin들을 아래와 같이 정의한다.
 }
 ```
 ## Extended Details
-+ ...TODO: boolean modifier, key-value modifier
+### Boolean modifier vs Key-value modifier
+BEM modifier의 선언 방식에 따라 boolean modifier와 key-value modifier를 모두 지원한다.
+```scss
+@include block(menu) {
+  // Boolean modifier
+  @include mod(hidden) {
+    /*...CSS declarations here...*/
+  }
+  
+  // Key-value modifier
+  @include mod(theme, morning-forest) {
+    /*...CSS declarations here...*/
+  }
+  
+  @include mod(theme, stormy-sky) {
+    /*...CSS declarations here...*/
+  }
+}
+```
+이것은 아래와 같이 컴파일된다.
+```css
+.b-menu_hidden {
+  /*...CSS declarations here...*/
+}
+
+.b-menu_theme_morning-forest {
+  /*...CSS declarations here...*/
+}
+
+.b-menu_theme_stormy-sky {
+  /*...CSS declarations here...*/
+}
+```
+
 + ...TODO: element inside modifier
 + ...TODO: 인접선택자
 
