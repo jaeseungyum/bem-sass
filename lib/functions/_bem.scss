@@ -115,3 +115,9 @@
 @function get-BEM-element-sep($null:null) {
   @return unquote($__BEM-element-sep__);
 }
+
+// Get BEM modifier separator from settings 
+// @return { String } BEM modifier separator
+@function get-BEM-modifier-sep($null:null) {
+  @return unquote($__BEM-modifier-sep__);
+}

@@ -36,6 +36,21 @@ describe("BEM functions", function() {
     }); 
   });
 
+  describe("get-BEM-modifier-sep", function() {
+    it("returns BEM modifier separator from settings", function() { 
+      sassaby = sassabyWithVariables({
+        "__BEM-modifier-sep__": "_"
+      });
+      sassaby.func("get-BEM-modifier-sep").calledWithArgs(null).equals("_");
+
+      sassaby = sassabyWithVariables({
+        "__BEM-modifier-sep__": "__"
+      });
+
+      sassaby.func("get-BEM-modifier-sep").calledWithArgs(null).equals("__");
+    }); 
+  });
+
 
   describe("get-BEM-block", function() {
 

@@ -7,6 +7,7 @@
 // Config BEM options
 @mixin config-BEM-options($map) {
   $__BEM-element-sep__: map-get($map, "element-sep") !global;
+  $__BEM-modifier-sep__: map-get($map, "modifier-sep") !global;
 }
 
 // Generate BEM block selector 
@@ -63,11 +64,11 @@
 @mixin make-BEM-modifier($modifier, $value: null) {
   @at-root {
     @if is-BEM-elem(&) {
-      #{&}_#{$modifier}#{if($value, "_#{$value}", "")} {
+      #{&}#{get-BEM-modifier-sep()}#{$modifier}#{if($value, "#{get-BEM-modifier-sep()}#{$value}", "")} {
         @content;
       }
     } @else {
-      #{get-BEM-block(&)}_#{$modifier}#{if($value, "_#{$value}", "")} {
+      #{get-BEM-block(&)}#{get-BEM-modifier-sep()}#{$modifier}#{if($value, "#{get-BEM-modifier-sep()}#{$value}", "")} {
         @content;
       }
     }
