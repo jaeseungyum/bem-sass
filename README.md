@@ -7,29 +7,33 @@ SCSS 작업 시 BEM(Block-Element-Modifier)을 좀 더 효과적으로 적용하
 bower install scss-BEM-helpers
 ```
 
-## Usage
+## Basic Usage
 BEM 선언에 사용할 사용자 mixin들을 아래와 같이 정의한다.
 ```scss
-// 'block'을 BEM block 선언에 사용할 mixin으로 하고, 
-// 컴파일될 접두사를 'b-'로 정한다.
+// BEM element와 modifier 각각의 기본 separator를 설정한다
+@include config-BEM-separators {
+  element: "__",
+  modifier: "_"
+}
+
+// BEM block 정의에 사용할 mixin으로 'block'을 선언한다.
+// 컴파일될 접두사를 'b-'로 정한다. (접두사는 옵션이다)
 @mixin block($name) {
   @include make-BEM-block($name, $prefix: "b-") {
     @content;
   };
 } 
 
-// 'elem'을 BEM element 선언에 사용할 mixin으로 하고, 
-// 구분자를 '__'로 정한다.
+// BEM element 정의에 사용할 mixin으로 'elem'을 선언한다.
 @mixin elem($name) {
-  @include make-BEM-element($name, $sep: "__") {
+  @include make-BEM-element($name) {
     @content;
   };
 }
 
-// 'mod'를 BEM modifier 선언에 사용할 mixin으로 하고, 
-// 구분자를 '_'로 정한다.
+// BEM modifier 정의에 사용할 mixin으로 'mod'를 선언한다.
 @mixin mod($name) {
-  @include make-BEM-element($name, $sep: "_") {
+  @include make-BEM-element($name) {
     @content;
   };
 }
