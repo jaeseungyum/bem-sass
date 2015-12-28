@@ -4,25 +4,9 @@
 //
 // ============================== 
 
-// Get BEM block selector(e.g "b-block") 
-// from given selector list
-// @param { List } the selector list
-// @return { List | Unquoted String } the BEM block selector
-@function get-BEM-block($selector) {
-
-  @if is-BEM-block($selector) {
-    @return selector-to-string($selector);
-  } 
-
-  @return (
-    slice-off-BEM-block(
-      selector-to-string($selector)
-    )
-  );
-}
-
 // Construct BEM element selector string
 // @param { String } the element name
+// @param { Boolean } called in a modifier context? 
 // @return { String } the constructed BEM element selector string
 @function make-BEM-element-selector($name, $in-BEM-modifier: false) {
 
@@ -40,12 +24,16 @@
 
 // Construct BEM modifier selector string
 // @param { String } the modifier name
+// @param { Boolean } called in an element context?
 // @return { String } the constructed BEM modifier selector string
 @function make-BEM-modifier-selector($name, $value: null, $in-BEM-element: false) {
 
   @if ($value) {
     @return (
-      add-BEM-modifier-value(make-BEM-modifier-selector($name), $value)
+      add-BEM-modifier-value(
+        make-BEM-modifier-selector($name), 
+        $value
+      )
     );
   }
 
@@ -70,6 +58,57 @@
   );
 }
 
+// Get BEM block selector(e.g "b-block") 
+// from given selector list
+// @param { List } the selector list
+// @return { Unquoted String } the BEM block selector
+@function get-BEM-block($selector) {
+
+  @if (is-BEM-mod($selector) or is-BEM-elem($selector)) {
+    @return (
+      slice-off-BEM-block(
+        selector-to-string($selector)
+      )
+    );
+  }
+
+  @return selector-to-string($selector); 
+}
+
+
+// Get BEM element separator from settings 
+// @return { String } BEM element separator
+@function get-BEM-element-sep($null:null) {
+  @return unquote($__BEM-element-sep__);
+}
+
+
+// Get BEM modifier separator from settings 
+// @return { String } BEM modifier separator
+@function get-BEM-modifier-sep($null:null) {
+  @return unquote($__BEM-modifier-sep__);
+}
+
+
+// Slice off BEM block string
+// from given selector string
+// @param   { String } the selector as string
+// @return  { Unquoted String } selector as unquoted string
+// @example
+//    slice-off-BEM-block(".b-block_mod") //=> ".b-block"
+@function slice-off-BEM-block($selector-string) {
+  @return (
+    unquote(
+      str-slice(
+        $selector-string,
+        1,
+        sep-start-at($selector-string)
+      )
+    )
+  );
+}
+
+
 // Convert selector to unquoted string
 // @param { List } the selector
 // @param { Unquoted String } the selector as unquoted string
@@ -93,24 +132,6 @@
   );
 } 
 
-// Slice off BEM block string
-// from given selector string
-// @param   { String } the selector as string
-// @return  { Unquoted String } selector as unquoted string
-// @example
-//    slice-off-BEM-block(".b-block_mod") //=> ".b-block"
-@function slice-off-BEM-block($selector-string) {
-  @return (
-    unquote(
-      str-slice(
-        $selector-string,
-        1,
-        sep-start-at($selector-string)
-      )
-    )
-  );
-}
-
 
 // Get an index of the first elem/modifier separator
 // from a given selector string
@@ -123,17 +144,6 @@
   }
   @return null; 
 }
-
-
-// Check if a given selector is a BEM block or not
-// @param  { List } the selector
-// @return { Boolean }
-// @TODO element, modifier가 아닐 뿐 아니라, block인 것도 확실히 해야할 필요가. 
-@function is-BEM-block($selector) {
-  @return (
-    not(is-BEM-mod($selector) or is-BEM-elem($selector))
-  );
-} 
 
 
 // Check if a given selector is a BEM modifier or not
@@ -157,16 +167,4 @@
     @return true;
   }
   @return false;
-}
-
-// Get BEM element separator from settings 
-// @return { String } BEM element separator
-@function get-BEM-element-sep($null:null) {
-  @return unquote($__BEM-element-sep__);
-}
-
-// Get BEM modifier separator from settings 
-// @return { String } BEM modifier separator
-@function get-BEM-modifier-sep($null:null) {
-  @return unquote($__BEM-modifier-sep__);
 }
