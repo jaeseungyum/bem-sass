@@ -69,8 +69,9 @@ BEM 선언에 사용할 사용자 mixin들은 아래와 같이 정의한다.
 ```
 ## Extended Details
 ### Boolean modifier & Key-value modifier
-modifier를 선언하는 방식에 따라 boolean modifier와 key-value modifier를 모두 표현할 수 있다. https://en.bem.info/method/naming-convention/#block-modifier
+modifier를 선언하는 방식에 따라 boolean modifier와 key-value modifier를 모두 표현할 수 있다. 
 ```scss
+// @see https://en.bem.info/method/naming-convention/#block-modifier
 @include block(menu) {
   /* Boolean modifier */
   @include mod(hidden) {
@@ -105,9 +106,9 @@ modifier를 선언하는 방식에 따라 boolean modifier와 key-value modifier
 ```
 
 ### Element modifier
-element 또한 block과 같은 방식으로 modifier를 가질 수 있다
-https://en.bem.info/method/naming-convention/#element-modifier
+element 또한 block과 같은 방식으로 modifier를 가질 수 있다.
 ```scss
+// @see https://en.bem.info/method/naming-convention/#element-modifier
 @include block(menu) {
   @include elem(item) {
     /* Boolean modifier */
