@@ -4,16 +4,37 @@ var Sassaby = require("sassaby");
 describe("BEM functions", function() {
 
   var sassaby;
+  var sassabyWithVariables;
   beforeEach(function() {
-    sassaby = new Sassaby(
-      path.resolve("lib/functions", "_bem.scss"),
-      {
-        dependencies: [
-          path.resolve("lib/functions", "_str.scss")
-        ]
-      }
-    );
+    sassabyWithVariables = function(variables) {
+      return new Sassaby(
+        path.resolve("lib/functions", "_bem.scss"),
+        {
+          dependencies: [
+            path.resolve("lib/functions", "_str.scss")
+          ],
+          variables: variables
+        }
+      );
+    };
+
+    sassaby = sassabyWithVariables({});
+
   }); 
+
+  describe("get-BEM-element-sep", function() {
+    it("returns BEM element separator from settings", function() { 
+      sassaby = sassabyWithVariables({
+        "__BEM-element-sep__": "__"
+      });
+      sassaby.func("get-BEM-element-sep").calledWithArgs(null).equals("__");
+
+      sassaby = sassabyWithVariables({
+        "__BEM-element-sep__": "___"
+      });
+      sassaby.func("get-BEM-element-sep").calledWithArgs(null).equals("___");
+    }); 
+  });
 
 
   describe("get-BEM-block", function() {

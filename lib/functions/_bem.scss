@@ -109,3 +109,9 @@
   }
   @return false;
 }
+
+// Get BEM element separator from settings 
+// @return { String } BEM element separator
+@function get-BEM-element-sep($null:null) {
+  @return unquote($__BEM-element-sep__);
+}
