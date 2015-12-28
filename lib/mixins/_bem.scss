@@ -36,9 +36,9 @@
 //        @content;
 //      }
 //    }
-@mixin make-BEM-element($element) {
+@mixin make-BEM-element($name) {
   @at-root {
-    #{make-BEM-element-selector($element)} {
+    #{make-BEM-element-selector($name, is-BEM-mod(&))} {
       @content;
     }
   }
@@ -54,9 +54,9 @@
 //        @content;
 //      }
 //    }
-@mixin make-BEM-modifier($modifier, $value: null) {
+@mixin make-BEM-modifier($name, $value: null) {
   @at-root {
-    #{make-BEM-modifier-selector($modifier, $value)} {
+    #{make-BEM-modifier-selector($name, $value, is-BEM-elem(&))} {
       @content;
     }
   }

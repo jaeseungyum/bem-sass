@@ -24,11 +24,11 @@
 // Construct BEM element selector string
 // @param { String } the element name
 // @return { String } the constructed BEM element selector string
-@function make-BEM-element-selector($name) {
+@function make-BEM-element-selector($name, $in-BEM-modifier: false) {
 
-  @if (in-BEM-modifier()) {
+  @if ($in-BEM-modifier) {
     @return (
-      & + " " + get-BEM-block(&) + get-BEM-element-sep() + $name
+      & + " " + make-BEM-element-selector($name)
     );
   }
 
@@ -37,43 +37,28 @@
   );
 }
 
-@function in-BEM-modifier() {
-  @return is-BEM-mod(&);
-}
-
 
 // Construct BEM modifier selector string
 // @param { String } the modifier name
 // @return { String } the constructed BEM modifier selector string
-@function make-BEM-modifier-selector($name, $value: null) {
+@function make-BEM-modifier-selector($name, $value: null, $in-BEM-element: false) {
 
-  @if ($value == null) {
+  @if ($value) {
     @return (
-      make-basic-BEM-modifier-selector($name) 
+      add-BEM-modifier-value(make-BEM-modifier-selector($name), $value)
     );
   }
 
-  @return (
-    add-BEM-modifier-value(make-basic-BEM-modifier-selector($name), $value)
-  );
-}
-
-@function make-basic-BEM-modifier-selector($name) {
-
-  @if (in-BEM-element()) {
+  @if ($in-BEM-element) {
     @return (
       & + get-BEM-modifier-sep() + $name 
-    );
+    )
   }
 
   @return (
     get-BEM-block(&) + get-BEM-modifier-sep() + $name 
   );
-}
-
-@function in-BEM-element() {
-  @return is-BEM-elem(&);
-}
+} 
 
 // Add a value string to given BEM modifier selector string
 // @param { String } the modifier name
