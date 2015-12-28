@@ -13,19 +13,25 @@ BEM 선언에 사용할 사용자 mixin들을 아래와 같이 정의한다.
 // 'block'을 BEM block 선언에 사용할 mixin으로 하고, 
 // 컴파일될 접두사를 'b-'로 정한다.
 @mixin block($name) {
-  @include make-BEM-block($name, $prefix: "b-");
+  @include make-BEM-block($name, $prefix: "b-") {
+    @content;
+  };
 } 
 
 // 'elem'을 BEM element 선언에 사용할 mixin으로 하고, 
 // 구분자를 '__'로 정한다.
 @mixin elem($name) {
-  @include make-BEM-element($name, $sep: "__");
+  @include make-BEM-element($name, $sep: "__") {
+    @content;
+  };
 }
 
 // 'mod'를 BEM modifier 선언에 사용할 mixin으로 하고, 
 // 구분자를 '_'로 정한다.
 @mixin mod($name) {
-  @include make-BEM-element($name, $sep: "_");
+  @include make-BEM-element($name, $sep: "_") {
+    @content;
+  };
 }
 ```
 정의한 mixin들은 scss에서 아래와 같이 활용할 수 있다
