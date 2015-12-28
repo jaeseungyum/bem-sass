@@ -52,7 +52,7 @@ BEM 선언에 사용할 사용자 mixin들을 아래와 같이 정의한다.
   }
 }
 ```
-이것은 아래와 같은 css rule들로 컴파일된다
+이것은 아래와 같이 컴파일 된다
 ```css
 .b-menu {
   /*...CSS declarations here...*/
