@@ -11,7 +11,7 @@ bower install scss-BEM-helpers
 BEM 선언에 사용할 사용자 mixin들을 아래와 같이 정의한다.
 ```scss
 // BEM element와 BEM modifier 각각의 기본 separator를 설정한다
-@include config-BEM-separators {
+@include config-BEM-seps {
   "element": "__",
   "modifier": "_"
 }
