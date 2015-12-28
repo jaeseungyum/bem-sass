@@ -68,15 +68,15 @@ BEM 선언에 사용할 사용자 mixin들을 아래와 같이 정의한다.
 ```
 ## Extended Details
 ### Boolean modifier vs Key-value modifier
-BEM modifier의 선언 방식에 따라 boolean modifier와 key-value modifier를 모두 지원한다.
+modifier를 선언하는 방식에 따라 boolean modifier와 key-value modifier를 모두 표현할 수 있다.
 ```scss
 @include block(menu) {
-  // Boolean modifier
+  /* Boolean modifier */
   @include mod(hidden) {
     /*...CSS declarations here...*/
   }
   
-  // Key-value modifier
+  /* key-value modifiers */
   @include mod(theme, morning-forest) {
     /*...CSS declarations here...*/
   }
@@ -88,10 +88,12 @@ BEM modifier의 선언 방식에 따라 boolean modifier와 key-value modifier�
 ```
 이것은 아래와 같이 컴파일된다.
 ```css
+/* Boolean modifier */
 .b-menu_hidden {
   /*...CSS declarations here...*/
 }
 
+/* key-value modifiers */
 .b-menu_theme_morning-forest {
   /*...CSS declarations here...*/
 }
@@ -101,7 +103,36 @@ BEM modifier의 선언 방식에 따라 boolean modifier와 key-value modifier�
 }
 ```
 
-+ ...TODO: element inside modifier
+### Element modifier
+element 또한 block과 같은 방식으로 modifier를 가질 수 있다
+```scss
+@include block(menu) {
+  @include elem(item) {
+    /* Boolean modifier */
+    @include mod(visible) {
+      /*...CSS declarations here...*/
+    }
+    
+    /* key-value modifier */
+    @include mod(type, radio) {
+      /*...CSS declarations here...*/
+    }
+  }
+}
+```
+이것은 아래와 같이 컴파일 된다
+```css
+/* Boolean modifier */
+.b-menu__item_visible {
+  /*...CSS declarations here...*/
+}
+
+/* key-value modifier */
+.b-menu__item_type_radio {
+  /*...CSS declarations here...*/
+}
+```
+
 + ...TODO: 인접선택자
 
 ## Caveats
