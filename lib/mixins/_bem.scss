@@ -5,9 +5,9 @@
 // ==============================
 
 // Config BEM options
-@mixin config-BEM-options($map) {
-  $__BEM-element-sep__: map-get($map, "element-sep") !global;
-  $__BEM-modifier-sep__: map-get($map, "modifier-sep") !global;
+@mixin config-BEM-separators($map) {
+  $__BEM-element-sep__: map-get($map, "element") !global;
+  $__BEM-modifier-sep__: map-get($map, "modifier") !global;
 }
 
 // Generate BEM block selector 
