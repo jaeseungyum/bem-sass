@@ -4,8 +4,8 @@
 //
 // ==============================
 
-// Config BEM options
-@mixin config-BEM-separators($map) {
+// Config BEM separators 
+@mixin config-BEM-seps($map) {
   $__BEM-element-sep__: map-get($map, "element") !global;
   $__BEM-modifier-sep__: map-get($map, "modifier") !global;
 }
