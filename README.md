@@ -48,6 +48,7 @@ BEM 선언에 사용할 사용자 mixin들은 아래와 같이 정의한다.
   @include elem(item) {
     /*...CSS declarations here...*/
   }
+  
   @include mod(horiz) {
     /*...CSS declarations here...*/
   }
@@ -72,6 +73,7 @@ BEM 선언에 사용할 사용자 mixin들은 아래와 같이 정의한다.
 modifier를 선언하는 방식에 따라 boolean modifier와 key-value modifier를 모두 표현할 수 있다. 
 ```scss
 // @see https://en.bem.info/method/naming-convention/#block-modifier
+
 @include block(menu) {
   /* Boolean modifier */
   @include mod(hidden) {
@@ -109,6 +111,7 @@ modifier를 선언하는 방식에 따라 boolean modifier와 key-value modifier
 element 또한 block과 같은 방식으로 modifier를 가질 수 있다.
 ```scss
 // @see https://en.bem.info/method/naming-convention/#element-modifier
+
 @include block(menu) {
   @include elem(item) {
     /* Boolean modifier */
@@ -132,6 +135,34 @@ element 또한 block과 같은 방식으로 modifier를 가질 수 있다.
 
 /* key-value modifier */
 .b-menu__item_type_radio {
+  /*...CSS declarations here...*/
+}
+```
+### Using cascades in BEM
+block에 적용된 mod(theme, state, ...)에 따라 변경되는 element의 형태를 선언하는 방법은 다음과 같다.
+```scss
+@see https://en.bem.info/method/solved-problems/#using-cascades-in-bem
+
+@include block(nav) {
+  @include elem(item) {
+    /*...CSS declarations here...*/
+  }
+  
+  @include mod(theme, islands) {
+    @include elem(item) {
+      /*...CSS declarations here...*/
+      // islands theme에서 item의 상태를 표현한다
+    }
+  }
+}
+```
+이것은 아래와 같이 컴파일 된다
+```css
+.b-nav__item {
+  /*...CSS declarations here...*/
+}
+
+.b-nav_theme_islands .b-nav__item {
   /*...CSS declarations here...*/
 }
 ```
