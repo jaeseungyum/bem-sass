@@ -66,3 +66,4 @@ BEM 선언에 사용할 사용자 mixin들을 아래와 같이 정의한다.
 
 ## See Also
 + https://en.bem.info/
++ https://css-tricks.com/snippets/sass/bem-mixins/
