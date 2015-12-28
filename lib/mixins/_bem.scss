@@ -4,13 +4,31 @@
 //
 // ==============================
 
-
+// Generate BEM block selector 
+// It is recommended to register an alias first to use this mixin
+//
+// @example
+//    @mixin b($name) {
+//      @include make-BEM-block($name, $prefix: "b-") {
+//        @content;
+//      }
+//    }
 @mixin make-BEM-block($name, $prefix: "b-") {
   .#{$prefix}#{$name} {
     @content;
   }
 }
 
+
+// Generate BEM element selector 
+// It is recommended to register an alias first to use this mixin
+//
+// @example
+//    @mixin e($name) {
+//      @include make-BEM-element($name) {
+//        @content;
+//      }
+//    }
 @mixin make-BEM-element($element) {
   @at-root {
     @if is-BEM-mod(&) {
@@ -27,6 +45,16 @@
   }
 }
 
+
+// Generate BEM modifier selector 
+// It is recommended to register an alias first to use this mixin
+//
+// @example
+//    @mixin m($name) {
+//      @include make-BEM-modifier($name) {
+//        @content;
+//      }
+//    }
 @mixin make-BEM-modifier($modifier, $value: null) {
   @at-root {
     @if is-BEM-elem(&) {
