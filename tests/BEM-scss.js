@@ -1,11 +1,11 @@
 var path    = require("path");
 var Sassaby = require("sassaby");
 
-describe("scss-BEM-helpers", function() {
+describe("dist/_BEM-scss.scss", function() {
   var sassaby;
   beforeEach(function() {
     sassaby = new Sassaby(
-      path.resolve("dist/scss-BEM-helpers.scss")
+      path.resolve("dist/_BEM-scss.scss")
     );
   }); 
 
