@@ -8,10 +8,10 @@ describe("BEM functions", function() {
   beforeEach(function() {
     sassabyWithVariables = function(variables) {
       return new Sassaby(
-        path.resolve("lib/functions", "_bem.scss"),
+        path.resolve("src/functions", "_bem.scss"),
         {
           dependencies: [
-            path.resolve("lib/functions", "_str.scss")
+            path.resolve("src/functions", "_str.scss")
           ],
           variables: variables
         }

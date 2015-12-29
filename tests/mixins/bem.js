@@ -6,11 +6,11 @@ describe("BEM mixins", function() {
   var sassaby, mixin;
   beforeEach(function() {
     sassaby = new Sassaby(
-      path.resolve("lib/mixins", "_bem.scss"),
+      path.resolve("src/mixins", "_bem.scss"),
       {
         dependencies: [
-          path.resolve("lib/functions", "_str.scss"),
-          path.resolve("lib/functions", "_bem.scss")
+          path.resolve("src/functions", "_str.scss"),
+          path.resolve("src/functions", "_bem.scss")
         ],
         variables: {
           "__BEM-element-sep__": "__",
