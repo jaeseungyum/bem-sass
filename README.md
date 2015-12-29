@@ -139,31 +139,41 @@ element 또한 block과 같은 방식으로 modifier를 가질 수 있다.
 }
 ```
 ### Using cascades in BEM
-BEM이 specificity 문제에서 벗어나기 위해 고안된 것은 사실이나 CSS 본연의 cascading을 활용하는 경우가 있다. 예를 들면 block에 적용된 mod(theme, state, ...)에 따라 변경되는 element를 표현할 때 cascading이 사용되는데, 이것은 아래 방식으로 선언할 수 있다.
+BEM이 CSS 본연의 cascading을 활용하는 경우가 있다. 예를 들면 block에 적용된 mod(theme, state, ...)에 따라 변경되는 element를 표현할 때 cascading이 사용되는데, 이것은 아래와 방식으로 선언할 수 있다.
 ```scss
 // @see https://en.bem.info/method/solved-problems/#using-cascades-in-bem
 
 @include block(nav) {
+  /*...default nav styles here...*/
+  
   @include elem(item) {
-    /*...CSS declarations here...*/
+    /*...default nav item styles here...*/
   }
   
   @include mod(theme, islands) {
-    // islands theme에서의 item을 표현한다
+    /*...nav theme islands styles here...*/
     @include elem(item) {
-      /*...CSS declarations here...*/
+      /*...nav item in theme islands styles here...*/
     }
   }
 }
 ```
 이것은 아래와 같이 컴파일 된다
 ```css
+.b-nav {
+  /*...default nav styles here...*/
+}
+
 .b-nav__item {
-  /*...CSS declarations here...*/
+  /*...default nav item styles here...*/
+}
+
+.b-nav_theme_islands {
+  /*...nav theme islands styles here...*/
 }
 
 .b-nav_theme_islands .b-nav__item {
-  /*...CSS declarations here...*/
+  /*...nav item in theme islands styles here...*/
 }
 ```
 
