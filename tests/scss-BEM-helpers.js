@@ -5,7 +5,7 @@ describe("scss-BEM-helpers", function() {
   var sassaby;
   beforeEach(function() {
     sassaby = new Sassaby(
-      path.resolve("scss-BEM-helpers.scss")
+      path.resolve("dist/scss-BEM-helpers.scss")
     );
   }); 
 
