@@ -177,7 +177,12 @@ BEM이 CSS 본연의 cascading을 활용하는 경우가 있다. 예를 들면 b
 }
 ```
 
-+ ...TODO: 인접선택자
+### ...TODO: element, modifier의 독립적 선언 방지
+
+### ...TODO: element 중첩의 방지
+https://en.bem.info/faq/#why-does-bem-not-recommend-using-elements-within-elements-block__elem1__elem2
+
+### ...TODO: cascading 시의 인접 형제 선택자의 활용
 
 ## Caveats
 + ...TODO: element, modifier는 block 없이 못쓴다
