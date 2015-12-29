@@ -1,5 +1,5 @@
 # scss-BEM-helpers
-SCSS 작업 시 BEM(Block-Element-Modifier)을 좀 더 효과적으로 적용하기 위해 만들었다. 유사한 도구가 없는 것은 아니지만, 프로젝트에 부작용 없이 BEM 선언용 mixin들을 추가할 수 있도록 하고 Ruby Sass(>=3.4), LibSass(>=3.3)에서 모두 문제 없이 컴파일링 되도록 하기 위해 만든 것.
+SCSS에서 BEM 컨벤션을 좀 더 편리하게 적용하기 위해 만들었다. 프로젝트에 부작용 없이 BEM 선언용 mixin들을 추가할 수 있도록 하고, Ruby Sass(>=3.4), LibSass(>=3.3)에서 모두 문제 없이 컴파일링 되도록 하는 것을 목적으로 했다.
 
 ## Install
 
@@ -7,8 +7,8 @@ SCSS 작업 시 BEM(Block-Element-Modifier)을 좀 더 효과적으로 적용하
 bower install scss-BEM-helpers
 ```
 
-## Basic Usage
-BEM 선언에 사용할 사용자 mixin들을 아래와 같이 정의한다.
+## Configurations
+BEM 선언에 사용할 사용자 mixin들은 아래와 같이 정의한다.
 ```scss
 // BEM element와 BEM modifier 각각의 기본 separator를 설정한다
 @include config-BEM-seps {
@@ -38,6 +38,7 @@ BEM 선언에 사용할 사용자 mixin들을 아래와 같이 정의한다.
   };
 }
 ```
+## Basic Usages
 정의한 mixin들은 scss에서 아래와 같이 활용할 수 있다
 ```scss
 // Menu block
@@ -47,12 +48,13 @@ BEM 선언에 사용할 사용자 mixin들을 아래와 같이 정의한다.
   @include elem(item) {
     /*...CSS declarations here...*/
   }
+  
   @include mod(horiz) {
     /*...CSS declarations here...*/
   }
 }
 ```
-이것은 아래와 같은 css rule들로 컴파일된다
+이것은 아래와 같이 컴파일 된다
 ```css
 .b-menu {
   /*...CSS declarations here...*/
@@ -67,9 +69,120 @@ BEM 선언에 사용할 사용자 mixin들을 아래와 같이 정의한다.
 }
 ```
 ## Extended Details
-+ ...TODO: boolean modifier, key-value modifier
-+ ...TODO: element inside modifier
-+ ...TODO: 인접선택자
+### Boolean modifier & Key-value modifier
+modifier를 선언하는 방식에 따라 boolean modifier와 key-value modifier를 모두 표현할 수 있다. 
+```scss
+// @see https://en.bem.info/method/naming-convention/#block-modifier
+
+@include block(menu) {
+  /* Boolean modifier */
+  @include mod(hidden) {
+    /*...CSS declarations here...*/
+  }
+  
+  /* key-value modifiers */
+  @include mod(theme, morning-forest) {
+    /*...CSS declarations here...*/
+  }
+  
+  @include mod(theme, stormy-sky) {
+    /*...CSS declarations here...*/
+  }
+}
+```
+이것은 아래와 같이 컴파일된다.
+```css
+/* Boolean modifier */
+.b-menu_hidden {
+  /*...CSS declarations here...*/
+}
+
+/* key-value modifiers */
+.b-menu_theme_morning-forest {
+  /*...CSS declarations here...*/
+}
+
+.b-menu_theme_stormy-sky {
+  /*...CSS declarations here...*/
+}
+```
+
+### Element modifier
+element 또한 block과 같은 방식으로 modifier를 가질 수 있다.
+```scss
+// @see https://en.bem.info/method/naming-convention/#element-modifier
+
+@include block(menu) {
+  @include elem(item) {
+    /* Boolean modifier */
+    @include mod(visible) {
+      /*...CSS declarations here...*/
+    }
+    
+    /* key-value modifier */
+    @include mod(type, radio) {
+      /*...CSS declarations here...*/
+    }
+  }
+}
+```
+이것은 아래와 같이 컴파일 된다
+```css
+/* Boolean modifier */
+.b-menu__item_visible {
+  /*...CSS declarations here...*/
+}
+
+/* key-value modifier */
+.b-menu__item_type_radio {
+  /*...CSS declarations here...*/
+}
+```
+### Using cascades in BEM
+BEM이 CSS 본연의 cascading을 활용하는 경우가 있다. 예를 들면 block에 적용된 mod(theme, state, ...)에 따라 변경되는 element를 표현할 때 cascading이 사용되는데, 이것은 아래와 방식으로 선언할 수 있다.
+```scss
+// @see https://en.bem.info/method/solved-problems/#using-cascades-in-bem
+
+@include block(nav) {
+  /*...default nav styles here...*/
+  
+  @include elem(item) {
+    /*...default nav item styles here...*/
+  }
+  
+  @include mod(theme, islands) {
+    /*...nav theme islands styles here...*/
+    @include elem(item) {
+      /*...nav item in theme islands styles here...*/
+    }
+  }
+}
+```
+이것은 아래와 같이 컴파일 된다
+```css
+.b-nav {
+  /*...default nav styles here...*/
+}
+
+.b-nav__item {
+  /*...default nav item styles here...*/
+}
+
+.b-nav_theme_islands {
+  /*...nav theme islands styles here...*/
+}
+
+.b-nav_theme_islands .b-nav__item {
+  /*...nav item in theme islands styles here...*/
+}
+```
+
+### ...TODO: element, modifier의 독립적 선언 방지
+
+### ...TODO: element 중첩의 방지
+https://en.bem.info/faq/#why-does-bem-not-recommend-using-elements-within-elements-block__elem1__elem2
+
+### ...TODO: cascading 시의 인접 형제 선택자의 활용
 
 ## Caveats
 + ...TODO: element, modifier는 block 없이 못쓴다
