@@ -1,10 +1,10 @@
-# scss-BEM-helpers
+# BEM-scss
 SCSS에서 BEM 컨벤션을 좀 더 편리하게 적용하기 위해 만들었다. 프로젝트에 부작용 없이 BEM 선언용 mixin들을 추가할 수 있도록 하고, Ruby Sass(>=3.4), LibSass(>=3.3)에서 모두 문제 없이 컴파일링 되도록 하는 것을 목적으로 했다.
 
 ## Install
 
 ```sh
-bower install scss-BEM-helpers
+bower install BEM-scss
 ```
 
 ## Configurations
