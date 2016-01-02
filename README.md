@@ -222,11 +222,20 @@ Error: element cannot be declared in another element
 ```
 
 ### 일괄 선언의 방지
-이전 버전의 BEM-scss는 컴파일될 css와 비슷한 형태로 아래와 같이 일괄 선언을 할 수 있는 방식을 지원했었다.
+초기 버전의 BEM-scss는 컴파일될 css와 비슷한 형태로 아래와 같이 일괄 선언을 할 수 있는 방식을 지원했었다.
 ```scss
-// WARNING! 더 이상 지원하지 않는다
+// WARNING! 아래 방식은 더 이상 지원하지 않는다
+
 @include block(nav) {
   @include all(elem(item), elem(divider)) {
+    /*...CSS declarations here...*/
+  }
+}
+
+// 또는
+
+@include block(nav) {
+  @include elem(item, divider) {
     /*...CSS declarations here...*/
   }
 }
