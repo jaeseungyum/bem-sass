@@ -6,50 +6,28 @@ SCSS 사용 시, BEM 컨벤션을 좀 더 편리하게 적용하기 위해 만�
 ```sh
 bower install --save-dev BEM-scss
 ```
-
+C
 ## Configurations
-BEM 선언에 사용할 사용자 mixin들은 아래와 같이 정의한다.
 ```scss
-// BEM element와 BEM modifier 각각의 기본 separator를 설정한다
 @include config-BEM-options ((
+  default-prefix: null,
+  block-types: null,
   element-sep: "__",
   modifier-sep: "_"
 ));
-
-// BEM block 정의에 사용할 mixin으로 'block'을 선언한다.
-// 컴파일될 접두사를 'b-'로 정한다. (접두사는 옵션이다)
-@mixin block($name) {
-  @include make-BEM-block($name, $prefix: "b-") {
-    @content;
-  };
-} 
-
-// BEM element 정의에 사용할 mixin으로 'elem'을 선언한다.
-@mixin elem($name) {
-  @include element($name) {
-    @content;
-  };
-}
-
-// BEM modifier 정의에 사용할 mixin으로 'mod'를 선언한다.
-@mixin mod($name) {
-  @include element($name) {
-    @content;
-  };
-}
 ```
 ## Basic Usages
 아래와 같이 BEM 방식으로 작성된 CSS가 있다고 하자.
 ```css
-.b-menu {
+.menu {
   /*...CSS declarations here...*/
 }
 
-.b-menu__item {
+.menu__item {
   /*...CSS declarations here...*/
 }
 
-.b-menu_horiz {
+.menu_horiz {
   /*...CSS declarations here...*/
 }
 ```
@@ -59,11 +37,11 @@ BEM 선언에 사용할 사용자 mixin들은 아래와 같이 정의한다.
 @include block(menu) {
   /*...CSS declarations here...*/
 
-  @include elem(item) {
+  @include element(item) {
     /*...CSS declarations here...*/
   }
   
-  @include mod(horiz) {
+  @include modifier(horiz) {
     /*...CSS declarations here...*/
   }
 }
@@ -76,16 +54,16 @@ modifier를 선언하는 방식에 따라 boolean modifier와 key-value modifier
 
 @include block(menu) {
   /* Boolean modifier */
-  @include mod(hidden) {
+  @include modifier(hidden) {
     /*...CSS declarations here...*/
   }
   
   /* key-value modifiers */
-  @include mod(theme, morning-forest) {
+  @include modifier(theme, morning-forest) {
     /*...CSS declarations here...*/
   }
   
-  @include mod(theme, stormy-sky) {
+  @include modifier(theme, stormy-sky) {
     /*...CSS declarations here...*/
   }
 }
@@ -93,16 +71,16 @@ modifier를 선언하는 방식에 따라 boolean modifier와 key-value modifier
 이것은 아래와 같이 컴파일된다.
 ```css
 /* Boolean modifier */
-.b-menu_hidden {
+.menu_hidden {
   /*...CSS declarations here...*/
 }
 
 /* key-value modifiers */
-.b-menu_theme_morning-forest {
+.menu_theme_morning-forest {
   /*...CSS declarations here...*/
 }
 
-.b-menu_theme_stormy-sky {
+.menu_theme_stormy-sky {
   /*...CSS declarations here...*/
 }
 ```
@@ -113,14 +91,14 @@ element 또한 block과 같은 방식으로 modifier를 가질 수 있다.
 // @see https://en.bem.info/method/naming-convention/#element-modifier
 
 @include block(menu) {
-  @include elem(item) {
+  @include element(item) {
     /* Boolean modifier */
-    @include mod(visible) {
+    @include modifier(visible) {
       /*...CSS declarations here...*/
     }
     
     /* key-value modifier */
-    @include mod(type, radio) {
+    @include modifier(type, radio) {
       /*...CSS declarations here...*/
     }
   }
@@ -129,12 +107,12 @@ element 또한 block과 같은 방식으로 modifier를 가질 수 있다.
 이것은 아래와 같이 컴파일 된다
 ```css
 /* Boolean modifier */
-.b-menu__item_visible {
+.menu__item_visible {
   /*...CSS declarations here...*/
 }
 
 /* key-value modifier */
-.b-menu__item_type_radio {
+.menu__item_type_radio {
   /*...CSS declarations here...*/
 }
 ```
@@ -146,13 +124,13 @@ BEM은 CSS의 명시도(Specificity) 전쟁을 피하기 위해 고안되었지�
 @include block(nav) {
   /*...default nav styles here...*/
   
-  @include elem(item) {
+  @include element(item) {
     /*...default nav item styles here...*/
   }
   
-  @include mod(theme, islands) {
+  @include modifier(theme, islands) {
     /*...nav theme islands styles here...*/
-    @include elem(item) {
+    @include element(item) {
       /*...nav item in theme islands styles here...*/
     }
   }
@@ -160,19 +138,19 @@ BEM은 CSS의 명시도(Specificity) 전쟁을 피하기 위해 고안되었지�
 ```
 이것은 아래와 같이 컴파일 된다
 ```css
-.b-nav {
+.nav {
   /*...default nav styles here...*/
 }
 
-.b-nav__item {
+.nav__item {
   /*...default nav item styles here...*/
 }
 
-.b-nav_theme_islands {
+.nav_theme_islands {
   /*...nav theme islands styles here...*/
 }
 
-.b-nav_theme_islands .b-nav__item {
+.nav_theme_islands .b-nav__item {
   /*...nav item in theme islands styles here...*/
 }
 ```
@@ -189,12 +167,12 @@ element와 modifier는 독립적으로 선언될 수 없다. element는 block �
 }
 
 // @see https://en.bem.info/method/key-concepts/#element
-@include elem(item) {
+@include element(item) {
   /*...CSS declarations here...*/
 }
 
 // @see https://en.bem.info/faq/#how-do-i-make-global-modifiers-for-blocks
-@include mod(theme, islands) {
+@include modifier(theme, islands) {
   /*...CSS declarations here...*/
 }
 ```
@@ -210,8 +188,8 @@ Error: modifier cannot be declared ouside of a block
 ```scss
 // @see https://en.bem.info/faq/#why-does-bem-not-recommend-using-elements-within-elements-block__elem1__elem2
 @include block(nav) {
-  @include elem(item) {
-    @include elem(link) {
+  @include element(item) {
+    @include element(link) {
     }
   }
 }
@@ -227,7 +205,7 @@ Error: element cannot be declared in another element
 // WARNING! 아래 방식은 더 이상 지원하지 않는다
 
 @include block(nav) {
-  @include all(elem(item), elem(divider)) {
+  @include all(element(item), element(divider)) {
     /*...CSS declarations here...*/
   }
 }
@@ -235,7 +213,7 @@ Error: element cannot be declared in another element
 // 또는
 
 @include block(nav) {
-  @include elem(item, divider) {
+  @include element(item, divider) {
     /*...CSS declarations here...*/
   }
 }
@@ -252,11 +230,11 @@ Error: element cannot be declared in another element
     /*...CSS declarations here...*/
   }
   
-  @include elem(item) {
+  @include element(item) {
     @extend %common-styles;
   }
   
-  @include elem(link) {
+  @include element(link) {
     @extend %common-styles;
   }
 }
