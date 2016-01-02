@@ -39,7 +39,7 @@ BEM 선언에 사용할 사용자 mixin들은 아래와 같이 정의한다.
 }
 ```
 ## Basic Usages
-아래와 같이 BEM 방식으로 작성된 CSS에 있다고 하자.
+아래와 같이 BEM 방식으로 작성된 CSS가 있다고 하자.
 ```css
 .b-menu {
   /*...CSS declarations here...*/
