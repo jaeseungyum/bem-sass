@@ -6,15 +6,7 @@ SCSS 사용 시, BEM 컨벤션을 좀 더 편리하게 적용하기 위해 만�
 ```sh
 bower install --save-dev BEM-scss
 ```
-## Configurations
-```scss
-@include config-BEM-options ((
-  default-prefix: null,
-  block-types: null,
-  element-sep: "__",
-  modifier-sep: "_"
-));
-```
+
 ## Basic Usages
 기본적으로 정의된 mixin들(block, element, modifier)을 활용해 아래와 같은 SCSS code를 작성할 수 있다. 
 ```scss
@@ -45,6 +37,30 @@ bower install --save-dev BEM-scss
   /*...the menu block modifier 'horiz' styles here...*/
 }
 ```
+
+## Configurations
+프로젝트에 원하는 방식으로 BEM setting을 변경할 수 있다. 이것은 선택적이며, 변경을 원할 경우 ```config-BEM-options``` mixin을 통해 선언한다. 선언하지 않은 것은 다음과 같은 셈이다.
+
+```scss
+@include config-BEM-options ((
+  default-prefix: null,
+  block-types: null,
+  element-sep: "__",
+  modifier-sep: "_"
+));
+```
+### Configurable Options
+#### ```default-block-prefix```
+block에 기본적으로 사용할 접두사를 설정한다. (e.g "b-", "c-", ...) 기본값은 null이다.
+
+#### ```block-types```
+프로젝트에 사용할 block 타입들을 정의할 수 있다. 이것 여러 block type과 그에 따른 접두사가 필요할 때, 예를 들어 [ITCSS](https://speakerdeck.com/dafed/managing-css-projects-with-itcss) 같은 방법론을 프로젝트에 적용할 때 유용하게 활용할 수 있다. 기본값은 null이다.
+
+#### ```element-sep```
+element separator를 설정한다. 기본값은 "__"이다.
+
+#### ```modifier-sep```
+modifier separator를 설정한다. 기본값은 "_"이다.
 
 ## Extended Details
 ### Boolean modifier & Key-value modifier
