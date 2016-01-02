@@ -1,20 +1,20 @@
 # BEM-scss [![Bower version](https://badge.fury.io/bo/BEM-scss.svg)](https://badge.fury.io/bo/BEM-scss)
-SCSS에서 BEM 컨벤션을 좀 더 편리하게 적용하기 위해 만들었다. 프로젝트에 부작용 없이 BEM 선언용 mixin들을 추가할 수 있도록 하고, Ruby Sass(>=3.4), LibSass(>=3.3)에서 모두 문제 없이 컴파일링 되도록 하는 것을 목적으로 했다.
+SCSS 사용 시, BEM 컨벤션을 좀 더 편리하게 적용하기 위해 만들었다. 프로젝트에 부작용 없이 BEM 선언용 mixin들을 추가할 수 있도록 하고, Ruby Sass(>=3.4), LibSass(>=3.3)에서 모두 문제 없이 컴파일링 되도록 하는 것을 목적으로 했다.
 
 ## Install
 
 ```sh
-bower install BEM-scss
+bower install --save-dev BEM-scss
 ```
 
 ## Configurations
 BEM 선언에 사용할 사용자 mixin들은 아래와 같이 정의한다.
 ```scss
 // BEM element와 BEM modifier 각각의 기본 separator를 설정한다
-@include config-BEM-seps {
+@include config-BEM-seps ((
   "element": "__",
   "modifier": "_"
-}
+));
 
 // BEM block 정의에 사용할 mixin으로 'block'을 선언한다.
 // 컴파일될 접두사를 'b-'로 정한다. (접두사는 옵션이다)
@@ -219,6 +219,47 @@ Error: modifier cannot be declared ouside of a block
 BEM-scss는 위와 같이 중첩 element를 선언할 경우 error를 발생시킨다.
 ```
 Error: element cannot be declared in another element
+```
+
+### 일괄 선언의 방지
+초기 버전의 BEM-scss는 컴파일될 css와 비슷한 형태로 아래와 같이 일괄 선언을 할 수 있는 방식을 지원했었다.
+```scss
+// WARNING! 아래 방식은 더 이상 지원하지 않는다
+
+@include block(nav) {
+  @include all(elem(item), elem(divider)) {
+    /*...CSS declarations here...*/
+  }
+}
+
+// 또는
+
+@include block(nav) {
+  @include elem(item, divider) {
+    /*...CSS declarations here...*/
+  }
+}
+```
+```css
+.b-nav__item, .b-nav__divider {
+  /*...CSS declarations here...*/
+}
+```
+그러나 이 방식은 코드 상에 해당 element나 modifier에 관한 선언들을 여러 곳에 분산시켜 관리 포인트를 늘리는 부작용이 있다. 해당 block, element, 또는 modifier에 관한 코드 블록은 코드 상에 한번인 것이 좋다는 판단에 더 이상 위와 같은 방식을 지원하지 않는다. 이는 SASS의 placeholder를 통해 아래와 같이 해소될 수 있다.
+```scss
+@include block(nav) {
+  %common-styles {
+    /*...CSS declarations here...*/
+  }
+  
+  @include elem(item) {
+    @extend %common-styles;
+  }
+  
+  @include elem(link) {
+    @extend %common-styles;
+  }
+}
 ```
 
 ## See Also
