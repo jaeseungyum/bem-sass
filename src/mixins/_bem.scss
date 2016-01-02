@@ -4,6 +4,9 @@
 //
 // ==============================
 
+$__BEM-element-sep__: "__";
+$__BEM-modifier-sep__: "_";
+
 // Config BEM separators 
 // @param { map } a BEM separator map (e.g (element: "__", modifier: "_"))
 @mixin config-BEM-options($map) {

@@ -62,17 +62,12 @@
 // from given selector list
 // @param { List } the selector list
 // @return { Unquoted String } the BEM block selector
-@function get-BEM-block($selector) {
-
-  @if (is-BEM-mod($selector) or is-BEM-elem($selector)) {
-    @return (
-      slice-off-BEM-block(
-        selector-to-string($selector)
-      )
-    );
-  }
-
-  @return selector-to-string($selector); 
+@function get-BEM-block($selector) { 
+  @return (
+    slice-off-BEM-block(
+      selector-to-string($selector)
+    )
+  );
 }
 
 
@@ -137,13 +132,24 @@
 // from a given selector string
 // @param   { String } the selector as string
 // @return  { Number } index of the separator
-// @TODO 미리 정한 element, modifier 구분자 중 가장 먼저나오는 것을 식별할 수 있어야
 @function sep-start-at($selector-string) {
-  @if (str-index($selector-string, "_")) {
-    @return str-index($selector-string, "_") - 1;
-  }
-  @return null; 
-}
+  $index-element-sep: str-index($selector-string, get-BEM-element-sep());
+  $index-modifier-sep: str-index($selector-string, get-BEM-modifier-sep());
+
+  @if ($index-element-sep and $index-modifier-sep) {
+    @return min($index-element-sep, $index-modifier-sep) - 1;
+  } 
+
+  @if ($index-element-sep) {
+    @return $index-element-sep - 1;
+  } 
+
+  @if ($index-modifier-sep) {
+    @return $index-modifier-sep - 1;
+  } 
+
+  @return -1; 
+} 
 
 
 // Check if a given selector is a BEM modifier or not
