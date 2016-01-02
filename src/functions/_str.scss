@@ -14,6 +14,48 @@
   @return $string;
 }
 
+// Return matched string
+// @author Yum
+// @param { String } $string - string
+// @param { String } $search - searching string
+// @return { String | null } - matched string
+
+@function str-match($string, $search) {
+  @if (str-index($string, $search)) {
+    $start: str-index($string, $search);
+    $end: $start + str-length($search) - 1;
+    $detected: str-slice($string, $start, $end); 
+
+    // and finding the exact matched one
+    @if (
+      //if the next character is equal to search string,
+      str-slice(
+        $string,
+        $end + 1,
+        $end + 1
+      ) == $search
+    ) {
+      @return str-match(str-slice($string, $end + 2), $search);
+    } 
+
+    @if (
+      $detected == $search and
+      // if the previous character is not equal to search string
+      str-slice(
+        $string,
+        str-index($string, $search) - 1,
+        str-index($string, $search) - 1
+      ) != $search
+    ) {
+      @return $detected;
+    } @else {
+      @return str-match(str-slice($string, $end + 1), $search);
+    }
+  } 
+
+  @return null;
+}
+
 @function str-rm-comma($string) {
   @return str-replace($string, ",", "");
 }
@@ -31,3 +73,4 @@
     )
   );
 } 
+

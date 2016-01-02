@@ -149,21 +149,18 @@
 // Check if a given selector is a BEM modifier or not
 // @param  { List } the selector
 // @return { Boolean }
-// @TODO 온전히 modifier 구분자(*_*)를 찾을 방안을 마련해야
 @function is-BEM-mod($selector) {
-  @if (str-index(inspect($selector), "_")) {
+  @if (str-match(inspect($selector), get-BEM-modifier-sep())) {
     @return true;
   }
   @return false;
-}
-
+} 
 
 // Check if a given selector is a BEM element or not
 // @param  { List } the selector
 // @return { Boolean }
-// @TODO 온전히 element 구분자(*_*)를 찾을 방안을 마련해야
 @function is-BEM-elem($selector) {
-  @if (str-index(inspect($selector), "__")) {
+  @if (str-match(inspect($selector), get-BEM-element-sep())) {
     @return true;
   }
   @return false;

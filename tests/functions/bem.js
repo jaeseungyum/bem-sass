@@ -18,7 +18,10 @@ describe("BEM functions", function() {
       );
     };
 
-    sassaby = sassabyWithVariables({});
+    sassaby = sassabyWithVariables({
+      "__BEM-element-sep__": "__",
+      "__BEM-modifier-sep__": "_"
+    });
 
   }); 
 
@@ -88,6 +91,10 @@ describe("BEM functions", function() {
       func.calledWithArgs(
         "unquote('.' + b-block_mod)"
       ).isTrue();
+
+      /*func.calledWithArgs(*/
+      /*"unquote('.' + b-block__elem)"*/
+      /*).isFalse();*/
     });
 
   });
@@ -110,5 +117,5 @@ describe("BEM functions", function() {
         "unquote('.' + b-block__elem)"
       ).isTrue();
     });
-  });
+  }); 
 }); 
