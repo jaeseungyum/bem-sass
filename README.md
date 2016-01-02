@@ -221,6 +221,38 @@ BEM-scss는 위와 같이 중첩 element를 선언할 경우 error를 발생시�
 Error: element cannot be declared in another element
 ```
 
+### 일괄 선언의 방지
+```css
+.b-nav__item, .b-nav__divider {
+  /*...CSS declarations here...*/
+}
+```
+이전 버전의 BEM-scss는 컴파일될 css와 비슷한 형태로 아래와 같이 일괄 선언을 할 수 있는 방식을 지원했었다.
+```scss
+// 더 이상 지원하지 않는다
+@include block(nav) {
+  @include all(elem(item), elem(divider)) {
+    /*...CSS declarations here...*/
+  }
+}
+```
+그러나 이 방식은 코드 상에 해당 element나 modifier에 관한 선언들을 여러 곳에 분산시켜 관리 포인트를 늘리는 부작용이 있다. 해당 block, element, 또는 modifier에 관한 코드 블록은 코드 상에 한번인 것이 좋다는 판단에 더 이상 위와 같은 방식을 지원하지 않는다. 이는 SASS의 placeholder를 통해 아래와 같이 해소될 수 있다.
+```scss
+@include block(nav) {
+  %common-styles {
+    /*...CSS declarations here...*/
+  }
+  
+  @include elem(item) {
+    @extend %common-styles;
+  }
+  
+  @include elem(link) {
+    @extend %common-styles;
+  }
+}
+```
+
 ## See Also
 + https://en.bem.info/
 + https://css-tricks.com/snippets/sass/bem-mixins/
