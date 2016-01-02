@@ -16,21 +16,7 @@ bower install --save-dev BEM-scss
 ));
 ```
 ## Basic Usages
-아래와 같이 BEM 방식으로 작성된 CSS가 있다고 하자.
-```css
-.menu {
-  /*...the 'menu' block styles here...*/
-}
-
-.menu__item {
-  /*...the menu block element 'item' styles here...*/
-}
-
-.menu_horiz {
-  /*...the menu block modifier 'horiz' styles here...*/
-}
-```
-위와 같이 컴파일된 CSS를 얻기 위해 정의한 mixin들을 활용하여 아래와 같은 SCSS를 작성할 수 있다. 
+기본적으로 정의된 mixin들(block, element, modifier)을 활용해 아래와 같은 SCSS code를 작성할 수 있다. 
 ```scss
 // Menu block
 @include block(menu) {
@@ -45,6 +31,21 @@ bower install --save-dev BEM-scss
   }
 }
 ```
+이것은 아래와 같은 css로 컴파일 된다.
+```css
+.menu {
+  /*...the 'menu' block styles here...*/
+}
+
+.menu__item {
+  /*...the menu block element 'item' styles here...*/
+}
+
+.menu_horiz {
+  /*...the menu block modifier 'horiz' styles here...*/
+}
+```
+
 ## Extended Details
 ### Boolean modifier & Key-value modifier
 modifier를 선언하는 방식에 따라 boolean modifier와 key-value modifier를 모두 표현할 수 있다. 
