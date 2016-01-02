@@ -208,7 +208,7 @@ Error: modifier cannot be declared ouside of a block
 ### 중첩 Element 방지
 중첩 element(e.g `block__elem1__elem2`)는 block 구조 변경, 확장의 유연성을 저해하므로 금지된다.
 ```scss
-\\ @see https://en.bem.info/faq/#why-does-bem-not-recommend-using-elements-within-elements-block__elem1__elem2
+// @see https://en.bem.info/faq/#why-does-bem-not-recommend-using-elements-within-elements-block__elem1__elem2
 @include block(nav) {
   @include elem(item) {
     @include elem(link) {
