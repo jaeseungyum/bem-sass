@@ -54,7 +54,7 @@ bower install --save-dev BEM-scss
 block에 기본적으로 사용할 접두사를 설정한다. (e.g "b-", "c-", ...) 기본값은 null이다.
 ```scss
 @include config-BEM-options((
-  default-block-prefix: "b-"
+  default-block-prefix: "b-" // block의 기본 접두사를 "b-"로 한다
 ));
 
 @include block(nav) {
@@ -66,6 +66,7 @@ block에 기본적으로 사용할 접두사를 설정한다. (e.g "b-", "c-", .
 ```
 ```css
 /* compiled CSS */
+
 .b-nav__item {
   /*...styles here...*/
 }
@@ -75,14 +76,15 @@ block에 기본적으로 사용할 접두사를 설정한다. (e.g "b-", "c-", .
 프로젝트에 사용할 block 타입들을 정의할 수 있다. 이것 여러 block type과 그에 따른 접두사가 필요할 때, 예를 들어 [ITCSS](https://speakerdeck.com/dafed/managing-css-projects-with-itcss) 같은 방법론을 프로젝트에 적용할 때 유용하게 활용할 수 있다. 기본값은 null이다.
 
 #### ```element-sep```
-element separator를 설정한다. 기본값은 "__"이다.
+element 구분자를 설정한다. 기본값은 "__"이다.
 
 ```scss
 @include config-BEM-options((
-  element-sep: "-"
+  element-sep: "-" // element 구분자를 "-"로 설정한다
 ));
 
 @include block(nav) {
+  /*...styles here...*/
   @include element(item) {
     /*...styles here...*/
   }
@@ -90,17 +92,21 @@ element separator를 설정한다. 기본값은 "__"이다.
 ```
 ```css
 /* compiled CSS */
+
+.nav {
+  /*...styles here...*/
+}
 .nav-item {
   /*...styles here...*/
 }
 ```
 
 #### ```modifier-sep```
-modifier separator를 설정한다. 기본값은 "_"이다.
+modifier 구분자를 설정한다. 기본값은 "_"이다.
 
 ```scss
 @include config-BEM-options((
-  modifier-sep: "--"
+  modifier-sep: "--" // modifier 구분자를 "--"로 설정한다
 ));
 
 @include block(nav) {
@@ -113,6 +119,7 @@ modifier separator를 설정한다. 기본값은 "_"이다.
 ```
 ```css
 /* compiled CSS */
+
 .nav__item--hidden {
   /*...styles here...*/
 }
