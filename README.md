@@ -178,7 +178,7 @@ BEM은 CSS의 명시도(Specificity) 전쟁을 피하기 위해 고안되었지�
 ```
 
 ### Element, Modifier의 독립적 선언 방지
-element와 modifier는 독립적으로 선언될 수 없다. element는 block 안에 선언되어야하며, modifier 또한 반드시 BEM entity 안에 선언되어야한다.
+element와 modifier는 독립적으로 선언될 수 없다. element는 block 안에 선언되어야 하며, modifier 또한 반드시 block 또는 유효한 element 안에 선언되어야한다.
 ```scss
 @include block(nav) {
   /*...CSS declarations here...*/
@@ -195,13 +195,19 @@ element와 modifier는 독립적으로 선언될 수 없다. element는 block �
 }
 ```
 
-BEM-scss는 block 바깥에서 element나 modifier를 선언할 경우, error를 발생시킨다.
+BEM-scss는 block 바깥에서 element나 modifier를 선언할 경우 error를 발생시킨다.
 ```
 Error: element cannot be declared ouside of a block
 Error: modifier cannot be declared ouside of a block
 ```
 
-### ...TODO: element 중첩의 방지
+### Elements of Elements 방지
+BEM methodology에서는 block만이 중첩 구조를 허용하는 유일한 BEM entity다. 중첩 element(e.g `block__elem1__elem2`)는 block 구조 변경, 확장의 유연성을 저해하므로 금지된다.
+```scss
+```
+BEM-scss는 중첩 element를 선언할 경우 error를 발생시킨다.
+```
+```
 https://en.bem.info/faq/#why-does-bem-not-recommend-using-elements-within-elements-block__elem1__elem2
 
 ### ...TODO: cascading 시의 인접 형제 선택자의 활용
