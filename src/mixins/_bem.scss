@@ -42,6 +42,10 @@
     @error "element cannot be declared ouside of a block"
   }
 
+  @if (is-BEM-elem(&)) {
+    @error "element cannot be declared in another element"
+  }
+
   @at-root {
     #{make-BEM-element-selector($name, is-BEM-mod(&))} {
       @content;
