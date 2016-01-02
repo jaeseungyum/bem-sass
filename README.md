@@ -177,7 +177,24 @@ BEM은 CSS의 명시도(Specificity) 전쟁을 피하기 위해 고안되었지�
 }
 ```
 
-### ...TODO: element, modifier의 독립적 선언 방지
+### Element, Modifier의 독립적 선언 방지
+element와 modifier는 독립적으로 선언될 수 없다. element는 block 안에 선언되어야하며, modifier 또한 반드시 BEM entity 안에 선언되어야한다.
+```scss
+@see https://en.bem.info/method/key-concepts/#element
+include elem(item) {
+  /*...CSS declarations here...*/
+}
+
+@see https://en.bem.info/faq/#how-do-i-make-global-modifiers-for-blocks
+include mod(theme, islands) {
+  /*...CSS declarations here...*/
+}
+```
+BEM-scss는 block 바깥에서 element나 modifier를 선언할 경우, error를 발생시킨다.
+```
+Error: element cannot be declared ouside of a block
+Error: modifier cannot be declared ouside of a block
+```
 
 ### ...TODO: element 중첩의 방지
 https://en.bem.info/faq/#why-does-bem-not-recommend-using-elements-within-elements-block__elem1__elem2
