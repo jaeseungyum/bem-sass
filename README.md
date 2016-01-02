@@ -4,7 +4,7 @@ SCSS 사용 시, BEM 컨벤션을 좀 더 편리하게 적용하기 위해 만�
 ## Install
 
 ```sh
-bower install BEM-scss
+bower install --save-dev BEM-scss
 ```
 
 ## Configurations
