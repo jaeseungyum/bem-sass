@@ -10,14 +10,14 @@ describe("dist/_BEM-scss.scss", function() {
   }); 
 
   it("imports str functions", function() {
-    sassaby.imports("src/functions/str");
+    sassaby.imports("./../src/functions/str");
   }); 
 
   it("imports bem functions", function() {
-    sassaby.imports("src/functions/bem");
+    sassaby.imports("./../src/functions/bem");
   }); 
 
   it("imports bem mixins", function() {
-    sassaby.imports("src/mixins/bem");
+    sassaby.imports("./../src/mixins/bem");
   });
 });

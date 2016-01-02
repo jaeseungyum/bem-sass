@@ -51,6 +51,18 @@ describe("BEM mixins", function() {
       });
     });
 
+    xdescribe("without BEM block", function() {
+      beforeEach(function() {
+        mixin = sassaby.standaloneMixin("make-BEM-element");
+      });
+      it("doesn't make BEM element", function() {
+        mixin.calledWithBlockAndArgs(
+          "@include make-BEM-element(elem2) { content: 'whatever'; }",
+          "elem1"
+        ).doesNotCreateSelector(".elem1__elem2");
+      });
+    });
+
     describe("inside BEM modifier which is inside BEM block", function() {
       it("makes BEM element in the given modifier context", function() { 
         mixin.calledWithBlockAndArgs(
@@ -58,13 +70,7 @@ describe("BEM mixins", function() {
           "block-name"
         ).createsSelector(".b-block-name_mod .b-block-name__elem");
       });
-    });
-
-    describe("ouside BEM block", function() {
-      xit("throws an error", function() {
-      });
     }); 
-
   });
 
 
