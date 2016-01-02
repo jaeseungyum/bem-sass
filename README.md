@@ -26,14 +26,14 @@ BEM 선언에 사용할 사용자 mixin들은 아래와 같이 정의한다.
 
 // BEM element 정의에 사용할 mixin으로 'elem'을 선언한다.
 @mixin elem($name) {
-  @include make-BEM-element($name) {
+  @include element($name) {
     @content;
   };
 }
 
 // BEM modifier 정의에 사용할 mixin으로 'mod'를 선언한다.
 @mixin mod($name) {
-  @include make-BEM-element($name) {
+  @include element($name) {
     @content;
   };
 }

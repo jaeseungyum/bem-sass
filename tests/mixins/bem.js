@@ -40,12 +40,12 @@ describe("BEM mixins", function() {
   }); 
 
 
-  describe("make-BEM-element", function() {
+  describe("element", function() {
 
     describe("inside BEM block", function() {
       it("makes BEM element", function() {
         mixin.calledWithBlockAndArgs(
-          "@include make-BEM-element(elem) { content: 'whatever'; }", 
+          "@include element(elem) { content: 'whatever'; }", 
           "block-name"
         ).createsSelector(".b-block-name__elem");
       });
@@ -53,11 +53,11 @@ describe("BEM mixins", function() {
 
     xdescribe("without BEM block", function() {
       beforeEach(function() {
-        mixin = sassaby.standaloneMixin("make-BEM-element");
+        mixin = sassaby.standaloneMixin("element");
       });
       it("doesn't make BEM element", function() {
         mixin.calledWithBlockAndArgs(
-          "@include make-BEM-element(elem2) { content: 'whatever'; }",
+          "@include element(elem2) { content: 'whatever'; }",
           "elem1"
         ).doesNotCreateSelector(".elem1__elem2");
       });
@@ -66,7 +66,7 @@ describe("BEM mixins", function() {
     describe("inside BEM modifier which is inside BEM block", function() {
       it("makes BEM element in the given modifier context", function() { 
         mixin.calledWithBlockAndArgs(
-          "@include make-BEM-modifier(mod) { @include make-BEM-element(elem) { content: 'whatever'; } }", 
+          "@include modifier(mod) { @include element(elem) { content: 'whatever'; } }", 
           "block-name"
         ).createsSelector(".b-block-name_mod .b-block-name__elem");
       });
@@ -74,12 +74,12 @@ describe("BEM mixins", function() {
   });
 
 
-  describe("make-BEM-modifier", function() {
+  describe("modifier", function() {
 
     describe("inside BEM block", function() {
       it("makes BEM modifier", function() {
         mixin.calledWithBlockAndArgs(
-          "@include make-BEM-modifier(mod) { content: 'whatever'; }", 
+          "@include modifier(mod) { content: 'whatever'; }", 
           "block-name"
         ).createsSelector(".b-block-name_mod");
       });
@@ -88,7 +88,7 @@ describe("BEM mixins", function() {
     describe("inside BEM element which is inside BEM block", function() {
       it("makes BEM modifier of the given element", function() { 
         mixin.calledWithBlockAndArgs(
-          "@include make-BEM-element(elem) { @include make-BEM-modifier(mod) { content: 'whatever'; } }", 
+          "@include element(elem) { @include modifier(mod) { content: 'whatever'; } }", 
           "block-name"
         ).createsSelector(".b-block-name__elem_mod");
       });
@@ -97,7 +97,7 @@ describe("BEM mixins", function() {
     describe("with a single argument", function() {
       it("makes a boolean modifier", function() {
         mixin.calledWithBlockAndArgs(
-          "@include make-BEM-modifier(mod) { content: 'whatever'; }",
+          "@include modifier(mod) { content: 'whatever'; }",
           "block-name"
         ).createsSelector(".b-block-name_mod");
       });
@@ -106,7 +106,7 @@ describe("BEM mixins", function() {
     describe("with 2 arguments", function() {
       it("makes a key-value type modifier", function() {
         mixin.calledWithBlockAndArgs(
-          "@include make-BEM-modifier(mod, value) { content: 'whatever'; }",
+          "@include modifier(mod, value) { content: 'whatever'; }",
           "block-name"
         ).createsSelector(".b-block-name_mod_value");
       });

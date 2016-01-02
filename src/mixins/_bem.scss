@@ -32,11 +32,11 @@
 //
 // @example
 //    @mixin e($name) {
-//      @include make-BEM-element($name) {
+//      @include element($name) {
 //        @content;
 //      }
 //    }
-@mixin make-BEM-element($name) {
+@mixin element($name) {
 
   @if (& == null) {
     @error "element cannot be declared ouside of a block"
@@ -59,11 +59,11 @@
 //
 // @example
 //    @mixin m($name) {
-//      @include make-BEM-modifier($name) {
+//      @include modifier($name) {
 //        @content;
 //      }
 //    }
-@mixin make-BEM-modifier($name, $value: null) {
+@mixin modifier($name, $value: null) {
 
   @if (& == null) {
     @error "modifier cannot be declared ouside of a block"
