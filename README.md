@@ -39,7 +39,21 @@ BEM 선언에 사용할 사용자 mixin들은 아래와 같이 정의한다.
 }
 ```
 ## Basic Usages
-정의한 mixin들은 scss에서 아래와 같이 활용할 수 있다
+아래와 같이 BEM 방식으로 작성된 CSS에 있다고 하자.
+```css
+.b-menu {
+  /*...CSS declarations here...*/
+}
+
+.b-menu__item {
+  /*...CSS declarations here...*/
+}
+
+.b-menu_horiz {
+  /*...CSS declarations here...*/
+}
+```
+위와 같이 컴파일된 CSS를 얻기 위해 정의한 mixin들을 활용하여 아래와 같은 SCSS를 작성할 수 있다. 
 ```scss
 // Menu block
 @include block(menu) {
@@ -52,20 +66,6 @@ BEM 선언에 사용할 사용자 mixin들은 아래와 같이 정의한다.
   @include mod(horiz) {
     /*...CSS declarations here...*/
   }
-}
-```
-이것은 아래와 같이 컴파일 된다
-```css
-.b-menu {
-  /*...CSS declarations here...*/
-}
-
-.b-menu__item {
-  /*...CSS declarations here...*/
-}
-
-.b-menu_horiz {
-  /*...CSS declarations here...*/
 }
 ```
 ## Extended Details
