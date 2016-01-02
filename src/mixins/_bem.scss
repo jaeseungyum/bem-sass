@@ -37,6 +37,11 @@
 //      }
 //    }
 @mixin make-BEM-element($name) {
+
+  @if (& == null) {
+    @error "element cannot be declared ouside of a block"
+  }
+
   @at-root {
     #{make-BEM-element-selector($name, is-BEM-mod(&))} {
       @content;
@@ -55,6 +60,11 @@
 //      }
 //    }
 @mixin make-BEM-modifier($name, $value: null) {
+
+  @if (& == null) {
+    @error "modifier cannot be declared ouside of a block"
+  }
+
   @at-root {
     #{make-BEM-modifier-selector($name, $value, is-BEM-elem(&))} {
       @content;
