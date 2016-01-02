@@ -19,29 +19,29 @@ bower install --save-dev BEM-scss
 아래와 같이 BEM 방식으로 작성된 CSS가 있다고 하자.
 ```css
 .menu {
-  /*...CSS declarations here...*/
+  /*...the 'menu' block styles here...*/
 }
 
 .menu__item {
-  /*...CSS declarations here...*/
+  /*...the menu block element 'item' styles here...*/
 }
 
 .menu_horiz {
-  /*...CSS declarations here...*/
+  /*...the menu block modifier 'horiz' styles here...*/
 }
 ```
 위와 같이 컴파일된 CSS를 얻기 위해 정의한 mixin들을 활용하여 아래와 같은 SCSS를 작성할 수 있다. 
 ```scss
 // Menu block
 @include block(menu) {
-  /*...CSS declarations here...*/
+  /*...the menu block styles are here...*/
 
   @include element(item) {
-    /*...CSS declarations here...*/
+    /*...the menu block element 'item' styles are here...*/
   }
   
   @include modifier(horiz) {
-    /*...CSS declarations here...*/
+    /*...the menu block modifier 'horiz' styles are here...*/
   }
 }
 ```
@@ -52,18 +52,19 @@ modifier를 선언하는 방식에 따라 boolean modifier와 key-value modifier
 // @see https://en.bem.info/method/naming-convention/#block-modifier
 
 @include block(menu) {
+  
   /* Boolean modifier */
   @include modifier(hidden) {
-    /*...CSS declarations here...*/
+    /*...the menu block modifier 'hidden' styles are here...*/
   }
   
   /* key-value modifiers */
   @include modifier(theme, morning-forest) {
-    /*...CSS declarations here...*/
+    /*...the menu block modifier 'theme: morning-forest' styles are here...*/
   }
   
   @include modifier(theme, stormy-sky) {
-    /*...CSS declarations here...*/
+    /*...the menu block modifier 'theme: stormy-sky' styles are here...*/
   }
 }
 ```
@@ -71,16 +72,16 @@ modifier를 선언하는 방식에 따라 boolean modifier와 key-value modifier
 ```css
 /* Boolean modifier */
 .menu_hidden {
-  /*...CSS declarations here...*/
+  /*...the menu block modifier 'hidden' styles are here...*/
 }
 
 /* key-value modifiers */
 .menu_theme_morning-forest {
-  /*...CSS declarations here...*/
+  /*...the menu block modifier 'theme: morning-forest' styles are here...*/
 }
 
 .menu_theme_stormy-sky {
-  /*...CSS declarations here...*/
+  /*...the menu block modifier 'theme: stormy-sky' styles are here...*/
 }
 ```
 
@@ -93,12 +94,12 @@ element 또한 block과 같은 방식으로 modifier를 가질 수 있다.
   @include element(item) {
     /* Boolean modifier */
     @include modifier(visible) {
-      /*...CSS declarations here...*/
+      /*...the element item modifier 'visible' styles are here...*/
     }
     
     /* key-value modifier */
     @include modifier(type, radio) {
-      /*...CSS declarations here...*/
+      /*...the element item modifier 'type: radio' styles are here...*/
     }
   }
 }
@@ -107,12 +108,12 @@ element 또한 block과 같은 방식으로 modifier를 가질 수 있다.
 ```css
 /* Boolean modifier */
 .menu__item_visible {
-  /*...CSS declarations here...*/
+  /*...the element item modifier 'visible' styles are here...*/
 }
 
 /* key-value modifier */
 .menu__item_type_radio {
-  /*...CSS declarations here...*/
+  /*...the element item modifier 'type: radio' styles are here...*/
 }
 ```
 ### Using cascades in BEM
@@ -121,16 +122,16 @@ BEM은 CSS의 명시도(Specificity) 전쟁을 피하기 위해 고안되었지�
 // @see https://en.bem.info/method/solved-problems/#using-cascades-in-bem
 
 @include block(nav) {
-  /*...default nav styles here...*/
+  /*...default 'nav' block styles are here...*/
   
   @include element(item) {
-    /*...default nav item styles here...*/
+    /*...default nav block element 'item' styles are here...*/
   }
   
   @include modifier(theme, islands) {
-    /*...nav theme islands styles here...*/
+    /*...nav block modifier 'theme:islands' styles are here...*/
     @include element(item) {
-      /*...nav item in theme islands styles here...*/
+      /*...nav block element 'item' in 'theme:islands' styles are here...*/
     }
   }
 }
@@ -138,19 +139,19 @@ BEM은 CSS의 명시도(Specificity) 전쟁을 피하기 위해 고안되었지�
 이것은 아래와 같이 컴파일 된다
 ```css
 .nav {
-  /*...default nav styles here...*/
+  /*...default 'nav' block styles are here...*/
 }
 
 .nav__item {
-  /*...default nav item styles here...*/
+  /*...default nav block element 'item' styles are here...*/
 }
 
 .nav_theme_islands {
-  /*...nav theme islands styles here...*/
+  /*...nav block modifier 'theme:islands' styles are here...*/
 }
 
 .nav_theme_islands .b-nav__item {
-  /*...nav item in theme islands styles here...*/
+  /*...nav block element 'item' in 'theme:islands' styles are here...*/
 }
 ```
 
