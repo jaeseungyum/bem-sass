@@ -75,11 +75,11 @@ describe("BEM functions", function() {
   }); 
 
 
-  describe("is-BEM-mod", function() {
+  describe("is-BEM-modifier", function() {
 
     var func;
     beforeEach(function() {
-      func = sassaby.func("is-BEM-mod");
+      func = sassaby.func("is-BEM-modifier");
     });
 
     it("tests whether a given selector is a BEM modifier or not", function() {
@@ -100,11 +100,11 @@ describe("BEM functions", function() {
   });
 
 
-  describe("is-BEM-elem", function() {
+  describe("is-BEM-element", function() {
 
     var func;
     beforeEach(function() {
-      func = sassaby.func("is-BEM-elem");
+      func = sassaby.func("is-BEM-element");
     });
 
     it("tests whether a given selector is a BEM element or not", function() {

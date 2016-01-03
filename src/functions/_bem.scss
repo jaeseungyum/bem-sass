@@ -4,9 +4,21 @@
 //
 // ============================== 
 
+// Construct BEM block selector string
+//
+// @param  { String } name of the block 
+// @param  { String } type of the block 
+// @return { String } the constructed BEM block selector string
+@function make-BEM-block-selector($name, $type) {
+  @return (
+    "." + get-BEM-block-prefix-by-type($type) + $name
+  );
+}
+
 // Construct BEM element selector string
-// @param { String } the element name
-// @param { Boolean } called in a modifier context? 
+//
+// @param  { String } the element name
+// @param  { Boolean } called in a modifier context? 
 // @return { String } the constructed BEM element selector string
 @function make-BEM-element-selector($name, $in-BEM-modifier: false) {
 
@@ -95,7 +107,10 @@
 // Get default BEM block prefix
 // @return { String } the default BEM block prefix
 @function get-BEM-block-prefix-default() {
-  @return unquote($__BEM-block-prefix-default__);
+  @if (type-of($__BEM-block-prefix-default__) == "string") {
+    @return unquote($__BEM-block-prefix-default__);
+  }
+  @return $__BEM-block-prefix-default__;
 }
 
 
@@ -183,7 +198,7 @@
 // Check if a given selector is a BEM modifier or not
 // @param  { List } the selector
 // @return { Boolean }
-@function is-BEM-mod($selector) {
+@function is-BEM-modifier($selector) {
   @if (str-match(inspect($selector), get-BEM-modifier-sep())) {
     @return true;
   }
@@ -193,7 +208,7 @@
 // Check if a given selector is a BEM element or not
 // @param  { List } the selector
 // @return { Boolean }
-@function is-BEM-elem($selector) {
+@function is-BEM-element($selector) {
   @if (str-match(inspect($selector), get-BEM-element-sep())) {
     @return true;
   }

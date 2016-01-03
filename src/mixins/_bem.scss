@@ -5,9 +5,9 @@
 // ============================== 
 
 // Set BEM configurations 
+//
 // @param { map } a BEM separator map (e.g (element: "__", modifier: "_"))
-@mixin configure-BEM($map:null) {
-
+@mixin configure-BEM($map:null) { 
   $defaults: (
     block-prefix-default: "",
     block-types: (),
@@ -25,49 +25,41 @@
   $__BEM-modifier-sep__: map-get($defaults, "modifier-sep") !global;
 }
 
+
 // Generate BEM block selector 
-// It is recommended to register an alias first to use this mixin
 //
+// @param { String } name of the block
+// @param { String } type of the block
+// @author Yum<ym.jsng@gmail.com>
 // @example
-//    @mixin b($name) {
-//      @include make-BEM-block($name, $prefix: "b-") {
-//        @content;
-//      }
-//    }
-@mixin make-BEM-block($name, $prefix: "b-") {
-  .#{$prefix}#{$name} {
+//  @include block(promo) {
+//    ...styles here...
+//  }
+//  @include block(media, "object") {
+//    ...styles here...
+//  }
+@mixin block($name, $type:null) {
+  #{make-BEM-block-selector($name, $type)} {
     @content;
   }
-}
-
-@mixin block($name, $type:null) {
-  .#{get-BEM-block-prefix-by-type($type)}#{$name} {
-    @content;
-  } 
 }
 
 
 // Generate BEM element selector 
-// It is recommended to register an alias first to use this mixin
 //
-// @example
-//    @mixin e($name) {
-//      @include element($name) {
-//        @content;
-//      }
-//    }
-@mixin element($name) {
-
+// @param { String } name of the element
+// @author Yum<ym.jsng@gmail.com>
+@mixin element($name) { 
   @if (& == null) {
     @error "element cannot be declared ouside of a block"
   }
 
-  @if (is-BEM-elem(&)) {
+  @if (is-BEM-element(&)) {
     @error "element cannot be declared in another element"
   }
 
   @at-root {
-    #{make-BEM-element-selector($name, is-BEM-mod(&))} {
+    #{make-BEM-element-selector($name, is-BEM-modifier(&))} {
       @content;
     }
   }
@@ -75,22 +67,16 @@
 
 
 // Generate BEM modifier selector 
-// It is recommended to register an alias first to use this mixin
 //
-// @example
-//    @mixin m($name) {
-//      @include modifier($name) {
-//        @content;
-//      }
-//    }
-@mixin modifier($name, $value: null) {
-
+// @param { String } name of the modifier 
+// @author Yum<ym.jsng@gmail.com>
+@mixin modifier($name, $value: null) { 
   @if (& == null) {
     @error "modifier cannot be declared ouside of a block"
   }
 
   @at-root {
-    #{make-BEM-modifier-selector($name, $value, is-BEM-elem(&))} {
+    #{make-BEM-modifier-selector($name, $value, is-BEM-element(&))} {
       @content;
     }
   }
