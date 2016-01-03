@@ -7,13 +7,13 @@ SCSS 사용 시, BEM 컨벤션을 좀 더 편리하게 적용하기 위해 만�
 bower install --save-dev BEM-scss
 ```
 
-## Basic Usages
 BEM-scss를 프로젝트 SCSS에 불러온 후, 최 상단에 configure-BEM을 설정한다.
 ```scss
 @import "dist/BEM-scss";
 @include configure-BEM;
 ```
 
+## Basic Usages
 BEM-scss가 지원하는 기본들을 활용해 아래와 같은 SCSS code를 작성할 수 있다. 
 ```scss
 // Menu block
