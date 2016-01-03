@@ -1,2 +1,3 @@
 test:
-	./.test.sh
+	mocha ./tests/**.js
+	mocha ./tests/**/**.js
