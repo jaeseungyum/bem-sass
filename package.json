@@ -1,13 +1,14 @@
 {
-  "name": "BEM-scss",
+  "name": "bem-scss",
   "version": "0.0.3",
+  "author": "Yum<ym.jsng@gmail.com>",
   "description": "BEM helpers for scss",
-  "main": "index.js",
+  "main": "dist/_BEM-scss",
   "directories": {
     "test": "tests"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "make test" 
   },
   "repository": {
     "type": "git",
@@ -22,5 +23,10 @@
   "devDependencies": {
     "expect.js": "^0.3.1",
     "sassaby": "~2.1.1"
-  }
+  },
+  "files": [
+    "dist/",
+    "src/",
+    "README.md"
+  ]
 }
