@@ -2,16 +2,21 @@
 // 
 //         Mixins - BEM
 //
-// ==============================
-
-$__BEM-element-sep__: "__";
-$__BEM-modifier-sep__: "_";
+// ============================== 
 
 // Config BEM separators 
 // @param { map } a BEM separator map (e.g (element: "__", modifier: "_"))
 @mixin config-BEM-options($map) {
-  $__BEM-element-sep__: map-get($map, "element-sep") !global;
-  $__BEM-modifier-sep__: map-get($map, "modifier-sep") !global;
+
+  $defaults: (
+    element-sep: "__",
+    modifier-sep: "_"
+  );
+
+  $defaults: map-merge($defaults, $map);
+
+  $__BEM-element-sep__: map-get($defaults, "element-sep") !global;
+  $__BEM-modifier-sep__: map-get($defaults, "modifier-sep") !global;
 }
 
 // Generate BEM block selector 

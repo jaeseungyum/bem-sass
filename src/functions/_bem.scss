@@ -30,7 +30,7 @@
 
   @if ($value) {
     @return (
-      add-BEM-modifier-value(
+      attach-value-to-BEM-modifier(
         make-BEM-modifier-selector($name), 
         $value
       )
@@ -52,7 +52,7 @@
 // @param { String } the modifier name
 // @param { String } the value 
 // @return { String } a value attached BEM modifier
-@function add-BEM-modifier-value($BEM-modifier-selector-string, $value) {
+@function attach-value-to-BEM-modifier($BEM-modifier-selector-string, $value) {
   @return ( 
     $BEM-modifier-selector-string + get-BEM-modifier-sep() + $value
   );
