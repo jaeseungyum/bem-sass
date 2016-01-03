@@ -45,7 +45,7 @@ BEM-scss가 지원하는 기본들을 활용해 아래와 같은 SCSS code를 �
 ```
 
 ## Configurations
-프로젝트에 원하는 방식으로 BEM setting을 변경할 수 있다. 이것은 선택적이며, 변경을 원할 경우 ```configure-BEM``` mixin을 통해 선언할 수 있다. 선언하지 않은 것은 다음과 같은 셈이다.
+프로젝트에 원하는 방식으로 BEM setting을 변경할 수 있다. 이것은 선택적이며, 변경을 원할 경우 ```configure-BEM``` mixin을 통해 선언할 수 있다. 선언하지 않은 것은 결국 다음과 같은 셈이다.
 
 ```scss
 @include configure-BEM ((
@@ -55,6 +55,7 @@ BEM-scss가 지원하는 기본들을 활용해 아래와 같은 SCSS code를 �
   modifier-sep: "_"
 ));
 ```
+
 #### ```block-prefix-default```
 block에 기본적으로 사용할 접두사를 설정한다. (e.g "b-", "c-", ...) 기본값은 ""이다.
 ```scss
@@ -62,8 +63,10 @@ block에 기본적으로 사용할 접두사를 설정한다. (e.g "b-", "c-", .
   default-block-prefix: "b-" // block의 기본 접두사를 "b-"로 한다
 ));
 
-@include block(nav) {
+/* Menu block */
+@include block(menu) {
   /*...styles here...*/
+  
   @include element(item) {
     /*...styles here...*/
   }
@@ -72,18 +75,24 @@ block에 기본적으로 사용할 접두사를 설정한다. (e.g "b-", "c-", .
 ```css
 /* compiled CSS */
 
-.b-nav__item {
+/* Menu block */
+.b-menu {
+  /*...styles here...*/
+}
+
+.b-menu__item {
   /*...styles here...*/
 }
 ```
 
 #### ```block-types```
-프로젝트에 사용할 block 타입들을 정의할 수 있다. 이것 여러 block type과 그에 따른 접두사가 필요할 때, 예를 들어 [ITCSS](https://speakerdeck.com/dafed/managing-css-projects-with-itcss) 같은 방법론을 프로젝트에 적용할 때 유용하게 활용할 수 있다. 기본값은 빈 list다.
+프로젝트에 사용할 block 타입들을 정의할 수 있다. 이것 여러 block type들과 그에 따른 접두사가 필요할 때, 예를 들어 [ITCSS](https://speakerdeck.com/dafed/managing-css-projects-with-itcss) 같은 방법론을 프로젝트에 적용할 때 유용하게 활용할 수 있다. 기본값은 빈 map이다.
 ```scss
 @include config-BEM-options((
   block-types: (
     object:    "o-",  // object block의 접두사로 o-를 사용한다
     component: "c-"   // component block의 접두사로 c-를 사용한다
+    utility:   "u-"   // utility block의 접두사로 u-를 사용한다
   )
 ));
 
@@ -96,13 +105,18 @@ block에 기본적으로 사용할 접두사를 설정한다. (e.g "b-", "c-", .
   }
 }
 
-/* Nav component */
-@include block(nav, "component") {
+/* Menu component */
+@include block(menu, "component") {
   /*...styles here...*/
 
   @include element(item) {
     /*...styles here...*/
   }
+}
+
+/* Clearfix utility */
+@include block(clearfix, "utility") {
+  /*...styles here...*/
 }
 ```
 ```css
@@ -116,11 +130,16 @@ block에 기본적으로 사용할 접두사를 설정한다. (e.g "b-", "c-", .
   /*...styles here...*/
 }
 
-/* Nav component */
-.c-nav {
+/* Menu component */
+.c-menu {
   /*...styles here...*/
 }
-.c-nav__item {
+.c-menu__item {
+  /*...styles here...*/
+}
+
+/* Clearfix utility */
+.u-clearfix {
   /*...styles here...*/
 }
 ```
