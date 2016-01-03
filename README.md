@@ -59,7 +59,7 @@ BEM-scss가 지원하는 기본들을 활용해 아래와 같은 SCSS code를 �
 #### ```block-prefix-default```
 block에 기본적으로 사용할 접두사를 설정한다. (e.g "b-", "c-", ...) 기본값은 ""이다.
 ```scss
-@include config-BEM-options((
+@include configure-BEM((
   default-block-prefix: "b-" // block의 기본 접두사를 "b-"로 한다
 ));
 
@@ -88,7 +88,7 @@ block에 기본적으로 사용할 접두사를 설정한다. (e.g "b-", "c-", .
 #### ```block-types```
 프로젝트에 사용할 block 타입들을 정의할 수 있다. 이것 여러 block type들과 그에 따른 접두사가 필요할 때, 예를 들어 [ITCSS](https://speakerdeck.com/dafed/managing-css-projects-with-itcss) 같은 방법론을 프로젝트에 적용할 때 유용하게 활용할 수 있다. 기본값은 빈 map이다.
 ```scss
-@include config-BEM-options((
+@include configure-BEM((
   block-types: (
     object:    "o-",  // object block의 접두사로 o-를 사용한다
     component: "c-"   // component block의 접두사로 c-를 사용한다
@@ -148,12 +148,13 @@ block에 기본적으로 사용할 접두사를 설정한다. (e.g "b-", "c-", .
 BEM element와 BEM modifier의 구분자를 설정한다. 기본값은 각각 "__"과 "_"이다.
 
 ```scss
-@include config-BEM-options((
+@include configure-BEM((
   // separator를 medium.com 스타일로 설정한다
   element-sep: "-",
   modifier-sep: "--"
 ));
 
+/* Promo block */
 @include block(promo) {
   /*...styles here...*/
   
@@ -169,6 +170,7 @@ BEM element와 BEM modifier의 구분자를 설정한다. 기본값은 각각 "_
 ```css
 /* compiled CSS */
 
+/* Promo block */
 .promo {
   /*...styles here...*/
 }
@@ -252,10 +254,12 @@ element 또한 block과 같은 방식으로 modifier를 가질 수 있다.
 }
 ```
 ### Using cascades in BEM
-BEM은 CSS의 명시도(Specificity) 전쟁을 피하기 위해 고안되었지만, 제한적으로 CSS 본연의 cascading을 활용하는 경우가 있다. 예를 들어 block의 modifier(theme, state, ...)에 따라 변경되는 element를 표현할 때 cascading이 사용되는데, 이것은 아래와 방식으로 선언할 수 있다.
+BEM은 CSS의 명시도(Specificity) 이슈를 피하기 위해 만들어졌지만, 제한적으로 CSS 본연의 cascading을 활용하는 경우가 있다. 예를 들어 block의 modifier(theme, state, ...)에 따라 변경되는 element를 표현할 때 cascading이 사용되는데, 이것은 아래와 방식으로 선언할 수 있다.
+
 ```scss
 // @see https://en.bem.info/method/solved-problems/#using-cascades-in-bem
 
+/* Nav block */
 @include block(nav) {
   /*...default 'nav' block styles are here...*/
   
@@ -273,6 +277,7 @@ BEM은 CSS의 명시도(Specificity) 전쟁을 피하기 위해 고안되었지�
 ```
 이것은 아래와 같이 컴파일 된다
 ```css
+/* Nav block */
 .nav {
   /*...default 'nav' block styles are here...*/
 }
@@ -378,3 +383,5 @@ Error: element cannot be declared in another element
 ## See Also
 + https://en.bem.info/
 + https://css-tricks.com/snippets/sass/bem-mixins/
++ http://csswizardry.com/2013/01/mindbemding-getting-your-head-round-bem-syntax/
++ https://speakerdeck.com/dafed/managing-css-projects-with-itcss
