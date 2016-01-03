@@ -1,5 +1,5 @@
 # BEM-scss [![Bower version](https://badge.fury.io/bo/BEM-scss.svg)](https://badge.fury.io/bo/BEM-scss)
-SCSS 사용 시, BEM 컨벤션을 좀 더 편리하게 적용하기 위해 만들었다. 프로젝트에 부작용 없이 BEM 선언용 mixin들을 추가할 수 있도록 하고, Ruby Sass(>=3.4), LibSass(>=3.3)에서 모두 문제 없이 컴파일링 되도록 하는 것을 목적으로 했다.
+SCSS 사용 시, BEM 컨벤션을 좀 더 편리하게 적용하기 위해 만들었다. 프로젝트에 부작용 없이 BEM block type을 추가할 수 있도록 하고, Ruby Sass(>=3.4), LibSass(>=3.3) 양측에서 모두 문제 없이 컴파일링 되도록 하는 것을 목적으로 했다.
 
 ## Install
 
@@ -8,7 +8,13 @@ bower install --save-dev BEM-scss
 ```
 
 ## Basic Usages
-기본적으로 정의된 mixin들(block, element, modifier)을 활용해 아래와 같은 SCSS code를 작성할 수 있다. 
+BEM-scss를 프로젝트 SCSS에 불러온 후, 최 상단에 configure-BEM을 설정한다.
+```scss
+@import "dist/BEM-scss";
+@include configure-BEM;
+```
+
+BEM-scss가 지원하는 기본들을 활용해 아래와 같은 SCSS code를 작성할 수 있다. 
 ```scss
 // Menu block
 @include block(menu) {
@@ -39,19 +45,18 @@ bower install --save-dev BEM-scss
 ```
 
 ## Configurations
-프로젝트에 원하는 방식으로 BEM setting을 변경할 수 있다. 이것은 선택적이며, 변경을 원할 경우 ```config-BEM-options``` mixin을 통해 선언한다. 선언하지 않은 것은 다음과 같은 셈이다.
+프로젝트에 원하는 방식으로 BEM setting을 변경할 수 있다. 이것은 선택적이며, 변경을 원할 경우 ```configure-BEM``` mixin을 통해 선언할 수 있다. 선언하지 않은 것은 다음과 같은 셈이다.
 
 ```scss
-@include config-BEM-options ((
-  default-block-prefix: null,
-  block-types: null,
+@include configure-BEM ((
+  block-prefix-default: "",
+  block-types: (),
   element-sep: "__",
   modifier-sep: "_"
 ));
 ```
-### Configurable Options
-#### ```default-block-prefix```
-block에 기본적으로 사용할 접두사를 설정한다. (e.g "b-", "c-", ...) 기본값은 null이다.
+#### ```block-prefix-default```
+block에 기본적으로 사용할 접두사를 설정한다. (e.g "b-", "c-", ...) 기본값은 ""이다.
 ```scss
 @include config-BEM-options((
   default-block-prefix: "b-" // block의 기본 접두사를 "b-"로 한다
@@ -73,18 +78,28 @@ block에 기본적으로 사용할 접두사를 설정한다. (e.g "b-", "c-", .
 ```
 
 #### ```block-types```
-프로젝트에 사용할 block 타입들을 정의할 수 있다. 이것 여러 block type과 그에 따른 접두사가 필요할 때, 예를 들어 [ITCSS](https://speakerdeck.com/dafed/managing-css-projects-with-itcss) 같은 방법론을 프로젝트에 적용할 때 유용하게 활용할 수 있다. 기본값은 null이다.
-
-#### ```element-sep```
-element 구분자를 설정한다. 기본값은 "__"이다.
-
+프로젝트에 사용할 block 타입들을 정의할 수 있다. 이것 여러 block type과 그에 따른 접두사가 필요할 때, 예를 들어 [ITCSS](https://speakerdeck.com/dafed/managing-css-projects-with-itcss) 같은 방법론을 프로젝트에 적용할 때 유용하게 활용할 수 있다. 기본값은 빈 list다.
 ```scss
 @include config-BEM-options((
-  element-sep: "-" // element 구분자를 "-"로 설정한다
+  block-types: (
+    object:    "o-",  // object block의 접두사로 o-를 사용한다
+    component: "c-"   // component block의 접두사로 c-를 사용한다
+  )
 ));
 
-@include block(nav) {
+/* Media object */
+@include block(media, "object") {
   /*...styles here...*/
+
+  @include element(body) {
+    /*...styles here...*/
+  }
+}
+
+/* Nav component */
+@include block(nav, "component") {
+  /*...styles here...*/
+
   @include element(item) {
     /*...styles here...*/
   }
@@ -93,34 +108,55 @@ element 구분자를 설정한다. 기본값은 "__"이다.
 ```css
 /* compiled CSS */
 
-.nav {
+/* Media object */
+.o-media {
   /*...styles here...*/
 }
-.nav-item {
+.o-media__body {
+  /*...styles here...*/
+}
+
+/* Nav component */
+.c-nav {
+  /*...styles here...*/
+}
+.c-nav__item {
   /*...styles here...*/
 }
 ```
 
-#### ```modifier-sep```
-modifier 구분자를 설정한다. 기본값은 "_"이다.
+#### ```element-sep```, ```modifier-sep```
+BEM element와 BEM modifier의 구분자를 설정한다. 기본값은 각각 "__"과 "_"이다.
 
 ```scss
 @include config-BEM-options((
-  modifier-sep: "--" // modifier 구분자를 "--"로 설정한다
+  // separator를 medium.com 스타일로 설정한다
+  element-sep: "-",
+  modifier-sep: "--"
 ));
 
-@include block(nav) {
-  @include element(item) {
-    @include modifier(hidden) {
-      /*...styles here...*/
-    }
+@include block(promo) {
+  /*...styles here...*/
+  
+  @include element(title) {
+    /*...styles here...*/
+  }
+  
+  @include modifier(hero) {
+    /*...styles here...*/
   }
 }
 ```
 ```css
 /* compiled CSS */
 
-.nav__item--hidden {
+.promo {
+  /*...styles here...*/
+}
+.promo-title {
+  /*...styles here...*/
+}
+.promo--hero {
   /*...styles here...*/
 }
 ```
