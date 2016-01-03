@@ -1,11 +1,9 @@
-# BEM-scss [![Bower version](https://badge.fury.io/bo/BEM-scss.svg)](https://badge.fury.io/bo/BEM-scss) [![npm version](https://badge.fury.io/js/bem-scss.svg)](https://badge.fury.io/js/bem-scss)
+# BEM-scss ![Bower version](https://img.shields.io/bower/v/BEM-scss.svg) [![npm version](https://img.shields.io/npm/v/bem-scss.svg)](https://www.npmjs.com/package/bem-scss)
 SCSS 사용 시, BEM 컨벤션을 좀 더 편리하게 적용하기 위해 만들었다. 프로젝트에 부작용 없이 BEM block type을 추가할 수 있도록 하고, Ruby Sass(>=3.4), LibSass(>=3.3) 양측에서 모두 문제 없이 컴파일링 되도록 하는 것을 목적으로 했다.
 
-## Install
-
-```sh
-bower install --save-dev BEM-scss
-```
+## Quick Start
++ Install with [Bower](http://bower.io): ```bower install --save-dev BEM-scss```
++ Install with [npm](https://www.npmjs.com): ```npm install -save-dev bem-scss```
 
 BEM-scss를 프로젝트 SCSS에 불러온 후, 최 상단에 configure-BEM을 설정한다.
 ```scss
