@@ -4,17 +4,23 @@
 //
 // ============================== 
 
-// Config BEM separators 
+// Set BEM configurations 
 // @param { map } a BEM separator map (e.g (element: "__", modifier: "_"))
-@mixin config-BEM-options($map) {
+@mixin configure-BEM($map:null) {
 
   $defaults: (
+    block-prefix-default: "",
+    block-types: (),
     element-sep: "__",
     modifier-sep: "_"
   );
 
-  $defaults: map-merge($defaults, $map);
+  @if ($map) {
+    $defaults: map-merge($defaults, $map);
+  } 
 
+  $__BEM-block-prefix-default__: map-get($defaults, "block-prefix-default") !global;
+  $__BEM-block-types__: map-get($defaults, "block-types") !global;
   $__BEM-element-sep__: map-get($defaults, "element-sep") !global;
   $__BEM-modifier-sep__: map-get($defaults, "modifier-sep") !global;
 }
@@ -32,6 +38,12 @@
   .#{$prefix}#{$name} {
     @content;
   }
+}
+
+@mixin block($name, $type:null) {
+  .#{get-BEM-block-prefix-by-type($type)}#{$name} {
+    @content;
+  } 
 }
 
 

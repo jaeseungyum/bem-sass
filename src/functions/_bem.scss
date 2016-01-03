@@ -48,6 +48,7 @@
   );
 } 
 
+
 // Add a value string to given BEM modifier selector string
 // @param { String } the modifier name
 // @param { String } the value 
@@ -57,6 +58,7 @@
     $BEM-modifier-selector-string + get-BEM-modifier-sep() + $value
   );
 }
+
 
 // Get BEM block selector(e.g "b-block") 
 // from given selector list
@@ -68,6 +70,32 @@
       selector-to-string($selector)
     )
   );
+} 
+
+
+// Get BEM block prefix by given type
+// @param { String } the type of the block
+// @return { String } the prefix of the block type
+@function get-BEM-block-prefix-by-type($type) {
+
+  @if ($type == null) {
+    @return get-BEM-block-prefix-default();
+  }
+
+  $prefix: map-get($__BEM-block-types__, $type);
+
+  @if ($prefix == null) {
+    @error "block type: '#{$type}' has not been declared";
+  }
+
+  @return unquote(map-get($__BEM-block-types__, $type));
+}
+
+
+// Get default BEM block prefix
+// @return { String } the default BEM block prefix
+@function get-BEM-block-prefix-default() {
+  @return unquote($__BEM-block-prefix-default__);
 }
 
 
