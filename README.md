@@ -59,7 +59,7 @@ BEM-scss가 지원하는 기본들을 활용해 아래와 같은 SCSS code를 �
 #### ```block-prefix-default```
 block에 기본적으로 사용할 접두사를 설정한다. (e.g "b-", "c-", ...) 기본값은 ""이다.
 ```scss
-@include config-BEM-options((
+@include configure-BEM((
   default-block-prefix: "b-" // block의 기본 접두사를 "b-"로 한다
 ));
 
@@ -88,7 +88,7 @@ block에 기본적으로 사용할 접두사를 설정한다. (e.g "b-", "c-", .
 #### ```block-types```
 프로젝트에 사용할 block 타입들을 정의할 수 있다. 이것 여러 block type들과 그에 따른 접두사가 필요할 때, 예를 들어 [ITCSS](https://speakerdeck.com/dafed/managing-css-projects-with-itcss) 같은 방법론을 프로젝트에 적용할 때 유용하게 활용할 수 있다. 기본값은 빈 map이다.
 ```scss
-@include config-BEM-options((
+@include configure-BEM((
   block-types: (
     object:    "o-",  // object block의 접두사로 o-를 사용한다
     component: "c-"   // component block의 접두사로 c-를 사용한다
@@ -148,7 +148,7 @@ block에 기본적으로 사용할 접두사를 설정한다. (e.g "b-", "c-", .
 BEM element와 BEM modifier의 구분자를 설정한다. 기본값은 각각 "__"과 "_"이다.
 
 ```scss
-@include config-BEM-options((
+@include configure-BEM((
   // separator를 medium.com 스타일로 설정한다
   element-sep: "-",
   modifier-sep: "--"
