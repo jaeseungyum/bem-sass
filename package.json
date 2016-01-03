@@ -1,7 +1,7 @@
 {
-  "name": "scss-bem-helpers",
-  "version": "0.0.0",
-  "description": "scss helpers for BEM",
+  "name": "BEM-scss",
+  "version": "0.0.2",
+  "description": "BEM helpers for scss",
   "main": "index.js",
   "directories": {
     "test": "tests"
