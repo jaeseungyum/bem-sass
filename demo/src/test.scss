@@ -1,0 +1,62 @@
+@import '../../dist/BEM-scss';
+
+@include configure-BEM((
+  block-types: (
+    component: c-,
+    object:    o-
+  ),
+  element-sep: "__",
+  modifier-sep: "_"
+));
+
+@include block(component, component) {
+  color: blue;
+
+  @include element(element) {
+    color: red;
+  }
+}
+
+@include block(media, object) {
+  color: blue;
+
+  @include element(item) {
+    color: yellow;
+  }
+
+  @include element(body) {
+    color: yellow;
+  }
+
+  @include modifier(horiz) {
+    @include element(item) {
+      color: blue;
+    }
+    @include element(body) {
+      color: blue;
+    }
+  }
+}
+
+@include block(block) {
+  color: red;
+
+  @include element(elem) {
+    color: red;
+
+    @include modifier(mod) {
+      color: blue;
+    }
+  }
+
+  @include modifier(mod) {
+    color: blue;
+
+    @include element(elem2) {
+      color: red;
+      & + & {
+        color: yellow;
+      }
+    }
+  }
+}

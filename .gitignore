@@ -1,7 +1,7 @@
 bower_components/
 node_modules/
 public/
-demo/
+demo/public/
 .sass-cache/
 .test.sh
 TODO.md
