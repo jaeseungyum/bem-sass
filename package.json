@@ -8,7 +8,7 @@
     "test": "tests"
   },
   "scripts": {
-    "pretest": "gem update sass:~3.4.20",
+    "pretest": "gem install sass:3.4.20",
     "test": "make test",
     "compiled:clean": "rm ./demo/compiled/**.css ./demo/compiled/**.map"
   },
