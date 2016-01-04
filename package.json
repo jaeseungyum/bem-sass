@@ -1,7 +1,7 @@
 {
   "name": "bem-scss",
   "version": "0.0.4",
-  "author": "Yum<ym.jsng@gmail.com>",
+  "author": "",
   "description": "BEM helpers for scss",
   "main": "dist/_BEM-scss",
   "directories": {
@@ -16,14 +16,13 @@
     "type": "git",
     "url": "https://github.com/jsng/scss-BEM-helpers.git"
   },
-  "author": "",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/jsng/scss-BEM-helpers/issues"
   },
   "homepage": "https://github.com/jsng/scss-BEM-helpers",
   "devDependencies": {
-    "expect.js": "^0.3.1",
+    "node-sass": "^3.4.2",
     "sassaby": "~2.1.1"
   },
   "files": [
