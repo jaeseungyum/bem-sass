@@ -8,7 +8,8 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "make test" 
+    "test": "make test",
+    "compiled:clean": "rm ./demo/compiled/**.*"
   },
   "repository": {
     "type": "git",
