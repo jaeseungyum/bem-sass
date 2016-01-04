@@ -8,6 +8,7 @@
     "test": "tests"
   },
   "scripts": {
+    "pretest": "gem update sass",
     "test": "make test",
     "compiled:clean": "rm ./demo/compiled/**.css ./demo/compiled/**.map"
   },
