@@ -1,6 +1,6 @@
 {
   "name": "bem-scss",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "author": "",
   "description": "BEM helpers for scss",
   "main": "dist/_BEM-scss",
