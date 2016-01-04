@@ -1,7 +1,8 @@
 bower_components/
 node_modules/
 public/
-demo/compiled/**.*
+demo/compiled/*.css
+demo/compiled/*.map
 .sass-cache/
 .test.sh
 TODO.md

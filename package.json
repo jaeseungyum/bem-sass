@@ -9,7 +9,7 @@
   },
   "scripts": {
     "test": "make test",
-    "compiled:clean": "rm ./demo/compiled/**.*"
+    "compiled:clean": "rm ./demo/compiled/**.css ./demo/compiled/**.map"
   },
   "repository": {
     "type": "git",
