@@ -1,12 +1,12 @@
 @import '../../dist/BEM-scss';
 
 @include configure-BEM((
-  block-types: (
+  "block-types": (
     component: c-,
     object:    o-
   ),
-  element-sep: "__",
-  modifier-sep: "_"
+  "element-sep": "__",
+  "modifier-sep": "_"
 ));
 
 @include block(component, component) {
