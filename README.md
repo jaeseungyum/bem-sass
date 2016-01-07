@@ -23,9 +23,8 @@ A Sass library for BEM-style naming convention.
   }
 }
 ```
+The code above will result in the follwing after compilation:
 ```css
-/* compiled CSS */
-
 .menu {
   /*...the menu block styles are here...*/
 }
