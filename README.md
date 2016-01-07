@@ -163,7 +163,7 @@ The code above will result in the follwing after compilation:
 
 ## Extended Details
 ### Boolean modifier & Key-value modifier
-bem-sass supports boolean modifier and key-value modifier.
+bem-sass supports 'key-value' modifiers as well as 'boolean' modifiers
 ```scss
 // @see https://en.bem.info/method/naming-convention/#block-modifier
 
@@ -184,7 +184,6 @@ bem-sass supports boolean modifier and key-value modifier.
   }
 }
 ```
-The code above will result in the follwing after compilation:
 ```css
 /* Boolean modifier */
 .menu_hidden {
@@ -202,7 +201,7 @@ The code above will result in the follwing after compilation:
 ```
 
 ### Element modifier
-Elements could get modified by element modifiers
+Elements could also get modified by modifiers
 ```scss
 // @see https://en.bem.info/method/naming-convention/#element-modifier
 
@@ -221,7 +220,6 @@ Elements could get modified by element modifiers
 }
 ```
 ```css
-/* compiled CSS */
 /* Boolean modifier */
 .menu__item_visible {
   /*...the element item modifier 'visible' styles are here...*/
@@ -253,8 +251,6 @@ Elements could get modified by element modifiers
 }
 ```
 ```css
-/* compiled CSS */
-
 /* Nav block */
 .nav {
   /*...default nav styles are here...*/
@@ -274,6 +270,7 @@ Elements could get modified by element modifiers
 ```
 
 ### ...TODO: sibling selectors
+
 
 ## Caveats
 
