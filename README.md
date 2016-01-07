@@ -9,6 +9,14 @@ A Sass library for BEM-style naming convention.
 + Install with [npm](https://www.npmjs.com): ```npm install -save-dev bem-sass```
 
 ## Basic Usages
+First, import bem-sass to your project.
+
+```scss
+@import 'dist/bem-scss';
+```
+
+Once you import bem-scss to your project, you can write BEM-style sass code in a cleaner manner like below: 
+
 ```scss
 // Menu block
 @include block(menu) {

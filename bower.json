@@ -1,12 +1,12 @@
 {
   "name": "bem-sass",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "homepage": "https://github.com/jsng/bem-sass",
   "authors": [
     "Yum Jaeseung <ym.jsng@gmail.com>"
   ],
   "description": "a sass library for bem style namespaced css",
-  "main": "dist/_bem.scss",
+  "main": "dist/_bem-sass.scss",
   "license": "MIT",
   "ignore": [
     "**/.*",
