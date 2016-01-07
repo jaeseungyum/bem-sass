@@ -208,12 +208,12 @@ Elements could also get modified by modifiers
   @include element(item) {
     /* Boolean modifier */
     @include modifier(visible) {
-      /*...the element item modifier 'visible' styles are here...*/
+      /*...the visible menu item styles are here...*/
     }
     
     /* key-value modifier */
     @include modifier(type, radio) {
-      /*...the element item modifier 'type: radio' styles are here...*/
+      /*...the radio type menu item styles are here...*/
     }
   }
 }
@@ -235,10 +235,10 @@ Elements could also get modified by modifiers
 
 /* Nav block */
 @include block(nav) {
-  /*...default nav styles are here...*/
+  /*...the default nav styles are here...*/
   
   @include element(item) {
-    /*...default nav item styles are here...*/
+    /*...the default nav item styles are here...*/
   }
   
   @include modifier(theme, islands) {
@@ -252,11 +252,11 @@ Elements could also get modified by modifiers
 ```css
 /* Nav block */
 .nav {
-  /*...default nav styles are here...*/
+  /*...the default nav styles are here...*/
 }
 
 .nav__item {
-  /*...default nav item styles are here...*/
+  /*...the default nav item styles are here...*/
 }
 
 .nav_theme_islands {
