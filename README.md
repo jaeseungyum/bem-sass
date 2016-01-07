@@ -50,7 +50,7 @@ A Sass library for BEM-style naming convention.
 ```
 
 #### ```block-prefix-default```
-Set default prefix for BEM block(e.g "b-", "c-"). the default is ""
+Set the default prefix for block mixin. the default value is "".
 ```scss
 @include configure-BEM((
   default-block-prefix: "b-" // Set default block prefix to "b-"
@@ -79,7 +79,7 @@ Set default prefix for BEM block(e.g "b-", "c-"). the default is ""
 ```
 
 #### ```block-types```
-Set additional block types. the default is an empty map.
+Add custom block types to project. the default is an empty map.
 ```scss
 @include configure-BEM((
   block-types: (
@@ -138,7 +138,7 @@ Set additional block types. the default is an empty map.
 ```
 
 #### ```element-sep```, ```modifier-sep```
-Set BEM element/modifier separators. the defaults are "__", "_" respectively.
+Set BEM element and modifier separators. the defaults are "__", "_" respectively.
 
 ```scss
 @include configure-BEM((
