@@ -42,7 +42,7 @@ The code above will result in the follwing after compilation:
 You can configure bem-sass by using the configuration mixin below.
 ```scss
 @include configure-BEM ((
-  block-prefix-default: "",
+  default-prefix: "",
   block-types: (),
   element-sep: "__",
   modifier-sep: "_"
