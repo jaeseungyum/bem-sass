@@ -15,11 +15,11 @@ A Sass library for BEM-style naming convention.
   /*...the menu block styles are here...*/
 
   @include element(item) {
-    /*...the menu block element 'item' styles are here...*/
+    /*...the menu item styles are here...*/
   }
   
-  @include modifier(horiz) {
-    /*...the menu block modifier 'horiz' styles are here...*/
+  @include modifier(horizontal) {
+    /*...the horizontal menu styles are here...*/
   }
 }
 ```
@@ -27,15 +27,15 @@ A Sass library for BEM-style naming convention.
 /* compiled CSS */
 
 .menu {
-  /*...the 'menu' block styles here...*/
+  /*...the menu block styles are here...*/
 }
 
 .menu__item {
-  /*...the menu block element 'item' styles here...*/
+  /*...the menu item styles are here...*/
 }
 
 .menu_horiz {
-  /*...the menu block modifier 'horiz' styles here...*/
+  /*...the horizontal menu styles are here...*/
 }
 ```
 
@@ -58,16 +58,15 @@ Set the default prefix for block mixin. the default value is "".
 
 /* Menu block */
 @include block(menu) {
-  /*...styles here...*/
+  /*...styles are here...*/
   
   @include element(item) {
-    /*...styles here...*/
+    /*...styles are here...*/
   }
 }
 ```
+The code above will result in the follwing after compilation:
 ```css
-/* compiled CSS */
-
 /* Menu block */
 .b-menu {
   /*...styles here...*/
@@ -84,56 +83,44 @@ Add custom block types to project. the default is an empty map.
 @include configure-BEM((
   block-types: (
     object:    "o-",  
-    component: "c-"   
-    utility:   "u-" 
+    component: "c-"
   )
 ));
 
 /* Media object */
 @include block(media, "object") {
-  /*...styles here...*/
+  /*...styles are here...*/
 
   @include element(body) {
-    /*...styles here...*/
+    /*...styles are here...*/
   }
 }
 
 /* Menu component */
 @include block(menu, "component") {
-  /*...styles here...*/
+  /*...styles are here...*/
 
   @include element(item) {
-    /*...styles here...*/
+    /*...styles are here...*/
   }
 }
-
-/* Clearfix utility */
-@include block(clearfix, "utility") {
-  /*...styles here...*/
-}
 ```
+The code above will result in the follwing after compilation:
 ```css
-/* compiled CSS */
-
 /* Media object */
 .o-media {
-  /*...styles here...*/
+  /*...styles are here...*/
 }
 .o-media__body {
-  /*...styles here...*/
+  /*...styles are here...*/
 }
 
 /* Menu component */
 .c-menu {
-  /*...styles here...*/
+  /*...styles are here...*/
 }
 .c-menu__item {
-  /*...styles here...*/
-}
-
-/* Clearfix utility */
-.u-clearfix {
-  /*...styles here...*/
+  /*...styles are here...*/
 }
 ```
 
@@ -149,20 +136,19 @@ Set BEM element and modifier separators. the defaults are "__", "_" respectively
 
 /* Promo block */
 @include block(promo) {
-  /*...styles here...*/
+  /*...styles are here...*/
   
   @include element(title) {
-    /*...styles here...*/
+    /*...styles are here...*/
   }
   
   @include modifier(hero) {
-    /*...styles here...*/
+    /*...styles are here...*/
   }
 }
 ```
+The code above will result in the follwing after compilation:
 ```css
-/* compiled CSS */
-
 /* Promo block */
 .promo {
   /*...styles here...*/
@@ -177,6 +163,7 @@ Set BEM element and modifier separators. the defaults are "__", "_" respectively
 
 ## Extended Details
 ### Boolean modifier & Key-value modifier
+bem-sass supports boolean modifier and key-value modifier.
 ```scss
 // @see https://en.bem.info/method/naming-convention/#block-modifier
 
@@ -184,34 +171,33 @@ Set BEM element and modifier separators. the defaults are "__", "_" respectively
   
   /* Boolean modifier */
   @include modifier(hidden) {
-    /*...the menu block modifier 'hidden' styles are here...*/
+    /*...the hidden menu styles are here...*/
   }
   
   /* key-value modifiers */
   @include modifier(theme, morning-forest) {
-    /*...the menu block modifier 'theme: morning-forest' styles are here...*/
+    /*...the morning-forest themed menu styles are here...*/
   }
   
   @include modifier(theme, stormy-sky) {
-    /*...the menu block modifier 'theme: stormy-sky' styles are here...*/
+    /*...the stormy-sky themed menu styles are here...*/
   }
 }
 ```
+The code above will result in the follwing after compilation:
 ```css
-/* compiled CSS */
-
 /* Boolean modifier */
 .menu_hidden {
-  /*...the menu block modifier 'hidden' styles are here...*/
+  /*...the hidden menu styles are here...*/
 }
 
 /* key-value modifiers */
 .menu_theme_morning-forest {
-  /*...the menu block modifier 'theme: morning-forest' styles are here...*/
+  /*...the morning-forest themed menu styles are here...*/
 }
 
 .menu_theme_stormy-sky {
-  /*...the menu block modifier 'theme: stormy-sky' styles are here...*/
+  /*...the stormy-sky themed menu styles are here...*/
 }
 ```
 
@@ -252,16 +238,16 @@ Elements could get modified by element modifiers
 
 /* Nav block */
 @include block(nav) {
-  /*...default 'nav' block styles are here...*/
+  /*...default nav styles are here...*/
   
   @include element(item) {
-    /*...default nav block element 'item' styles are here...*/
+    /*...default nav item styles are here...*/
   }
   
   @include modifier(theme, islands) {
-    /*...nav block modifier 'theme:islands' styles are here...*/
+    /*...the islands themed nav styles are here...*/
     @include element(item) {
-      /*...nav block element 'item' in 'theme:islands' styles are here...*/
+      /*...the islands themed nav item styles are here...*/
     }
   }
 }
@@ -271,19 +257,19 @@ Elements could get modified by element modifiers
 
 /* Nav block */
 .nav {
-  /*...default 'nav' block styles are here...*/
+  /*...default nav styles are here...*/
 }
 
 .nav__item {
-  /*...default nav block element 'item' styles are here...*/
+  /*...default nav item styles are here...*/
 }
 
 .nav_theme_islands {
-  /*...nav block modifier 'theme:islands' styles are here...*/
+  /*...the islands themed nav styles are here...*/
 }
 
 .nav_theme_islands .b-nav__item {
-  /*...nav block element 'item' in 'theme:islands' styles are here...*/
+  /*...the islands themed nav item styles are here...*/
 }
 ```
 
