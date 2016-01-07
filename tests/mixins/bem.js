@@ -13,7 +13,7 @@ describe("BEM mixins", function() {
           path.resolve("src/functions", "_bem.scss")
         ],
         variables: {
-          "__BEM-block-prefix-default__": "",
+          "__BEM-default-prefix__": "",
           "__BEM-element-sep__": "__",
           "__BEM-modifier-sep__": "_"
         }

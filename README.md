@@ -53,7 +53,7 @@ You can configure bem-sass by using the configuration mixin below.
 Set the default prefix for block mixin. the default value is "".
 ```scss
 @include configure-BEM((
-  default-block-prefix: "b-" // Set default block prefix to "b-"
+  default-prefix: "b-" // Set default block prefix to "b-"
 ));
 
 /* Menu block */

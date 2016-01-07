@@ -106,10 +106,10 @@
 // Get default BEM block prefix
 // @return { String } the default BEM block prefix
 @function get-BEM-block-prefix-default() {
-  @if (type-of($__BEM-block-prefix-default__) == "string") {
-    @return unquote($__BEM-block-prefix-default__);
+  @if (type-of($__BEM-default-prefix__) == "string") {
+    @return unquote($__BEM-default-prefix__);
   }
-  @return $__BEM-block-prefix-default__;
+  @return $__BEM-default-prefix__;
 }
 
 

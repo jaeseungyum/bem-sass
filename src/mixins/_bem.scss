@@ -9,7 +9,7 @@
 // @param { map } a BEM separator map (e.g (element: "__", modifier: "_"))
 @mixin configure-BEM($map:null) { 
   $defaults: (
-    block-prefix-default: "",
+    default-prefix: "",
     block-types: (),
     element-sep: "__",
     modifier-sep: "_"
@@ -19,7 +19,7 @@
     $defaults: map-merge($defaults, $map);
   } 
 
-  $__BEM-block-prefix-default__: map-get($defaults, "block-prefix-default") !global;
+  $__BEM-default-prefix__: map-get($defaults, "default-prefix") !global;
   $__BEM-block-types__: map-get($defaults, "block-types") !global;
   $__BEM-element-sep__: map-get($defaults, "element-sep") !global;
   $__BEM-modifier-sep__: map-get($defaults, "modifier-sep") !global;
