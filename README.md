@@ -1,18 +1,19 @@
-# BEM-scss ![Bower version](https://img.shields.io/bower/v/BEM-scss.svg) [![npm version](https://img.shields.io/npm/v/bem-scss.svg)](https://www.npmjs.com/package/bem-scss) ![Build Status](https://img.shields.io/circleci/project/jsng/BEM-scss.svg)
-SCSS 사용 시, BEM 컨벤션을 좀 더 편리하게 적용하기 위해 만들었다. 프로젝트에 부작용 없이 BEM block type을 추가할 수 있도록 하고, Ruby Sass(>=3.4), LibSass(>=3.3) 양측에서 모두 문제 없이 컴파일링 되도록 하는 것을 목적으로 했다.
+# bem sass![Bower version](https://img.shields.io/bower/v/bem-sass.svg) [![npm version](https://img.shields.io/npm/v/bem-sass.svg)](https://www.npmjs.com/package/bem-sass) ![Build Status](https://img.shields.io/circleci/project/jsng/bem-sass.svg)
+A Sass library for BEM-style naming convention.
+
++ Ruby Sass(>=3.4)
++ LibSass(>=3.3) 
 
 ## Quick Start
-+ Install with [Bower](http://bower.io): ```bower install --save-dev BEM-scss```
-+ Install with [npm](https://www.npmjs.com): ```npm install -save-dev bem-scss```
++ Install with [Bower](http://bower.io): ```bower install --save-dev bem-sass```
++ Install with [npm](https://www.npmjs.com): ```npm install -save-dev bem-sass```
 
-BEM-scss를 프로젝트 SCSS에 불러온 후, 최 상단에 configure-BEM을 설정한다.
+bem-sass를 프로젝트의 scss에 불러온 후, 최상단에 아래와 같이 configure-BEM을 설정한다.
 ```scss
-@import "dist/BEM-scss";
 @include configure-BEM;
 ```
 
 ## Basic Usages
-BEM-scss가 지원하는 기본들을 활용해 아래와 같은 SCSS code를 작성할 수 있다. 
 ```scss
 // Menu block
 @include block(menu) {
@@ -27,8 +28,9 @@ BEM-scss가 지원하는 기본들을 활용해 아래와 같은 SCSS code를 �
   }
 }
 ```
-이것은 아래와 같은 css로 컴파일 된다.
 ```css
+/* compiled CSS */
+
 .menu {
   /*...the 'menu' block styles here...*/
 }
@@ -315,7 +317,7 @@ element와 modifier는 독립적으로 선언될 수 없다. element는 block �
 }
 ```
 
-BEM-scss는 위와 같이 block 바깥에서 element나 modifier를 선언할 경우 error를 발생시킨다.
+bem-sass는 위와 같이 block 바깥에서 element나 modifier를 선언할 경우 error를 발생시킨다.
 ```
 Error: element cannot be declared ouside of a block
 Error: modifier cannot be declared ouside of a block
@@ -332,13 +334,13 @@ Error: modifier cannot be declared ouside of a block
   }
 }
 ```
-BEM-scss는 위와 같이 중첩 element를 선언할 경우 error를 발생시킨다.
+bem-sass는 위와 같이 중첩 element를 선언할 경우 error를 발생시킨다.
 ```
 Error: element cannot be declared in another element
 ```
 
 ### 일괄 선언의 방지
-초기 버전의 BEM-scss는 컴파일될 css와 비슷한 형태로 아래와 같이 일괄 선언을 할 수 있는 방식을 지원했었다.
+초기 버전의 bem-sass는 컴파일될 css와 비슷한 형태로 아래와 같이 일괄 선언을 할 수 있는 방식을 지원했었다.
 ```scss
 // WARNING! 아래 방식은 더 이상 지원하지 않는다
 
