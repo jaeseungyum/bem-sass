@@ -39,6 +39,7 @@ The code above will result in the follwing after compilation:
 ```
 
 ## Configurations
+You can configure bem-sass by using the configuration mixin below.
 ```scss
 @include configure-BEM ((
   block-prefix-default: "",
@@ -64,7 +65,6 @@ Set the default prefix for block mixin. the default value is "".
   }
 }
 ```
-The code above will result in the follwing after compilation:
 ```css
 /* Menu block */
 .b-menu {
@@ -77,7 +77,7 @@ The code above will result in the follwing after compilation:
 ```
 
 #### ```block-types```
-Add custom block types to project. the default is an empty map.
+Manage custom block types(name/prefix pair). the default is an empty map.
 ```scss
 @include configure-BEM((
   block-types: (
