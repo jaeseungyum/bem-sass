@@ -1,6 +1,6 @@
 {
   "name": "bem-sass",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "author": "",
   "description": "a sass library for bem style namespaced css",
   "main": "dist/_bem.scss",
