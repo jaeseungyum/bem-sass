@@ -1,9 +1,9 @@
 {
-  "name": "bem-scss",
+  "name": "bem-sass",
   "version": "0.0.5",
   "author": "",
-  "description": "BEM helpers for scss",
-  "main": "dist/_BEM-scss",
+  "description": "a sass library for bem style namespaced css",
+  "main": "dist/_bem.scss",
   "directories": {
     "test": "tests"
   },
@@ -14,13 +14,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/jsng/scss-BEM-helpers.git"
+    "url": "https://github.com/jsng/bem-sass.git"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jsng/scss-BEM-helpers/issues"
+    "url": "https://github.com/jsng/bem-sass/issues"
   },
-  "homepage": "https://github.com/jsng/scss-BEM-helpers",
+  "homepage": "https://github.com/jsng/bem-sass",
   "devDependencies": {
     "node-sass": "^3.4.2",
     "sassaby": "~2.1.1"

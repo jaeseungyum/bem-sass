@@ -1,4 +1,4 @@
-@import '../../dist/BEM-scss';
+@import '../../dist/bem';
 
 @include configure-BEM((
   block-types: (
@@ -31,7 +31,7 @@
       }
     }
   }
-}
+} 
 
 /* block: (component: "c-") */
 @include block(component, component) {

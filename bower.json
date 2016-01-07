@@ -1,12 +1,12 @@
 {
-  "name": "BEM-scss",
+  "name": "bem-sass",
   "version": "0.0.5",
-  "homepage": "https://github.com/jsng/BEM-scss",
+  "homepage": "https://github.com/jsng/bem-sass",
   "authors": [
     "Yum Jaeseung <ym.jsng@gmail.com>"
   ],
-  "description": "BEM helpers for scss",
-  "main": "dist/_BEM-scss.scss",
+  "description": "a sass library for bem style namespaced css",
+  "main": "dist/_bem.scss",
   "license": "MIT",
   "ignore": [
     "**/.*",
