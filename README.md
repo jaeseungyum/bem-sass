@@ -163,7 +163,7 @@ The code above will result in the follwing after compilation:
 
 ## Extended Details
 ### Boolean modifier & Key-value modifier
-bem-sass supports 'key-value' modifiers as well as 'boolean' modifiers
+bem-sass supports key-value modifiers as well as boolean modifiers
 ```scss
 // @see https://en.bem.info/method/naming-convention/#block-modifier
 
@@ -222,12 +222,12 @@ Elements could also get modified by modifiers
 ```css
 /* Boolean modifier */
 .menu__item_visible {
-  /*...the element item modifier 'visible' styles are here...*/
+  /*...the visible menu item styles are here...*/
 }
 
 /* key-value modifier */
 .menu__item_type_radio {
-  /*...the element item modifier 'type: radio' styles are here...*/
+  /*...the radio type menu item styles are here...*/
 }
 ```
 ### Using cascades in BEM
