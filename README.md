@@ -1,6 +1,10 @@
 # bem-sass 
-![Bower version](https://img.shields.io/bower/v/bem-sass.svg) [![npm version](https://img.shields.io/npm/v/bem-sass.svg)](https://www.npmjs.com/package/bem-sass) ![Build Status](https://img.shields.io/circleci/project/jsng/bem-sass.svg)
-A Sass library for BEM-style naming convention.
+![Bower version](https://img.shields.io/bower/v/bem-sass.svg) 
+[![npm version](https://img.shields.io/npm/v/bem-sass.svg)](https://www.npmjs.com/package/bem-sass) 
+![Build Status](https://img.shields.io/circleci/project/jsng/bem-sass.svg)
+
+
+`bem-sass` is a Sass library for BEM-style naming convention.
 
 + Ruby Sass(>=3.4)
 + LibSass(>=3.3) 
@@ -352,20 +356,38 @@ Error: .nav is already declared and should not be changed
 ```
 
 ```scss
+// BAD
+@include block(nav) {
+
+  .nav__item, .nav__link {
+    /*...commons styles of item and link...*/
+  }
+  
+  @include element(item) {
+    /*...item styles...*/
+  }
+  
+  @include element(link) {
+    /*...link styles...*/
+  }
+}
+
 // GOOD
 @include block(nav) {
 
   // common styles of item / link
   %common-styles {
-    /*...CSS declarations here...*/
+    /*...commons styles of item and link...*/
   }
   
   @include element(item) {
     @extend %common-styles;
+    /*...item styles...*/
   }
   
   @include element(link) {
     @extend %common-styles;
+    /*...link styles...*/
   }
 }
 ```
