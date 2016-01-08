@@ -1,13 +1,4 @@
-@import '../../dist/bem-sass';
-
-/*@include configure-BEM((*/
-/*block-types: (*/
-/*component: c-,*/
-/*object:    o-*/
-/*),*/
-/*element-sep: "__",*/
-/*modifier-sep: "_"*/
-/*));*/
+@import '../../dist/bem-sass'; 
 
 /* block */
 @include block(block) {
@@ -19,7 +10,7 @@
     @include modifier(mod) {
       color: blue;
     }
-  }
+  } 
 
   @include modifier(mod) {
     color: blue;
@@ -29,37 +20,52 @@
       & + & {
         color: yellow;
       }
+    } 
+  } 
+} 
+
+@include block(block) {
+   color: blue;
+}
+
+@include configure-BEM((
+  block-types: (
+    component: c-,
+    object:    o-
+  ),
+  element-sep: "__",
+  modifier-sep: "_"
+));
+
+/* block: (component: "c-") */
+@include block(component, component) {
+  color: blue;
+
+  @include element(element) {
+    color: red;
+  }
+}
+
+/* block: (object: "o-") */
+@include block(media, object) {
+  color: blue;
+
+  @include element(item) {
+    color: yellow;
+  }
+
+  @include element(body) {
+    color: yellow;
+  }
+
+  @include modifier(horiz) {
+    @include element(item) {
+      color: blue;
+    }
+    @include element(body) {
+      color: blue;
     }
   }
 } 
 
-/**//* block: (component: "c-") */
-/*@include block(component, component) {*/
-/*color: blue;*/
-
-/*@include element(element) {*/
-/*color: red;*/
-/*}*/
-/*}*/
-
-/**//* block: (object: "o-") */
-/*@include block(media, object) {*/
-/*color: blue;*/
-
-/*@include element(item) {*/
-/*color: yellow;*/
-/*}*/
-
-/*@include element(body) {*/
-/*color: yellow;*/
-/*}*/
-
-/*@include modifier(horiz) {*/
-/*@include element(item) {*/
-/*color: blue;*/
-/*}*/
-/*@include element(body) {*/
-/*color: blue;*/
-/*}*/
-/*}*/
-/*} */
+@debug $__BEM-entities__;

@@ -13,6 +13,7 @@ describe("BEM mixins", function() {
           path.resolve("src/functions", "_bem.scss")
         ],
         variables: {
+          "__BEM-entities__": ["component", "component__el"],
           "__BEM-default-prefix__": "",
           "__BEM-element-sep__": "__",
           "__BEM-modifier-sep__": "_"

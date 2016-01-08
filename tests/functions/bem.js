@@ -118,4 +118,23 @@ describe("BEM functions", function() {
       ).isTrue();
     });
   }); 
+
+  describe("BEM-entity-exists", function() {
+
+    var func;
+    beforeEach(function() {
+      sassaby = sassabyWithVariables({
+        "__BEM-entities__": ["block", "block__elem"],
+        "__BEM-element-sep__": "__",
+        "__BEM-modifier-sep__": "_"
+      });
+      func = sassaby.func("BEM-entity-exists");
+    });
+
+    it("tests whether a given BEM entity is already declared or not", function() {
+
+      func.calledWithArgs("block").isTrue();
+      func.calledWithArgs("block_mod").isFalse(); 
+    });
+  }); 
 }); 

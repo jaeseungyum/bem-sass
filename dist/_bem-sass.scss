@@ -1,4 +1,5 @@
 @import "./../src/functions/str";
 @import "./../src/functions/bem";
 @import "./../src/mixins/bem";
+@include init-BEM;
 @include configure-BEM;

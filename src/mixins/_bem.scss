@@ -4,6 +4,10 @@
 //
 // ============================== 
 
+@mixin init-BEM() {
+  $__BEM-entities__: () !global;
+}
+
 // Set BEM configurations 
 //
 // @param { map } a BEM separator map (e.g (element: "__", modifier: "_"))
@@ -39,9 +43,19 @@
 //    ...styles here...
 //  }
 @mixin block($name, $type:null) {
-  #{make-BEM-block-selector($name, $type)} {
-    @content;
-  }
+
+  $BEM-block-entity: make-BEM-block-selector($name, $type);
+
+  @if BEM-entity-exists($BEM-block-entity) {
+    @error "#{$BEM-block-entity} is already declared before"
+  } 
+
+  @if (register-BEM-entity($BEM-block-entity)) {
+    #{$BEM-block-entity} {
+      @content;
+    }
+  };
+
 }
 
 
@@ -50,8 +64,9 @@
 // @param { String } name of the element
 // @author Yum<ym.jsng@gmail.com>
 @mixin element($name) { 
+
   @if (& == null) {
-    @error "element cannot be declared ouside of a block"
+    @error "element cannot be declared outside of a block"
   }
 
   @if (is-BEM-element(&)) {
@@ -59,8 +74,16 @@
   }
 
   @at-root {
-    #{make-BEM-element-selector($name, is-BEM-modifier(&))} {
-      @content;
+    $BEM-element-entity: make-BEM-element-selector($name, is-BEM-modifier(&));
+
+    @if BEM-entity-exists($BEM-element-entity) {
+      @error "#{$BEM-element-entity} is already declared before"
+    }
+
+    @if (register-BEM-entity($BEM-element-entity)) {
+      #{$BEM-element-entity} {
+        @content;
+      }
     }
   }
 }
@@ -76,8 +99,16 @@
   }
 
   @at-root {
-    #{make-BEM-modifier-selector($name, $value, is-BEM-element(&))} {
-      @content;
+    $BEM-modifier-entity: make-BEM-modifier-selector($name, $value, is-BEM-element(&));
+    
+    @if BEM-entity-exists($BEM-modifier-entity) {
+      @error "#{$BEM-modifier-entity} is already declared before"
+    }
+
+    @if register-BEM-entity($BEM-modifier-entity) {
+      #{$BEM-modifier-entity} {
+        @content;
+      }
     }
   }
 }

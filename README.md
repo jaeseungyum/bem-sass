@@ -322,29 +322,39 @@ Error: element cannot be declared in another element
 ```
 
 ### Immutability
-...TODO...
+
 ```scss
+// Nav block
 @include block(nav) {
-  @include all(element(item), element(divider)) {
-    /*...CSS declarations here...*/
+  /*...CSS declarations here...*/ 
+
+  @include element(item) {
+    /*...CSS declarations here...*/ 
+  }
+
+  // Attempt to change the nav item styles
+  @include element(item) {
+    /*...CSS declarations here...*/ 
   }
 }
 
-// or
+// Attempt to change the nav block styles
+@include block(nav) {
+  /*...CSS declarations here...*/ 
+}
+```
 
-@include block(nav) {
-  @include element(item, divider) {
-    /*...CSS declarations here...*/
-  }
-}
+They both will raise errors.
 ```
-```css
-.b-nav__item, .b-nav__divider {
-  /*...CSS declarations here...*/
-}
+Error: .nav__item is already declared and should not be changed 
+Error: .nav is already declared and should not be changed 
 ```
+
 ```scss
+// GOOD
 @include block(nav) {
+
+  // common styles of item / link
   %common-styles {
     /*...CSS declarations here...*/
   }

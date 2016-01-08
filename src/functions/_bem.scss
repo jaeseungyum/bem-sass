@@ -213,3 +213,20 @@
   }
   @return false;
 }
+
+// Check if a BEM entity exists or not
+// @param { String } the selector string
+// @return { Boolean }
+@function BEM-entity-exists($selector-string) {
+  @each $BEM-entity in $__BEM-entities__ {
+    @if ($BEM-entity == $selector-string) {
+      @return true;
+    }
+  }
+  @return false;
+}
+
+@function register-BEM-entity($selector-string) {
+  $__BEM-entities__: append($__BEM-entities__, $selector-string) !global;
+  @return true;
+}
