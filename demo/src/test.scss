@@ -24,10 +24,6 @@
   } 
 } 
 
-@include block(block) {
-   color: blue;
-}
-
 @include configure-BEM((
   block-types: (
     component: c-,
