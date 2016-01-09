@@ -47,8 +47,8 @@ When compiled:
 }
 ```
 
-## Configurations
-You can configure bem-sass settings by `configure-BEM` mixin
+## Custom Configurations
+You can configure bem-sass options by `configure-BEM` mixin. Using this mixin is optional. If there have been no custom configurations, the default configurations are same as below:
 ```scss
 @include configure-BEM ((
   default-prefix: "",
@@ -59,7 +59,7 @@ You can configure bem-sass settings by `configure-BEM` mixin
 ```
 
 #### ```default-prefix```
-Set the default prefix for block mixin. the default value is "".
+Set the default prefix for `block` mixin.
 ```scss
 @include configure-BEM((
   default-prefix: "b-" // Set default block prefix to "b-"
@@ -88,7 +88,7 @@ When compiled:
 ```
 
 #### ```block-types```
-Sometimes you may need to define several block types to organize your css object structure (especially, when you are considering a methodology like [ITCSS](https://speakerdeck.com/dafed/managing-css-projects-with-itcss)). You can define your own several block levels by adding 'block type: prefix' pair. the default is an empty map.
+Sometimes you may need to define several block types to organize your css object structure (especially, when you are considering a methodology like [ITCSS](https://speakerdeck.com/dafed/managing-css-projects-with-itcss)). You can define your own several block levels by adding `block type: prefix` pair to `block-types` map.
 ```scss
 @include configure-BEM((
   block-types: (
@@ -136,7 +136,7 @@ When compiled:
 ```
 
 #### ```element-sep```, ```modifier-sep```
-Set BEM element and modifier separators. the defaults are "__", "_" respectively.
+You can set your own BEM element/modifier separators.
 
 ```scss
 @include configure-BEM((
@@ -175,7 +175,7 @@ When compiled:
 
 ## Extended Details
 ### Boolean modifier & Key-value modifier
-bem-sass supports key-value modifiers as well as boolean modifiers.
+bem-sass supports key-value modifiers by accepting 2 arguments when using `modifier` mixin. Passing a single argument generates a boolean modifier.
 ```scss
 // @see https://en.bem.info/method/naming-convention/#block-modifier
 
@@ -197,7 +197,7 @@ bem-sass supports key-value modifiers as well as boolean modifiers.
 }
 ```
 ```css
-/* Boolean modifier */
+/* Example of a boolean modifier */
 .menu_hidden {
   /*...the hidden menu styles are here...*/
 }
@@ -214,7 +214,7 @@ bem-sass supports key-value modifiers as well as boolean modifiers.
 
 ### Element modifier
 
-Elements could also get modified by their own modifiers
+Elements could also get modified by their own modifiers.
 ```scss
 // @see https://en.bem.info/method/naming-convention/#element-modifier
 
@@ -264,6 +264,8 @@ Elements could also get modified by their own modifiers
   }
 }
 ```
+
+When compiled:
 ```css
 /* Nav block */
 .nav {
@@ -286,12 +288,8 @@ Elements could also get modified by their own modifiers
 ## Caveats
 
 ### Element and modifier cannot be used stand-alone
-An element(or a modifier) is a part of a block. Both have no standalone meaning.
+An element(or a modifier) is a part of a block. It has no standalone meaning without it's parent block.
 ```scss
-@include block(nav) {
-  /*...CSS declarations here...*/
-}
-
 // @see https://en.bem.info/method/key-concepts/#element
 @include element(item) {
   /*...CSS declarations here...*/
@@ -315,6 +313,7 @@ The existence of elements of elements is an antipattern because it hinders the a
 // @see https://en.bem.info/faq/#why-does-bem-not-recommend-using-elements-within-elements-block__elem1__elem2
 @include block(nav) {
   @include element(item) {
+    // Attempt to make elements of elements: BAD
     @include element(link) {
     }
   }
@@ -336,13 +335,13 @@ bem-sass is heavily inspired by Immutable CSS. It prevents you reassigning css c
     /*...CSS declarations here...*/ 
   }
 
-  // Attempt to reassign the nav item styles
+  // Attempt to reassign the nav item styles: BAD
   @include element(item) {
     /*...CSS declarations here...*/ 
   }
 }
 
-// Attempt to reassign the nav block styles
+// Attempt to reassign the nav block styles: BAD
 @include block(nav) {
   /*...CSS declarations here...*/ 
 }
