@@ -197,7 +197,7 @@ bem-sass supports key-value modifiers by accepting 2 arguments when using `modif
 }
 ```
 ```css
-/* Example of a boolean modifier */
+/* Boolean modifier */
 .menu_hidden {
   /*...the hidden menu styles are here...*/
 }
