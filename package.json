@@ -1,12 +1,25 @@
 {
   "name": "bem-sass",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "author": "",
   "description": "a Sass library for BEM-style namespaced css",
   "main": "dist/_bem-sass.scss",
   "directories": {
     "test": "tests"
   },
+  "keywords": [
+    "bem",
+    "bemit",
+    "itcss",
+    "sass",
+    "scss",
+    "css",
+    "immutable",
+    "immutable-css",
+    "immutablecss",
+    "mixins",
+    "helpers"
+  ],
   "scripts": {
     "pretest": "gem install sass:3.4.20",
     "test": "make test",
