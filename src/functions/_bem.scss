@@ -226,6 +226,9 @@
   @return false;
 }
 
+// Add a BEM entity to BEM-entities list
+// @param { String } the selector string
+// @return { Boolean }
 @function register-BEM-entity($selector-string) {
   $__BEM-entities__: append($__BEM-entities__, $selector-string) !global;
   @return true;
