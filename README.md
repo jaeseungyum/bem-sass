@@ -13,7 +13,7 @@
 + Install with [npm](https://www.npmjs.com): ```npm install -save-dev bem-sass```
 
 ## Basic Usages
-Once you import bem-sass to your project, you can write BEM-style sass code like below: 
+Once you import bem-sass to your project, you can build your own css object like below:
 
 ```scss
 
