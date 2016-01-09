@@ -42,13 +42,13 @@ When compiled:
   /*...the menu item styles are here...*/
 }
 
-.menu_horiz {
+.menu_horizontal {
   /*...the horizontal menu styles are here...*/
 }
 ```
 
 ## Custom Configurations
-You can configure bem-sass options by `configure-BEM` mixin. Using this mixin is optional. If there have been no custom configurations, the default configurations are same as below:
+You can configure bem-sass options by `configure-BEM` mixin. Using this mixin is optional. If there have been no custom configurations, the default options are same as below:
 ```scss
 @include configure-BEM ((
   default-prefix: "",
