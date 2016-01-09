@@ -4,26 +4,21 @@
 ![Build Status](https://img.shields.io/circleci/project/jsng/bem-sass.svg)
 
 
-`bem-sass` is a Sass library for BEM-style naming convention.
+`bem-sass` is a Sass library for BEM-style naming convention. It helps you adopt BEM methodology with no compatibility issues with both RubySass(>= 3.4) and LibSass(>=3.3), with more flexible namespacing configurations.
 
-+ Ruby Sass(>=3.4)
-+ LibSass(>=3.3) 
+`bem-sass` is also inspired by [Immutable CSS](http://csswizardry.com/2015/03/immutable-css/). Immutable CSS describes your specified css classes should never be overwritten. this helps you build more robust, cleaner css code base by preventing cross-referencing css classes.
 
 ## Quick Start
 + Install with [Bower](http://bower.io): ```bower install --save-dev bem-sass```
 + Install with [npm](https://www.npmjs.com): ```npm install -save-dev bem-sass```
 
 ## Basic Usages
-First, import bem-sass to your project.
+Once you import bem-sass to your project, you can write BEM-style sass code like below: 
 
 ```scss
-@import 'dist/bem-scss';
-```
 
-Once you import bem-scss to your project, you can write BEM-style sass code in a cleaner manner like below: 
-
-```scss
 // Menu block
+
 @include block(menu) {
   /*...the menu block styles are here...*/
 
@@ -36,7 +31,8 @@ Once you import bem-scss to your project, you can write BEM-style sass code in a
   }
 }
 ```
-The code above will result in the follwing after compilation:
+
+When compiled:
 ```css
 .menu {
   /*...the menu block styles are here...*/
@@ -52,7 +48,7 @@ The code above will result in the follwing after compilation:
 ```
 
 ## Configurations
-You can configure bem-sass by using the configuration mixin below.
+You can configure debfault bem-sass settings by `configure-BEM` mixin
 ```scss
 @include configure-BEM ((
   default-prefix: "",
@@ -78,6 +74,8 @@ Set the default prefix for block mixin. the default value is "".
   }
 }
 ```
+
+When compiled:
 ```css
 /* Menu block */
 .b-menu {
@@ -90,7 +88,7 @@ Set the default prefix for block mixin. the default value is "".
 ```
 
 #### ```block-types```
-Manage custom block types(name/prefix pair). the default is an empty map.
+Sometimes you may need to define several block types to manage your project (especially when you adopt methodology like ITCSS). You can define several block levels by adding 'block type name / prefix' pair. the default is an empty map.
 ```scss
 @include configure-BEM((
   block-types: (
@@ -117,7 +115,8 @@ Manage custom block types(name/prefix pair). the default is an empty map.
   }
 }
 ```
-The code above will result in the follwing after compilation:
+
+When compiled:
 ```css
 /* Media object */
 .o-media {
@@ -159,7 +158,8 @@ Set BEM element and modifier separators. the defaults are "__", "_" respectively
   }
 }
 ```
-The code above will result in the follwing after compilation:
+
+When compiled:
 ```css
 /* Promo block */
 .promo {
@@ -175,7 +175,7 @@ The code above will result in the follwing after compilation:
 
 ## Extended Details
 ### Boolean modifier & Key-value modifier
-bem-sass supports key-value modifiers as well as boolean modifiers
+bem-sass supports key-value modifiers as well as boolean modifiers.
 ```scss
 // @see https://en.bem.info/method/naming-convention/#block-modifier
 
@@ -213,7 +213,8 @@ bem-sass supports key-value modifiers as well as boolean modifiers
 ```
 
 ### Element modifier
-Elements could also get modified by modifiers
+
+Elements could also get modified by their own modifiers
 ```scss
 // @see https://en.bem.info/method/naming-convention/#element-modifier
 
@@ -256,6 +257,7 @@ Elements could also get modified by modifiers
   
   @include modifier(theme, islands) {
     /*...the islands themed nav styles are here...*/
+   
     @include element(item) {
       /*...the islands themed nav item styles are here...*/
     }
@@ -281,9 +283,6 @@ Elements could also get modified by modifiers
 }
 ```
 
-### ...TODO: sibling selectors
-
-
 ## Caveats
 
 ### Element and modifier cannot be used stand-alone
@@ -304,14 +303,14 @@ An element(or a modifier) is a part of a block. Both have no standalone meaning.
 }
 ```
 
-They both will raise errors.
+When compiled:
 ```
 Error: element cannot be declared ouside of a block
 Error: modifier cannot be declared ouside of a block
 ```
 
-### Elements within elements are not allowed
-The existence of elements of elements hinders the ability to change the internal structure of the block: elements cannot be swapped around, removed or added without modifying the existing code.
+### Elements within elements are bad
+The existence of elements of elements is an antipattern because it hinders the ability to change the internal structure of the block: elements cannot be swapped around, removed or added without modifying the existing code.
 ```scss
 // @see https://en.bem.info/faq/#why-does-bem-not-recommend-using-elements-within-elements-block__elem1__elem2
 @include block(nav) {
@@ -321,13 +320,13 @@ The existence of elements of elements hinders the ability to change the internal
   }
 }
 ```
-This will raise an error.
+When compiled:
 ```
 Error: element cannot be declared in another element
 ```
 
 ### Immutability
-
+bem-sass is heavily inspired by Immutable CSS. It prevents you reassigning css classes which in turn produces side effects.
 ```scss
 // Nav block
 @include block(nav) {
@@ -337,59 +336,22 @@ Error: element cannot be declared in another element
     /*...CSS declarations here...*/ 
   }
 
-  // Attempt to change the nav item styles
+  // Attempt to reassign the nav item styles
   @include element(item) {
     /*...CSS declarations here...*/ 
   }
 }
 
-// Attempt to change the nav block styles
+// Attempt to reassign the nav block styles
 @include block(nav) {
   /*...CSS declarations here...*/ 
 }
 ```
 
-They both will raise errors.
+When compiled:
 ```
-Error: .nav__item is already declared and should not be changed 
-Error: .nav is already declared and should not be changed 
-```
-
-```scss
-// BAD
-@include block(nav) {
-
-  .nav__item, .nav__link {
-    /*...commons styles of item and link...*/
-  }
-  
-  @include element(item) {
-    /*...item styles...*/
-  }
-  
-  @include element(link) {
-    /*...link styles...*/
-  }
-}
-
-// GOOD
-@include block(nav) {
-
-  // common styles of item / link
-  %common-styles {
-    /*...commons styles of item and link...*/
-  }
-  
-  @include element(item) {
-    @extend %common-styles;
-    /*...item styles...*/
-  }
-  
-  @include element(link) {
-    @extend %common-styles;
-    /*...link styles...*/
-  }
-}
+Error: in `element': Attempt to reassign .nav__item 
+Error: in `block': Attempt to reassign .nav
 ```
 
 ## See Also
