@@ -77,7 +77,7 @@
     $BEM-element-entity: make-BEM-element-selector($name, is-BEM-modifier(&));
 
     @if BEM-entity-exists($BEM-element-entity) {
-      @error "#{$BEM-element-entity} is already declared before"
+      @error "Attempt to reassign #{$BEM-element-entity}"
     }
 
     @if (register-BEM-entity($BEM-element-entity)) {
@@ -102,7 +102,7 @@
     $BEM-modifier-entity: make-BEM-modifier-selector($name, $value, is-BEM-element(&));
     
     @if BEM-entity-exists($BEM-modifier-entity) {
-      @error "#{$BEM-modifier-entity} is already declared before"
+      @error "Attempt to reassign #{$BEM-modifier-entity}"
     }
 
     @if register-BEM-entity($BEM-modifier-entity) {
