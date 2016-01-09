@@ -6,7 +6,7 @@
 
 `bem-sass` is a Sass library for BEM-style naming convention. It helps you adopt BEM methodology with no compatibility issues with both RubySass(>= 3.4) and LibSass(>=3.3), with more flexible namespacing configurations.
 
-`bem-sass` is also inspired by [Immutable CSS](http://csswizardry.com/2015/03/immutable-css/). Immutable CSS describes your specified css classes should never be overwritten. this helps you build more robust, cleaner css code base by preventing cross-referencing css classes.
+`bem-sass` is also inspired by [Immutable CSS](http://csswizardry.com/2015/03/immutable-css/). Immutable CSS describes your specified css classes should never be overwritten. Applying this concept helps you build more robust, cleaner css code base at scale by preventing cross-referencing css classes.
 
 ## Quick Start
 + Install with [Bower](http://bower.io): ```bower install --save-dev bem-sass```
