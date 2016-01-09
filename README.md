@@ -349,8 +349,8 @@ bem-sass is heavily inspired by Immutable CSS. It prevents you reassigning css c
 
 When compiled:
 ```
-Error: in `element': Attempt to reassign .nav__item 
-Error: in `block': Attempt to reassign .nav
+Error: in `element': Attempt to reassign `.nav__item` 
+Error: in `block': Attempt to reassign `.nav`
 ```
 
 ## See Also
