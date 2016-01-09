@@ -48,7 +48,7 @@ When compiled:
 ```
 
 ## Configurations
-You can configure debfault bem-sass settings by `configure-BEM` mixin
+You can configure bem-sass settings by `configure-BEM` mixin
 ```scss
 @include configure-BEM ((
   default-prefix: "",
