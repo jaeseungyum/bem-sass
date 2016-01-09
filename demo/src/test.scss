@@ -15,12 +15,12 @@
   @include modifier(mod) {
     color: blue;
 
-    @include adjacent-siblings {
-      color: yellow;
-    }
-
     @include element(elem2) {
       color: red; 
+
+      @include adjacent-siblings {
+        color: yellow;
+      }
     } 
   } 
 } 
@@ -64,5 +64,3 @@
     }
   }
 } 
-
-@debug $__BEM-entities__;
