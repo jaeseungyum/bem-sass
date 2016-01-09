@@ -96,7 +96,7 @@
   $prefix: map-get($__BEM-block-types__, $type);
 
   @if ($prefix == null) {
-    @error "block type: '#{$type}' has not been declared";
+    @error "block type `#{$type}` has not been declared";
   }
 
   @return unquote(map-get($__BEM-block-types__, $type));
