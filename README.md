@@ -163,13 +163,13 @@ When compiled:
 ```css
 /* Promo block */
 .promo {
-  /*...styles here...*/
+  /*...styles are here...*/
 }
 .promo-title {
-  /*...styles here...*/
+  /*...styles are here...*/
 }
 .promo--hero {
-  /*...styles here...*/
+  /*...styles are here...*/
 }
 ```
 
