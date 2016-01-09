@@ -48,7 +48,7 @@ When compiled:
 ```
 
 ## Custom Configurations
-You can configure bem-sass options by `configure-BEM` mixin. Using this mixin is optional. If there have been no custom configurations, the default options are same as below:
+You can configure bem-sass options by `configure-BEM` mixin. Using this mixin is optional. If there have been no custom configurations, the default options are the same as below:
 ```scss
 @include configure-BEM ((
   default-prefix: "",
