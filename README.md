@@ -88,7 +88,7 @@ When compiled:
 ```
 
 #### ```block-types```
-Sometimes you may need to define several block types to manage your project (especially when you adopt methodology like ITCSS). You can define several block levels by adding 'block type name / prefix' pair. the default is an empty map.
+Sometimes you may need to define several block types to organize your css object structure (especially, when you are considering a methodology like [ITCSS](https://speakerdeck.com/dafed/managing-css-projects-with-itcss)). You can define your own several block levels by adding 'block type: prefix' pair. the default is an empty map.
 ```scss
 @include configure-BEM((
   block-types: (
