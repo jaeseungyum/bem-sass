@@ -59,6 +59,13 @@ describe("BEM mixins", function() {
           "block-name"
         ).createsSelector(".block-name_mod .block-name__elem");
       });
+
+      it("makes adjacent sibling BEM elements in the given modifier context", function() {
+        mixin.calledWithBlockAndArgs(
+          "@include modifier(mod) { @include element(elem) { @include adjacent-siblings { content: 'whatever';} } }", 
+          "block-name"
+        ).createsSelector(".block-name_mod .block-name__elem+.block-name__elem"); 
+      });
     }); 
   });
 

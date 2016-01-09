@@ -285,6 +285,30 @@ When compiled:
 }
 ```
 
+### Adjacent siblings in a given modifier context
+Sometimes you need to use adjacent sibling selector. Given that you want to add top line to each item of a modified nav block except the first item. With `&` provided by original Sass, you cannot accomplish this requirement. In that kind of circumstance, you can use `adjacent-siblings`.
+
+```scss
+@include block(nav) {
+  @include modifier(secondary) {
+    @include element(item) {
+
+      // Using & + & produces `.nav_secondary .nav__item + .nav_secondary .nav__item` which we do not expect.
+      // Use `adjacent-siblings` here.
+      @include adjacent-siblings {
+        /*...styles are here...*/ 
+      }
+    }
+  }
+}
+```
+When compiled: 
+```css
+.nav_secondary .nav__item + .nav__item {
+  /*...styles are here...*/ 
+}
+```
+
 ## Caveats
 
 ### Element and modifier cannot be used stand-alone

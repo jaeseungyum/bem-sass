@@ -5,7 +5,7 @@
   "authors": [
     "Yum Jaeseung <ym.jsng@gmail.com>"
   ],
-  "description": "a sass library for bem style namespaced css",
+  "description": "a Sass library for BEM-style namespaced css",
   "main": "dist/_bem-sass.scss",
   "license": "MIT",
   "ignore": [

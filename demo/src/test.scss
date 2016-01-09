@@ -5,7 +5,7 @@
   color: red;
 
   @include element(elem) {
-    color: red;
+    color: red; 
 
     @include modifier(mod) {
       color: blue;
@@ -15,11 +15,12 @@
   @include modifier(mod) {
     color: blue;
 
+    @include adjacent-siblings {
+      color: yellow;
+    }
+
     @include element(elem2) {
-      color: red;
-      & + & {
-        color: yellow;
-      }
+      color: red; 
     } 
   } 
 } 

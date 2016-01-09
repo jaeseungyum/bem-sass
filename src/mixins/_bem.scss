@@ -112,3 +112,46 @@
     }
   }
 }
+
+// Generate adjacent sibling selector of an element in a given modifier context
+// @example
+//
+//  In scss:
+//
+//  @include block(list) {
+//    @include modifier(ver, 2) {
+//      @include element(item) {
+//        @include adjacent-siblings {
+//          border-top: 1px solid rgb(0, 0, 0);
+//        }
+//      }
+//    }
+//  }
+//
+//  When compiled:
+//
+//  .list_ver_2 .list__item + .list__item {
+//    border-top: 1px solid rgb(0, 0, 0);
+//  }
+//
+@mixin adjacent-siblings {
+
+  @if (& == null) {
+    @error "No context given";
+  }
+
+  @if (str-index(inspect(&), " ") == null) {
+    @error "mixin `adjacent-siblings` is declared in invalid position";
+  }
+
+  $element: selector-to-string(
+    str-slice(
+      inspect(&), 
+      str-index(inspect(&), " ") + 1
+    )
+  );
+
+  & + #{$element} {
+    @content;
+  }
+} 
