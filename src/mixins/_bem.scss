@@ -47,7 +47,7 @@
   $BEM-block-entity: make-BEM-block-selector($name, $type);
 
   @if BEM-entity-exists($BEM-block-entity) {
-    @error "#{$BEM-block-entity} is already declared before"
+    @error "Attempt to reassign #{$BEM-block-entity}"
   } 
 
   @if (register-BEM-entity($BEM-block-entity)) {
