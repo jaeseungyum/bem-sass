@@ -4,9 +4,9 @@
 ![Build Status](https://img.shields.io/circleci/project/jsng/bem-sass.svg)
 
 
-`bem-sass` is a Sass library for BEM-style naming convention. It helps you adopt BEM methodology with no compatibility issues with both RubySass(>= 3.4) and LibSass(>=3.3), with more flexible namespacing configurations.
+`bem-sass` is a Sass library for BEM-style naming convention. It helps you apply BEM methodology to write your own CSS with no compatibility issues with both RubySass(>= 3.4) and LibSass(>=3.3), and provides more flexible namespacing configurations.
 
-`bem-sass` is also inspired by [Immutable CSS](http://csswizardry.com/2015/03/immutable-css/). Immutable CSS describes your specified css classes should never be overwritten. Applying this concept helps you build more robust, cleaner css code base at scale by preventing cross-referencing css classes.
+`bem-sass` is also inspired by [Immutable CSS](http://csswizardry.com/2015/03/immutable-css/), which describes your specified css classes should never be overwritten. Applying this concept helps you build more robust, secure css codebase at scale by preventing cross-referencing css classes.
 
 ## Quick Start
 + Install with [Bower](http://bower.io): ```bower install --save-dev bem-sass```
@@ -48,7 +48,7 @@ When compiled:
 ```
 
 ## Custom Configurations
-You can configure bem-sass options by `configure-BEM` mixin. Using this mixin is optional. If there have been no custom configurations, the default options are the same as below:
+You can configure bem-sass options by `configure-BEM` mixin. Using this mixin is optional. If there have been no custom configurations, the default options are exactly the same as below:
 ```scss
 @include configure-BEM ((
   default-prefix: "",
@@ -88,7 +88,7 @@ When compiled:
 ```
 
 #### ```block-types```
-Sometimes you may need to define several block types to organize your css object structure (especially, when you are considering a methodology like [ITCSS](https://speakerdeck.com/dafed/managing-css-projects-with-itcss)). You can define your own several block levels by adding `block type: prefix` pair to `block-types` map.
+Sometimes you may need to define several block types to organize your css object structure especially when you are considering a methodology like [ITCSS](https://speakerdeck.com/dafed/managing-css-projects-with-itcss). You can define your own several block levels by adding `block type: prefix` pair to `block-types` map.
 ```scss
 @include configure-BEM((
   block-types: (
@@ -175,7 +175,7 @@ When compiled:
 
 ## Extended Details
 ### Boolean modifier & Key-value modifier
-bem-sass supports key-value modifiers by accepting 2 arguments when using `modifier` mixin. Passing a single argument generates a boolean modifier.
+bem-sass supports key-value modifiers. If you pass 2 arguments when using `modifier` mixin, this will generates a key-value modifier. Passing a single argument generates a boolean modifier.
 ```scss
 // @see https://en.bem.info/method/naming-convention/#block-modifier
 
@@ -280,13 +280,13 @@ When compiled:
   /*...the islands themed nav styles are here...*/
 }
 
-.nav_theme_islands .b-nav__item {
+.nav_theme_islands > .b-nav__item {
   /*...the islands themed nav item styles are here...*/
 }
 ```
 
-### Element's adjacent siblings in a given modifier context
-Given that you want to add top line to each item of a modified nav block except the first item. With `&` provided by the original Sass, you cannot achieve this requirement. In that kind of circumstance, you can use `adjacent-siblings`.
+### Element + Element
+Given that you want to add a top line to each item of a modified nav block except the first item. With `&` provided by the original Sass, you cannot achieve this requirement. In that kind of circumstance, you can use `adjacent-siblings` mixin.
 
 ```scss
 @include block(nav) {
@@ -336,6 +336,7 @@ Error: modifier cannot be declared ouside of a block
 
 ### Elements within elements are bad
 The existence of elements of elements is an antipattern because it hinders the ability to change the internal structure of the block: elements cannot be swapped around, removed or added without modifying the existing code.
+
 ```scss
 // @see https://en.bem.info/faq/#why-does-bem-not-recommend-using-elements-within-elements-block__elem1__elem2
 @include block(nav) {
@@ -352,7 +353,8 @@ Error: element cannot be declared in another element
 ```
 
 ### Immutability
-bem-sass is heavily inspired by Immutable CSS. It prevents you reassigning css classes which in turn produces side effects.
+bem-sass ensures that every BEM entity you create is immutable. It prevents you from reassigning css classes which in turn produces side effects.
+
 ```scss
 // Nav block
 @include block(nav) {
