@@ -233,3 +233,27 @@
   $__BEM-entities__: append($__BEM-entities__, $selector-string) !global;
   @return true;
 }
+
+// Check if bem-sass is initialized or not
+// @return { Boolean }
+@function is-BEM-initialized() {
+  @if (
+    variable-exists("__BEM-initialized__") and 
+    $__BEM-initialized__
+  ) {
+    @return true;
+  }
+
+  @return false;
+}
+
+// Check if bem-sass is configured or not
+@function is-BEM-configured() {
+  @if (
+    variable-exists("__BEM-configured__") and
+    $__BEM-configured__
+  ) {
+    @return true;
+  }
+  @return false;
+}

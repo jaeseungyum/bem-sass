@@ -5,13 +5,24 @@
 // ============================== 
 
 @mixin init-bem-sass() {
+
+  @if is-BEM-initialized() {
+    @error "bem-sass is already initialized";
+  }
+
   $__BEM-entities__: () !global;
+  $__BEM-initialized__: true !global;
 }
 
 // Set BEM configurations 
 //
 // @param { map } a BEM separator map (e.g (element: "__", modifier: "_"))
 @mixin configure-bem-sass($map:null) { 
+
+  @if is-BEM-configured() {
+    @error "bem-sass is already configured";
+  }
+
   $defaults: (
     default-prefix: "",
     block-types: (),
@@ -21,6 +32,7 @@
 
   @if ($map) {
     $defaults: map-merge($defaults, $map);
+    $__BEM-configured__: true !global;
   } 
 
   $__BEM-default-prefix__: map-get($defaults, "default-prefix") !global;

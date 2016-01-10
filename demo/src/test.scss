@@ -36,7 +36,7 @@
   ),
   element-sep: "__",
   modifier-sep: "_"
-));
+)); 
 
 /* block: (component: "c-") */
 @include block(component, component) {
