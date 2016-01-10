@@ -285,7 +285,7 @@ When compiled:
 }
 ```
 
-### Element + Element
+### Element + element in a modifier
 Given that you want to add a top line to each item of a modified nav block except the first item. With `&` provided by the original Sass, you cannot achieve this requirement. In that kind of circumstance, you can use `adjacent-siblings` mixin.
 
 ```scss
