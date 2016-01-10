@@ -20,30 +20,24 @@
 // @param { String } $search - searching string
 // @return { String | null } - matched string
 
-@function str-match($string, $search) {
+@function str-match($string, $search) { 
   @if (str-index($string, $search)) {
+
     $start: str-index($string, $search);
-    $end: $start + str-length($search) - 1;
-    $suspect: str-slice($string, $start, $end); 
+    $end: $start + str-length($search) - 1; 
+    $next-chr: str-slice(
+      $string, 
+      $end + 1, 
+      $end + 1 
+    );
+    $suspect: str-slice($string, $start, $end);  
 
-    // and finding the exact matched one
     @if (
-      //if the next character is equal to search string,
-      str-slice(
-        $string,
-        $end + 1,
-        $end + 1
-      ) == $search
-    ) {
-      @return str-match(str-slice($string, $end + 2), $search);
-    } 
-
-    @if ($suspect == $search) {
-      @return $suspect;
-    } @else {
-      @return str-match(str-slice($string, $end + 1), $search);
-    }
-  } 
+      $suspect == $search and
+      $next-chr != $search 
+    ) { @return $suspect; } 
+    @return str-match(str-slice($string, $end + str-length($search) + 1), $search);
+  }
 
   @return null;
 }

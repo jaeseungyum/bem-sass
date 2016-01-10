@@ -30,10 +30,10 @@ describe("Custom string functions", function() {
         "_"
       ).isFalsy();
 
-      /*sassaby.func("str-match").calledWithArgs(*/
-      /*"block-element",*/
-      /*"__"*/
-      /*).isFalsy();*/
+      sassaby.func("str-match").calledWithArgs(
+        "block-element",
+        "__"
+      ).isFalsy();
     });
   });
 });

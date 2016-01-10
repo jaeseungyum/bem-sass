@@ -224,7 +224,7 @@
 // @param  { List } the selector
 // @return { Boolean }
 @function is-a-modifier($selector) {
-  @if (str-match(inspect($selector), get-BEM-modifier-sep())) {
+  @if (str-match(selector-to-string($selector), get-BEM-modifier-sep())) {
     @return true;
   }
   @return false;
@@ -235,7 +235,7 @@
 // @param  { List } the selector
 // @return { Boolean }
 @function is-an-element($selector) {
-  @if (str-match(inspect($selector), get-BEM-element-sep())) {
+  @if (str-match(selector-to-string($selector), get-BEM-element-sep())) {
     @return true;
   }
   @return false;
