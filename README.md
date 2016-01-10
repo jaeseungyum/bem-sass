@@ -174,7 +174,7 @@ When compiled:
 ```
 
 ## Extended Details
-### Boolean modifier & Key-value modifier
+### Boolean Modifier & Key-Value Modifier
 bem-sass supports key-value modifiers. If you pass 2 arguments when using `modifier` mixin, this will generates a key-value modifier. Passing a single argument generates a boolean modifier.
 ```scss
 // @see https://en.bem.info/method/naming-convention/#block-modifier
@@ -212,7 +212,7 @@ bem-sass supports key-value modifiers. If you pass 2 arguments when using `modif
 }
 ```
 
-### Element modifier
+### Element Modifier
 
 Elements could also get modified by their own modifiers.
 ```scss
@@ -243,7 +243,7 @@ Elements could also get modified by their own modifiers.
   /*...the radio type menu item styles are here...*/
 }
 ```
-### Using cascades in BEM
+### Using Cascades in BEM
 ```scss
 // @see https://en.bem.info/method/solved-problems/#using-cascades-in-bem
 
@@ -285,7 +285,7 @@ When compiled:
 }
 ```
 
-### Element + element in a modifier
+### Adjacent Sibling Elements in a Modifier
 Given that you want to add a top line to each item of a modified nav block except the first item. With `&` provided by the original Sass, you cannot achieve this requirement. In that kind of circumstance, you can use `adjacent-siblings` mixin.
 
 ```scss
@@ -314,7 +314,7 @@ When compiled:
 
 ## Caveats
 
-### Element and modifier cannot be used stand-alone
+### Element and Modifier Cannot Be Used Stand-Alone
 An element(or a modifier) is a part of a block. It has no standalone meaning without it's parent block.
 ```scss
 // @see https://en.bem.info/method/key-concepts/#element
@@ -334,8 +334,8 @@ Error: element cannot be declared ouside of a block
 Error: modifier cannot be declared ouside of a block
 ```
 
-### Elements within elements are bad
-The existence of elements of elements is an antipattern because it hinders the ability to change the internal structure of the block: elements cannot be swapped around, removed or added without modifying the existing code.
+### Elements Within Elements
+The existence of elements of elements is an antipattern because it hinders the ability to change the internal structure of the block. bem-sass prevents you from creating those kind of elements.
 
 ```scss
 // @see https://en.bem.info/faq/#why-does-bem-not-recommend-using-elements-within-elements-block__elem1__elem2
@@ -347,7 +347,6 @@ The existence of elements of elements is an antipattern because it hinders the a
   }
 }
 ```
-When compiled:
 ```
 Error: element cannot be declared in another element
 ```
@@ -375,8 +374,6 @@ bem-sass ensures that every BEM entity you create is immutable. It prevents you 
   /*...CSS declarations here...*/ 
 }
 ```
-
-When compiled:
 ```
 Error: in `element': Attempt to reassign `.nav__item` 
 Error: in `block': Attempt to reassign `.nav`
