@@ -307,7 +307,7 @@ Given that you want to add a top line to each item of a modified nav block excep
 ```
 When compiled: 
 ```css
-.nav_secondary .nav__item + .nav__item {
+.nav_secondary > .nav__item + .nav__item {
   border-top: 1px solid rgb(0, 0, 0);
 }
 ```
