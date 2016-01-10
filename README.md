@@ -335,7 +335,7 @@ Error: modifier cannot be declared ouside of a block
 ```
 
 ### Elements Within Elements
-The existence of elements of elements is an antipattern because it hinders the ability to change the internal structure of the block. bem-sass prevents you from creating those kind of elements.
+The existence of elements of elements is an antipattern because it hinders the ability to change the internal structure of the block. bem-sass prevents you from creating those kind of invalid elements.
 
 ```scss
 // @see https://en.bem.info/faq/#why-does-bem-not-recommend-using-elements-within-elements-block__elem1__elem2
@@ -351,7 +351,7 @@ The existence of elements of elements is an antipattern because it hinders the a
 Error: element cannot be declared in another element
 ```
 
-### Immutability
+### Keep BEM Entities Immutable
 bem-sass ensures that every BEM entity you create is immutable. It prevents you from reassigning css classes which in turn produces side effects.
 
 ```scss
