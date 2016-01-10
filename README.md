@@ -187,7 +187,7 @@ When compiled:
 ```
 
 ### Share Common CSS Rules Between Elements
-Since bem-sass enforces immutability on every BEM entity, there can be inevitable duplications between some elements that share common css rules. Given that `nav__item` and `nav__link` have common css rules. It seems that the only way to reduce the duplication is using sass placeholder and '@extend'.
+Given that `nav__item` and `nav__link` have common css rules. Since bem-sass enforces immutability on every BEM entity, it seems that the only way to avoid an inevitable code duplication is using Sass placeholder and `@extend`.
 
 ```scss
 @include block(nav) { 
@@ -207,7 +207,7 @@ Since bem-sass enforces immutability on every BEM entity, there can be inevitabl
 }
 ```
 
-But when compiled, this produces nested selectors like below:
+But when compiled, this produces unexpected nested selectors like below:
 ```css
 .nav .nav__item,
 .nav .nav__link {
@@ -216,22 +216,21 @@ But when compiled, this produces nested selectors like below:
 }
 ```
 
-To avoid this, bem-sass provides `def-rules`.
-
+To avoid this, bem-sass provides `def-rules` and `get-rules`.
 ```scss
 @include block(nav) {
 
-  @include def-rules("nav-items") {
+  @include def-rules("items") {
     display: inline-block;
     height: 100%;
   }
 
   @include element(item) {
-    @include get-rules("nav-items");
+    @include get-rules("items");
   }
 
   @include element(link) {
-    @include get-rules("nav-items");
+    @include get-rules("items");
   }
 }
 ```
@@ -242,7 +241,8 @@ To avoid this, bem-sass provides `def-rules`.
   height: 100%;
 }
 ```
-Note that `def-rules` and `get-rules` should be inside of a block. Common css rule set you create by `def-rules` is also immutable, hence it cannot be declared more than once in the block context.
+Note that `def-rules` and `get-rules` should be inside of a block.
+
 
 ## Custom Configurations
 You can configure bem-sass options by `configure-bem-sass` mixin. Using this mixin is optional. If there have been no custom configurations, the default options are exactly the same as below:
