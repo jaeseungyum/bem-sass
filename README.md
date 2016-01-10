@@ -48,9 +48,9 @@ When compiled:
 ```
 
 ## Custom Configurations
-You can configure bem-sass options by `configure-BEM` mixin. Using this mixin is optional. If there have been no custom configurations, the default options are exactly the same as below:
+You can configure bem-sass options by `configure-bem-sass` mixin. Using this mixin is optional. If there have been no custom configurations, the default options are exactly the same as below:
 ```scss
-@include configure-BEM ((
+@include configure-bem-sass ((
   default-prefix: "",
   block-types: (),
   element-sep: "__",
@@ -61,7 +61,7 @@ You can configure bem-sass options by `configure-BEM` mixin. Using this mixin is
 #### ```default-prefix```
 Set the default prefix for `block` mixin.
 ```scss
-@include configure-BEM((
+@include configure-bem-sass((
   default-prefix: "b-" // Set default block prefix to "b-"
 ));
 
@@ -90,7 +90,7 @@ When compiled:
 #### ```block-types```
 Sometimes you may need to define several block types to organize your css object structure especially when you are considering a methodology like [ITCSS](https://speakerdeck.com/dafed/managing-css-projects-with-itcss). You can define your own several block levels by adding `block type: prefix` pair to `block-types` map.
 ```scss
-@include configure-BEM((
+@include configure-bem-sass((
   block-types: (
     object:    "o-",  
     component: "c-"
@@ -139,7 +139,7 @@ When compiled:
 You can set your own BEM element/modifier separators.
 
 ```scss
-@include configure-BEM((
+@include configure-bem-sass((
   // Set separators like Medium.com
   element-sep: "-",
   modifier-sep: "--"

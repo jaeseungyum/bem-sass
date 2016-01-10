@@ -23,9 +23,13 @@
       }
     } 
   } 
+
+  @media screen and (min-width: 767px) {
+    color: red;
+  }
 } 
 
-@include configure-BEM((
+@include configure-bem-sass((
   block-types: (
     component: c-,
     object:    o-

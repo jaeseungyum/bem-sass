@@ -4,14 +4,14 @@
 //
 // ============================== 
 
-@mixin init-BEM() {
+@mixin init-bem-sass() {
   $__BEM-entities__: () !global;
 }
 
 // Set BEM configurations 
 //
 // @param { map } a BEM separator map (e.g (element: "__", modifier: "_"))
-@mixin configure-BEM($map:null) { 
+@mixin configure-bem-sass($map:null) { 
   $defaults: (
     default-prefix: "",
     block-types: (),
