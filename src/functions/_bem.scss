@@ -4,6 +4,32 @@
 //
 // ============================== 
 
+// Check if bem-sass is initialized or not
+// @return { Boolean }
+@function is-BEM-initialized() {
+  @if (
+    variable-exists("__BEM-initialized__") and 
+    $__BEM-initialized__
+  ) {
+    @return true;
+  }
+
+  @return false;
+}
+
+
+// Check if bem-sass is configured or not
+@function is-BEM-configured() {
+  @if (
+    variable-exists("__BEM-configured__") and
+    $__BEM-configured__
+  ) {
+    @return true;
+  }
+  @return false;
+}
+
+
 // Construct BEM block selector string
 //
 // @param  { String } name of the block 
@@ -213,9 +239,10 @@
     @return true;
   }
   @return false;
-}
+} 
 
-// Check if a BEM entity exists or not
+
+// Check if a BEM entity exists in the log or not
 // @param { String } the selector string
 // @return { Boolean }
 @function BEM-entity-exists($selector-string) {
@@ -231,43 +258,68 @@
 // @return { List } logged BEM entities(as String)
 @function get-BEM-entities() {
   @return $__BEM-entities__;
-}
+} 
 
 
-// Add a BEM entity to the list of BEM entities
+// Log a BEM entity to the list of BEM entities
 // @param { String } the selector string
 // @return { Boolean }
 @function log-BEM-entity($selector-string) {
-  $__BEM-entities__: append($__BEM-entities__, $selector-string) !global;
+  @if set-BEM-entities(append(get-BEM-entities(), $selector-string)) {
+    @return true;
+  }
+  @return false;
+} 
+
+
+// Set BEM entities list
+// @params { List } value
+// @return { Boolean } true 
+@function set-BEM-entities($value) {
+  $__BEM-entities__: $value !global;
   @return true;
-}
+} 
 
 
-// Check if bem-sass is initialized or not
+// Check if the common rules exists in the log or not
+// @param { String } the selector string
 // @return { Boolean }
-@function is-BEM-initialized() {
-  @if (
-    variable-exists("__BEM-initialized__") and 
-    $__BEM-initialized__
-  ) {
-    @return true;
-  }
-
-  @return false;
-}
-
-// Check if bem-sass is configured or not
-@function is-BEM-configured() {
-  @if (
-    variable-exists("__BEM-configured__") and
-    $__BEM-configured__
-  ) {
-    @return true;
+@function common-rules-exists($selector-string) {
+  @each $rules in get-common-rules() {
+    @if ($rules == $selector-string) {
+      @return true;
+    }
   }
   @return false;
 }
+
+
+// Get common rules
+@function get-common-rules() {
+  @return $__BEM-common-rules__;
+} 
+
+
+// Set common rules
+@function set-common-rules($value) {
+  $__BEM-common-rules__: $value !global;
+  @return true;
+} 
+
+
+// log a common rules to the list of common rules; 
+// @param { String } the selector string
+// @return { Boolean }
+@function log-common-rules($selector-string) {
+  @if set-common-rules(append(get-common-rules(), $selector-string)) {
+    @return true;
+  }
+  @return false;
+} 
+
 
 // Make block's common rules placeholder
 @function rules-placeholder($string, $context) {
-  @return str-slice(get-BEM-block($context), 2) + "__CR__" + $string;
+  @return str-slice(get-BEM-block($context), 2) + "__CRS__" + $string;
 }
+

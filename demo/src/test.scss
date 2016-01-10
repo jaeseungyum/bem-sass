@@ -62,7 +62,7 @@
 
   @include def-rules("nav-item") {
     font-size: 1em;
-  }
+  } 
 
   @include element(header) {
     @include get-rules("nav-item");

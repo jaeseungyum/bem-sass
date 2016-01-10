@@ -11,6 +11,7 @@
   }
 
   $__BEM-entities__: () !global;
+  $__BEM-common-rules__: () !global;
   $__BEM-initialized__: true !global;
 }
 
@@ -178,9 +179,16 @@
     @error "`def-rules` should be inside a block";
   }
 
-  @at-root %#{rules-placeholder($rule-name, $context)} {
-    @content
+  @if common-rules-exists(rules-placeholder($rule-name, $context)) {
+    @error "Attempt to reassign the common rules `#{$rule-name}` in `#{get-BEM-block($context)}`"
   }
+
+  @if (log-common-rules(rules-placeholder($rule-name, $context))) {
+    @at-root %#{rules-placeholder($rule-name, $context)} {
+      @content
+    }
+  }
+
 }
 
 
@@ -191,6 +199,10 @@
 
   @if ($context == null) {
     @error "`rules` should be inside a block";
+  } 
+
+  @if (not common-rules-exists(rules-placeholder($rule-name, $context))) {
+    @error "There are no common rules `#{$rule-name}` in `#{get-BEM-block($context)}`";
   }
 
   @extend %#{rules-placeholder($rule-name, $context)};
