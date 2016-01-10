@@ -20,9 +20,9 @@
 // @param  { String } the element name
 // @param  { Boolean } called in a modifier context? 
 // @return { String } the constructed BEM element selector string
-@function make-BEM-element-selector($name, $in-BEM-modifier: false) {
+@function make-BEM-element-selector($name, $in-a-modifier: false) {
 
-  @if ($in-BEM-modifier) {
+  @if ($in-a-modifier) {
     @return (
       & + ">" + make-BEM-element-selector($name)
     );
@@ -38,7 +38,7 @@
 // @param { String } the modifier name
 // @param { Boolean } called in an element context?
 // @return { String } the constructed BEM modifier selector string
-@function make-BEM-modifier-selector($name, $value: null, $in-BEM-element: false) {
+@function make-BEM-modifier-selector($name, $value: null, $in-an-element: false) {
 
   @if ($value) {
     @return (
@@ -49,7 +49,7 @@
     );
   }
 
-  @if ($in-BEM-element) {
+  @if ($in-an-element) {
     @return (
       & + get-BEM-modifier-sep() + $name 
     )
@@ -197,17 +197,18 @@
 // Check if a given selector is a BEM modifier or not
 // @param  { List } the selector
 // @return { Boolean }
-@function is-BEM-modifier($selector) {
+@function is-a-modifier($selector) {
   @if (str-match(inspect($selector), get-BEM-modifier-sep())) {
     @return true;
   }
   @return false;
 } 
 
+
 // Check if a given selector is a BEM element or not
 // @param  { List } the selector
 // @return { Boolean }
-@function is-BEM-element($selector) {
+@function is-an-element($selector) {
   @if (str-match(inspect($selector), get-BEM-element-sep())) {
     @return true;
   }
@@ -218,7 +219,7 @@
 // @param { String } the selector string
 // @return { Boolean }
 @function BEM-entity-exists($selector-string) {
-  @each $BEM-entity in $__BEM-entities__ {
+  @each $BEM-entity in get-BEM-entities() {
     @if ($BEM-entity == $selector-string) {
       @return true;
     }
@@ -226,13 +227,21 @@
   @return false;
 }
 
-// Add a BEM entity to BEM-entities list
+// Get BEM entities list
+// @return { List } logged BEM entities(as String)
+@function get-BEM-entities() {
+  @return $__BEM-entities__;
+}
+
+
+// Add a BEM entity to the list of BEM entities
 // @param { String } the selector string
 // @return { Boolean }
-@function register-BEM-entity($selector-string) {
+@function log-BEM-entity($selector-string) {
   $__BEM-entities__: append($__BEM-entities__, $selector-string) !global;
   @return true;
 }
+
 
 // Check if bem-sass is initialized or not
 // @return { Boolean }

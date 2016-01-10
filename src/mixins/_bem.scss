@@ -62,7 +62,7 @@
     @error "Attempt to reassign `#{$BEM-block-entity}`"
   } 
 
-  @if (register-BEM-entity($BEM-block-entity)) {
+  @if (log-BEM-entity($BEM-block-entity)) {
     #{$BEM-block-entity} {
       @content;
     }
@@ -81,18 +81,18 @@
     @error "element cannot be declared outside of a block"
   }
 
-  @if (is-BEM-element(&)) {
+  @if (is-an-element(&)) {
     @error "element cannot be declared in another element"
   }
 
   @at-root {
-    $BEM-element-entity: make-BEM-element-selector($name, is-BEM-modifier(&));
+    $BEM-element-entity: make-BEM-element-selector($name, is-a-modifier(&));
 
     @if BEM-entity-exists($BEM-element-entity) {
       @error "Attempt to reassign `#{$BEM-element-entity}`"
     }
 
-    @if (register-BEM-entity($BEM-element-entity)) {
+    @if (log-BEM-entity($BEM-element-entity)) {
       #{$BEM-element-entity} {
         @content;
       }
@@ -111,13 +111,13 @@
   }
 
   @at-root {
-    $BEM-modifier-entity: make-BEM-modifier-selector($name, $value, is-BEM-element(&));
+    $BEM-modifier-entity: make-BEM-modifier-selector($name, $value, is-an-element(&));
     
     @if BEM-entity-exists($BEM-modifier-entity) {
       @error "Attempt to reassign `#{$BEM-modifier-entity}`"
     }
 
-    @if register-BEM-entity($BEM-modifier-entity) {
+    @if log-BEM-entity($BEM-modifier-entity) {
       #{$BEM-modifier-entity} {
         @content;
       }
