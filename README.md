@@ -175,7 +175,7 @@ When compiled:
 
 ## Extended Details
 ### Boolean Modifier & Key-Value Modifier
-bem-sass supports key-value modifiers. If you pass 2 arguments when using `modifier` mixin, this will generates a key-value modifier. Passing a single argument generates a boolean modifier.
+bem-sass supports key-value modifiers. When using `modifier`, passing a single argument generates a boolean modifier, whereas passing 2 arguments generates a key-value modifier.
 ```scss
 // @see https://en.bem.info/method/naming-convention/#block-modifier
 
