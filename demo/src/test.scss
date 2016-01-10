@@ -23,10 +23,6 @@
       }
     } 
   } 
-
-  @media screen and (min-width: 767px) {
-    color: red;
-  }
 } 
 
 @include configure-bem-sass((
@@ -37,15 +33,6 @@
   element-sep: "__",
   modifier-sep: "_"
 )); 
-
-/* block: (component: "c-") */
-@include block(component, component) {
-  color: blue;
-
-  @include element(element) {
-    color: red;
-  }
-}
 
 /* block: (object: "o-") */
 @include block(media, object) {
@@ -66,5 +53,24 @@
     @include element(body) {
       color: blue;
     }
+  }
+} 
+
+/* block: (component: "c-") */
+@include block(nav, component) {
+  color: blue;
+
+  @include def-rules("nav-item") {
+    font-size: 1em;
+  }
+
+  @include element(header) {
+    @include get-rules("nav-item");
+    color: red;
+  }
+
+  @include element(search) {
+    @include get-rules("nav-item");
+    color: blue;
   }
 } 

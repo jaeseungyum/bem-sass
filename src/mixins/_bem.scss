@@ -167,3 +167,31 @@
     @content;
   }
 } 
+
+
+// Define common css rules to be share with elements inside a given block
+// @param { String } rule-name
+@mixin def-rules($rule-name) {
+  $context: &;
+
+  @if ($context == null) {
+    @error "`def-rules` should be inside a block";
+  }
+
+  @at-root %#{rules-placeholder($rule-name, $context)} {
+    @content
+  }
+}
+
+
+// Get common css rules inside a given block
+// @param { String } rule-name
+@mixin get-rules($rule-name) {
+  $context: &;
+
+  @if ($context == null) {
+    @error "`rules` should be inside a block";
+  }
+
+  @extend %#{rules-placeholder($rule-name, $context)};
+}

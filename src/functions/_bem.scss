@@ -266,3 +266,8 @@
   }
   @return false;
 }
+
+// Make block's common rules placeholder
+@function rules-placeholder($string, $context) {
+  @return str-slice(get-BEM-block($context), 2) + "__CR__" + $string;
+}
