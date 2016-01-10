@@ -186,7 +186,7 @@ When compiled:
 }
 ```
 
-### Share Common CSS Rules Between Elements
+### Shared CSS Rules Between Elements
 Given that `nav__item` and `nav__link` have common css rules. Since bem-sass enforces immutability on every BEM entity, it seems that the only way to avoid an inevitable code duplication is using Sass placeholder and `@extend`.
 
 ```scss
