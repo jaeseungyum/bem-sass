@@ -57,14 +57,14 @@ describe("BEM mixins", function() {
         mixin.calledWithBlockAndArgs(
           "@include modifier(mod) { @include element(elem) { content: 'whatever'; } }", 
           "block-name"
-        ).createsSelector(".block-name_mod .block-name__elem");
+        ).createsSelector(".block-name_mod>.block-name__elem");
       });
 
       it("makes adjacent sibling BEM elements in the given modifier context", function() {
         mixin.calledWithBlockAndArgs(
           "@include modifier(mod) { @include element(elem) { @include adjacent-siblings { content: 'whatever';} } }", 
           "block-name"
-        ).createsSelector(".block-name_mod .block-name__elem+.block-name__elem"); 
+        ).createsSelector(".block-name_mod>.block-name__elem+.block-name__elem"); 
       });
     }); 
   });

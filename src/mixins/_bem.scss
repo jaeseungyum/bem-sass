@@ -147,7 +147,7 @@
   $element: selector-to-string(
     str-slice(
       inspect(&), 
-      str-index(inspect(&), " ") + 1
+      str-index(inspect(&), " ") + 3
     )
   );
 
