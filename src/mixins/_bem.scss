@@ -12,7 +12,14 @@
 
   $__BEM-entities__: () !global;
   $__BEM-common-rules__: () !global;
+  $__BEM-prefixes__: () !global;
   $__BEM-initialized__: true !global;
+
+  $__bem-sass__: (
+    entities: (),
+    common-rules: (),
+    prefixes: ()
+  ) !global;
 }
 
 // Set BEM configurations 

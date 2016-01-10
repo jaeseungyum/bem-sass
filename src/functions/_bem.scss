@@ -7,13 +7,9 @@
 // Check if bem-sass is initialized or not
 // @return { Boolean }
 @function is-BEM-initialized() {
-  @if (
-    variable-exists("__BEM-initialized__") and 
-    $__BEM-initialized__
-  ) {
+  @if (variable-exists("__bem-sass__")) {
     @return true;
-  }
-
+  } 
   @return false;
 }
 
