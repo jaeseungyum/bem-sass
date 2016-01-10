@@ -392,7 +392,7 @@ Error: element should be inside of a block
 Error: modifier should be inside of a block
 ```
 
-### Elements Within Elements
+### Avoid Elements Within Elements
 The existence of elements of elements is an antipattern because it hinders the ability to change the internal structure of the block. bem-sass prevents you from creating those kind of invalid elements.
 
 ```scss
@@ -406,7 +406,7 @@ The existence of elements of elements is an antipattern because it hinders the a
 }
 ```
 ```
-Error: element should not be inside of another element
+Error: element should not be within another element
 ```
 
 ### Keep BEM Entities Immutable
