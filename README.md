@@ -47,132 +47,6 @@ When compiled:
 }
 ```
 
-## Custom Configurations
-You can configure bem-sass options by `configure-bem-sass` mixin. Using this mixin is optional. If there have been no custom configurations, the default options are exactly the same as below:
-```scss
-@include configure-bem-sass ((
-  default-prefix: "",
-  block-types: (),
-  element-sep: "__",
-  modifier-sep: "_"
-));
-```
-
-#### ```default-prefix```
-Set the default prefix for `block` mixin.
-```scss
-@include configure-bem-sass((
-  default-prefix: "b-" // Set default block prefix to "b-"
-));
-
-/* Menu block */
-@include block(menu) {
-  /*...styles are here...*/
-  
-  @include element(item) {
-    /*...styles are here...*/
-  }
-}
-```
-
-When compiled:
-```css
-/* Menu block */
-.b-menu {
-  /*...styles here...*/
-}
-
-.b-menu__item {
-  /*...styles here...*/
-}
-```
-
-#### ```block-types```
-Sometimes you may need to define several block types to organize your css object structure especially when you are considering a methodology like [ITCSS](https://speakerdeck.com/dafed/managing-css-projects-with-itcss). You can define your own several block levels by adding `block type: prefix` pair to `block-types` map.
-```scss
-@include configure-bem-sass((
-  block-types: (
-    object:    "o-",  
-    component: "c-"
-  )
-));
-
-/* Media object */
-@include block(media, "object") {
-  /*...styles are here...*/
-
-  @include element(body) {
-    /*...styles are here...*/
-  }
-}
-
-/* Menu component */
-@include block(menu, "component") {
-  /*...styles are here...*/
-
-  @include element(item) {
-    /*...styles are here...*/
-  }
-}
-```
-
-When compiled:
-```css
-/* Media object */
-.o-media {
-  /*...styles are here...*/
-}
-.o-media__body {
-  /*...styles are here...*/
-}
-
-/* Menu component */
-.c-menu {
-  /*...styles are here...*/
-}
-.c-menu__item {
-  /*...styles are here...*/
-}
-```
-
-#### ```element-sep```, ```modifier-sep```
-You can set your own BEM element/modifier separators.
-
-```scss
-@include configure-bem-sass((
-  // Set separators like Medium.com
-  element-sep: "-",
-  modifier-sep: "--"
-));
-
-/* Promo block */
-@include block(promo) {
-  /*...styles are here...*/
-  
-  @include element(title) {
-    /*...styles are here...*/
-  }
-  
-  @include modifier(hero) {
-    /*...styles are here...*/
-  }
-}
-```
-
-When compiled:
-```css
-/* Promo block */
-.promo {
-  /*...styles are here...*/
-}
-.promo-title {
-  /*...styles are here...*/
-}
-.promo--hero {
-  /*...styles are here...*/
-}
-```
-
 ## Extended Details
 ### Boolean Modifier & Key-Value Modifier
 bem-sass supports key-value modifiers. When using `modifier`, passing a single argument generates a boolean modifier, whereas passing 2 arguments generates a key-value modifier.
@@ -312,6 +186,190 @@ When compiled:
 }
 ```
 
+### Share Common CSS Rules Between Elements
+Since bem-sass enforces immutability on every BEM entity, there can be inevitable duplications between some elements that share common css rules. Given that `nav__item` and `nav__link` have common css rules. It seems that the only way to reduce the duplication is using sass placeholder and '@extend'.
+
+```scss
+@include block(nav) { 
+
+  %common-rules {
+    display: inline-block;
+    height: 100%;
+  }
+
+  @include element(item) {
+    @extend %common-rules;
+  }
+
+  @include element(link) {
+    @extend %common-rules;
+  }
+}
+```
+
+But when compiled, this produces nested selectors like below:
+```css
+.nav .nav__item,
+.nav .nav__link {
+  display: inline-block;
+  height: 100%;
+}
+```
+
+To avoid this, bem-sass provides `def-rules`.
+
+```scss
+@include block(nav) {
+
+  @include def-rules("nav-items") {
+    display: inline-block;
+    height: 100%;
+  }
+
+  @include element(item) {
+    @include get-rules("nav-items");
+  }
+
+  @include element(link) {
+    @include get-rules("nav-items");
+  }
+}
+```
+```css
+.nav__item,
+.nav__link {
+  display: inline-block;
+  height: 100%;
+}
+```
+Note that `def-rules` and `get-rules` should be inside of a block. Common css rule set you create by `def-rules` is also immutable, hence it cannot be declared more than once in the block context.
+
+## Custom Configurations
+You can configure bem-sass options by `configure-bem-sass` mixin. Using this mixin is optional. If there have been no custom configurations, the default options are exactly the same as below:
+```scss
+@include configure-bem-sass ((
+  default-prefix: "",
+  block-types: (),
+  element-sep: "__",
+  modifier-sep: "_"
+));
+```
+
+#### ```default-prefix```
+Set the default prefix for `block` mixin.
+```scss
+@include configure-bem-sass((
+  default-prefix: "b-" // Set default block prefix to "b-"
+));
+
+/* Menu block */
+@include block(menu) {
+  /*...styles are here...*/
+  
+  @include element(item) {
+    /*...styles are here...*/
+  }
+}
+```
+
+When compiled:
+```css
+/* Menu block */
+.b-menu {
+  /*...styles here...*/
+}
+
+.b-menu__item {
+  /*...styles here...*/
+}
+```
+
+#### ```block-types```
+Sometimes you may need to define several block types to organize your css object structure especially when you are considering a methodology like [ITCSS](https://speakerdeck.com/dafed/managing-css-projects-with-itcss). You can define your own several block levels by adding `block type: prefix` pair to `block-types` map.
+```scss
+@include configure-bem-sass((
+  block-types: (
+    object:    "o-",  
+    component: "c-"
+  )
+));
+
+/* Media object */
+@include block(media, "object") {
+  /*...styles are here...*/
+
+  @include element(body) {
+    /*...styles are here...*/
+  }
+}
+
+/* Menu component */
+@include block(menu, "component") {
+  /*...styles are here...*/
+
+  @include element(item) {
+    /*...styles are here...*/
+  }
+}
+```
+
+When compiled:
+```css
+/* Media object */
+.o-media {
+  /*...styles are here...*/
+}
+.o-media__body {
+  /*...styles are here...*/
+}
+
+/* Menu component */
+.c-menu {
+  /*...styles are here...*/
+}
+.c-menu__item {
+  /*...styles are here...*/
+}
+```
+
+#### ```element-sep```, ```modifier-sep```
+You can set your own BEM element/modifier separators.
+
+```scss
+@include configure-bem-sass((
+  // Set separators like Medium.com
+  element-sep: "-",
+  modifier-sep: "--"
+));
+
+/* Promo block */
+@include block(promo) {
+  /*...styles are here...*/
+  
+  @include element(title) {
+    /*...styles are here...*/
+  }
+  
+  @include modifier(hero) {
+    /*...styles are here...*/
+  }
+}
+```
+
+When compiled:
+```css
+/* Promo block */
+.promo {
+  /*...styles are here...*/
+}
+.promo-title {
+  /*...styles are here...*/
+}
+.promo--hero {
+  /*...styles are here...*/
+}
+```
+
 ## Caveats
 
 ### Element and Modifier Cannot Be Used Stand-Alone
@@ -330,8 +388,8 @@ An element(or a modifier) is a part of a block. It has no standalone meaning wit
 
 When compiled:
 ```
-Error: element cannot be declared ouside of a block
-Error: modifier cannot be declared ouside of a block
+Error: element should be inside of a block
+Error: modifier should be inside of a block
 ```
 
 ### Elements Within Elements
@@ -348,7 +406,7 @@ The existence of elements of elements is an antipattern because it hinders the a
 }
 ```
 ```
-Error: element cannot be declared in another element
+Error: element should not be inside of another element
 ```
 
 ### Keep BEM Entities Immutable
@@ -378,6 +436,7 @@ bem-sass ensures that every BEM entity you create is immutable. It prevents you 
 Error: in `element': Attempt to reassign `.nav__item` 
 Error: in `block': Attempt to reassign `.nav`
 ```
+
 
 ## See Also
 + https://en.bem.info/

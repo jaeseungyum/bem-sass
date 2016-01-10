@@ -79,11 +79,11 @@
 @mixin element($name) { 
 
   @if (& == null) {
-    @error "element cannot be declared outside of a block"
+    @error "element should be inside of a block"
   }
 
   @if (is-an-element(&)) {
-    @error "element cannot be declared in another element"
+    @error "element should not be within another element"
   }
 
   @at-root {
@@ -108,7 +108,7 @@
 // @author Yum<ym.jsng@gmail.com>
 @mixin modifier($name, $value: null) { 
   @if (& == null) {
-    @error "modifier cannot be declared ouside of a block"
+    @error "modifier should be inside of a block"
   }
 
   @at-root {
@@ -176,7 +176,7 @@
   $context: &;
 
   @if ($context == null) {
-    @error "`def-rules` should be inside a block";
+    @error "`def-rules` should be inside of a block";
   }
 
   @if common-rules-exists(rules-placeholder($rule-name, $context)) {
@@ -198,7 +198,7 @@
   $context: &;
 
   @if ($context == null) {
-    @error "`rules` should be inside a block";
+    @error "`rules` should be inside of a block";
   } 
 
   @if (not common-rules-exists(rules-placeholder($rule-name, $context))) {
