@@ -6,47 +6,45 @@
 
 @mixin init-bem-sass() {
 
-  @if is-BEM-initialized() {
+  @if is-bem-sass-initialized() {
     @error "bem-sass is already initialized";
-  }
-
-  $__BEM-entities__: () !global;
-  $__BEM-common-rules__: () !global;
-  $__BEM-prefixes__: () !global;
-  $__BEM-initialized__: true !global;
+  } 
 
   $__bem-sass__: (
     entities: (),
     common-rules: (),
-    prefixes: ()
+    prefixes: (),
+    config: (
+      default-prefix: unquote(""),
+      block-types: (),
+      element-sep: unquote("__"),
+      modifier-sep: unquote("_")
+    ),
+    state: (
+      configured: false
+    )
   ) !global;
 }
 
-// Set BEM configurations 
+// Set BEM config 
 //
 // @param { map } a BEM separator map (e.g (element: "__", modifier: "_"))
 @mixin configure-bem-sass($map:null) { 
 
   @if is-BEM-configured() {
     @error "bem-sass is already configured";
-  }
-
-  $defaults: (
-    default-prefix: "",
-    block-types: (),
-    element-sep: "__",
-    modifier-sep: "_"
-  );
-
-  @if ($map) {
-    $defaults: map-merge($defaults, $map);
-    $__BEM-configured__: true !global;
   } 
 
-  $__BEM-default-prefix__: map-get($defaults, "default-prefix") !global;
-  $__BEM-block-types__: map-get($defaults, "block-types") !global;
-  $__BEM-element-sep__: map-get($defaults, "element-sep") !global;
-  $__BEM-modifier-sep__: map-get($defaults, "modifier-sep") !global;
+  @if $map { 
+    $map: unquotize-map-string($map, "default-prefix");
+    $map: unquotize-map-string($map, "element-sep");
+    $map: unquotize-map-string($map, "modifier-sep"); 
+
+    @if (
+      bem-sass-set("config", map-merge(bem-sass-get("config"), $map)) and
+      bem-sass-set("state" "configured", true)
+    ) {};
+  } 
 }
 
 
@@ -66,11 +64,11 @@
 
   $BEM-block-entity: make-BEM-block-selector($name, $type);
 
-  @if BEM-entity-exists($BEM-block-entity) {
+  @if bem-sass-exists("entities", $BEM-block-entity) {
     @error "Attempt to reassign `#{$BEM-block-entity}`"
   } 
 
-  @if (log-BEM-entity($BEM-block-entity)) {
+  @if (bem-sass-add("entities", $BEM-block-entity)) {
     #{$BEM-block-entity} {
       @content;
     }
@@ -96,11 +94,11 @@
   @at-root {
     $BEM-element-entity: make-BEM-element-selector($name, is-a-modifier(&));
 
-    @if BEM-entity-exists($BEM-element-entity) {
+    @if bem-sass-exists("entities", $BEM-element-entity) {
       @error "Attempt to reassign `#{$BEM-element-entity}`"
     }
 
-    @if (log-BEM-entity($BEM-element-entity)) {
+    @if (bem-sass-add("entities", $BEM-element-entity)) {
       #{$BEM-element-entity} {
         @content;
       }
@@ -121,11 +119,11 @@
   @at-root {
     $BEM-modifier-entity: make-BEM-modifier-selector($name, $value, is-an-element(&));
     
-    @if BEM-entity-exists($BEM-modifier-entity) {
+    @if bem-sass-exists("entities", $BEM-modifier-entity) {
       @error "Attempt to reassign `#{$BEM-modifier-entity}`"
     }
 
-    @if log-BEM-entity($BEM-modifier-entity) {
+    @if bem-sass-add("entities", $BEM-modifier-entity) {
       #{$BEM-modifier-entity} {
         @content;
       }
@@ -186,12 +184,12 @@
     @error "`def-rules` should be inside of a block";
   }
 
-  @if common-rules-exists(rules-placeholder($rule-name, $context)) {
+  @if bem-sass-exists("common-rules", make-rules-selector($rule-name, $context)) {
     @error "Attempt to reassign the common rules `#{$rule-name}` in `#{get-BEM-block($context)}`"
   }
 
-  @if (log-common-rules(rules-placeholder($rule-name, $context))) {
-    @at-root %#{rules-placeholder($rule-name, $context)} {
+  @if (bem-sass-add("common-rules", make-rules-selector($rule-name, $context))) {
+    @at-root %#{make-rules-selector($rule-name, $context)} {
       @content
     }
   }
@@ -208,9 +206,9 @@
     @error "`rules` should be inside of a block";
   } 
 
-  @if (not common-rules-exists(rules-placeholder($rule-name, $context))) {
+  @if (not bem-sass-exists("common-rules", make-rules-selector($rule-name, $context))) {
     @error "There are no common rules `#{$rule-name}` in `#{get-BEM-block($context)}`";
   }
 
-  @extend %#{rules-placeholder($rule-name, $context)};
+  @extend %#{make-rules-selector($rule-name, $context)};
 }

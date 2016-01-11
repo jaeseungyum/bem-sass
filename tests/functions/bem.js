@@ -8,50 +8,66 @@ describe("BEM functions", function() {
   beforeEach(function() {
     sassabyWithVariables = function(variables) {
       return new Sassaby(
-        path.resolve("src/functions", "_bem.scss"),
+        path.resolve("src/functions", "_bem-constructor.scss"),
         {
           dependencies: [
-            path.resolve("src/functions", "_str.scss")
+            path.resolve("src/_bundle.scss"),
+            path.resolve("tests/fixtures/default.scss")
           ],
           variables: variables
         }
       );
-    };
+    }; 
 
     sassaby = sassabyWithVariables({
-      "__BEM-element-sep__": "__",
-      "__BEM-modifier-sep__": "_"
-    });
-
+      "defaultPrefix": null, 
+      "blockTypes": null,
+      "elementSep": "__",
+      "modifierSep": "_"
+    }); 
   }); 
 
   describe("get-BEM-element-sep", function() {
-    it("returns BEM element separator from settings", function() { 
-      sassaby = sassabyWithVariables({
-        "__BEM-element-sep__": "__"
-      });
-      sassaby.func("get-BEM-element-sep").calledWithArgs(null).equals("__");
 
-      sassaby = sassabyWithVariables({
-        "__BEM-element-sep__": "___"
+    it("returns BEM element separator from settings", function() { 
+      sassaby.func("get-BEM-element-sep").calledWithArgs(null).equals("__"); 
+    });
+
+    describe("with element separator ___", function() {
+      beforeEach(function() {
+        sassaby = sassabyWithVariables({
+          "defaultPrefix": null, 
+          "blockTypes": null,
+          "elementSep": "___",
+          "modifierSep": "_"
+        });
       });
-      sassaby.func("get-BEM-element-sep").calledWithArgs(null).equals("___");
-    }); 
+
+      it("returns BEM element separator from settings", function() { 
+        sassaby.func("get-BEM-element-sep").calledWithArgs(null).equals("___");
+      }); 
+    });
   });
 
   describe("get-BEM-modifier-sep", function() {
     it("returns BEM modifier separator from settings", function() { 
-      sassaby = sassabyWithVariables({
-        "__BEM-modifier-sep__": "_"
-      });
       sassaby.func("get-BEM-modifier-sep").calledWithArgs(null).equals("_");
-
-      sassaby = sassabyWithVariables({
-        "__BEM-modifier-sep__": "__"
-      });
-
-      sassaby.func("get-BEM-modifier-sep").calledWithArgs(null).equals("__");
     }); 
+
+    describe("with modifier separator __", function() {
+      beforeEach(function() {
+        sassaby = sassabyWithVariables({
+          "defaultPrefix": null, 
+          "blockTypes": null,
+          "elementSep": "_",
+          "modifierSep": "__"
+        });
+      });
+      it("returns BEM modifier separator from settings", function() { 
+        sassaby.func("get-BEM-modifier-sep").calledWithArgs(null).equals("__");
+      }); 
+    });
+
   });
 
 
@@ -123,18 +139,13 @@ describe("BEM functions", function() {
 
     var func;
     beforeEach(function() {
-      sassaby = sassabyWithVariables({
-        "__BEM-entities__": ["block", "block__elem"],
-        "__BEM-element-sep__": "__",
-        "__BEM-modifier-sep__": "_"
-      });
-      func = sassaby.func("BEM-entity-exists");
+      func = sassaby.func("bem-sass-exists");
     });
 
-    it("tests whether a given BEM entity is already declared or not", function() {
-
-      func.calledWithArgs("block").isTrue();
-      func.calledWithArgs("block_mod").isFalse(); 
+    it("tests whether a given BEM entity is already declared or not", function() { 
+      func.calledWithArgs("entities", "block").isTrue(); 
+      func.calledWithArgs("entities", "block__elem").isTrue(); 
+      func.calledWithArgs("entities", "block_mod").isFalse(); 
     });
   }); 
 }); 

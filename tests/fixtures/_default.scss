@@ -1,0 +1,10 @@
+@include init-bem-sass;
+@include configure-bem-sass((
+  default-prefix: $defaultPrefix or "",
+  block-types: $blockTypes or (),
+  element-sep: $elementSep or "__",
+  modifier-sep: $modifierSep or "_"
+));
+
+@if (bem-sass-add("entities", "block")) {};
+@if (bem-sass-add("entities", "block__elem")) {};

@@ -4,28 +4,6 @@
 //
 // ============================== 
 
-// Check if bem-sass is initialized or not
-// @return { Boolean }
-@function is-BEM-initialized() {
-  @if (variable-exists("__bem-sass__")) {
-    @return true;
-  } 
-  @return false;
-}
-
-
-// Check if bem-sass is configured or not
-@function is-BEM-configured() {
-  @if (
-    variable-exists("__BEM-configured__") and
-    $__BEM-configured__
-  ) {
-    @return true;
-  }
-  @return false;
-}
-
-
 // Construct BEM block selector string
 //
 // @param  { String } name of the block 
@@ -33,7 +11,7 @@
 // @return { String } the constructed BEM block selector string
 @function make-BEM-block-selector($name, $type) {
   @return (
-    "." + get-BEM-block-prefix-by-type($type) + $name
+    "." + get-BEM-block-prefix($type) + $name
   );
 }
 
@@ -51,7 +29,7 @@
   }
 
   @return (
-    get-BEM-block(&) + get-BEM-element-sep() + $name
+    get-BEM-block(&) + bem-sass-get("config", "element-sep") + $name
   );
 }
 
@@ -73,12 +51,12 @@
 
   @if ($in-an-element) {
     @return (
-      & + get-BEM-modifier-sep() + $name 
+      & + bem-sass-get("config", "modifier-sep") + $name 
     )
   }
 
   @return (
-    get-BEM-block(&) + get-BEM-modifier-sep() + $name 
+    get-BEM-block(&) + bem-sass-get("config", "modifier-sep") + $name 
   );
 } 
 
@@ -89,9 +67,15 @@
 // @return { String } a value attached BEM modifier
 @function attach-value-to-BEM-modifier($BEM-modifier-selector-string, $value) {
   @return ( 
-    $BEM-modifier-selector-string + get-BEM-modifier-sep() + $value
+    $BEM-modifier-selector-string + bem-sass-get("config", "modifier-sep") + $value
   );
 }
+
+
+// Make block's common rules placeholder
+@function make-rules-selector($string, $context) {
+  @return str-slice(get-BEM-block($context), 2) + "__CRS__" + $string;
+} 
 
 
 // Get BEM block selector(e.g "b-block") 
@@ -110,42 +94,36 @@
 // Get BEM block prefix by given type
 // @param { String } the type of the block
 // @return { String } the prefix of the block type
-@function get-BEM-block-prefix-by-type($type) { 
+@function get-BEM-block-prefix($type: null) { 
   @if ($type == null) {
-    @return get-BEM-block-prefix-default();
-  }
+    @return bem-sass-get("config", "default-prefix");
+  } 
 
-  $prefix: map-get($__BEM-block-types__, $type);
-
-  @if ($prefix == null) {
+  @if (
+    bem-sass-get(
+      "config", 
+      "block-types", 
+      $type
+    )  == null
+  ) {
     @error "block type `#{$type}` has not been declared";
   }
 
-  @return unquote(map-get($__BEM-block-types__, $type));
-}
-
-
-// Get default BEM block prefix
-// @return { String } the default BEM block prefix
-@function get-BEM-block-prefix-default() {
-  @if (type-of($__BEM-default-prefix__) == "string") {
-    @return unquote($__BEM-default-prefix__);
-  }
-  @return $__BEM-default-prefix__;
+  @return bem-sass-get("config", "block-types", $type);
 }
 
 
 // Get BEM element separator from settings 
 // @return { String } BEM element separator
 @function get-BEM-element-sep($null:null) {
-  @return unquote($__BEM-element-sep__);
+  @return bem-sass-get("config", "element-sep");
 }
 
 
 // Get BEM modifier separator from settings 
 // @return { String } BEM modifier separator
 @function get-BEM-modifier-sep($null:null) {
-  @return unquote($__BEM-modifier-sep__);
+  @return bem-sass-get("config", "modifier-sep");
 }
 
 
@@ -197,8 +175,8 @@
 // @param   { String } the selector as string
 // @return  { Number } index of the separator
 @function sep-start-at($selector-string) {
-  $index-element-sep: str-index($selector-string, get-BEM-element-sep());
-  $index-modifier-sep: str-index($selector-string, get-BEM-modifier-sep());
+  $index-element-sep: str-index($selector-string, bem-sass-get("config", "element-sep"));
+  $index-modifier-sep: str-index($selector-string, bem-sass-get("config", "modifier-sep"));
 
   @if ($index-element-sep and $index-modifier-sep) {
     @return min($index-element-sep, $index-modifier-sep) - 1;
@@ -220,7 +198,7 @@
 // @param  { List } the selector
 // @return { Boolean }
 @function is-a-modifier($selector) {
-  @if (str-match(selector-to-string($selector), get-BEM-modifier-sep())) {
+  @if (str-match(selector-to-string($selector), bem-sass-get("config", "modifier-sep"))) {
     @return true;
   }
   @return false;
@@ -231,91 +209,8 @@
 // @param  { List } the selector
 // @return { Boolean }
 @function is-an-element($selector) {
-  @if (str-match(selector-to-string($selector), get-BEM-element-sep())) {
+  @if (str-match(selector-to-string($selector), bem-sass-get("config", "element-sep"))) {
     @return true;
   }
   @return false;
 } 
-
-
-// Check if a BEM entity exists in the log or not
-// @param { String } the selector string
-// @return { Boolean }
-@function BEM-entity-exists($selector-string) {
-  @each $BEM-entity in get-BEM-entities() {
-    @if ($BEM-entity == $selector-string) {
-      @return true;
-    }
-  }
-  @return false;
-}
-
-// Get BEM entities list
-// @return { List } logged BEM entities(as String)
-@function get-BEM-entities() {
-  @return $__BEM-entities__;
-} 
-
-
-// Log a BEM entity to the list of BEM entities
-// @param { String } the selector string
-// @return { Boolean }
-@function log-BEM-entity($selector-string) {
-  @if set-BEM-entities(append(get-BEM-entities(), $selector-string)) {
-    @return true;
-  }
-  @return false;
-} 
-
-
-// Set BEM entities list
-// @params { List } value
-// @return { Boolean } true 
-@function set-BEM-entities($value) {
-  $__BEM-entities__: $value !global;
-  @return true;
-} 
-
-
-// Check if the common rules exists in the log or not
-// @param { String } the selector string
-// @return { Boolean }
-@function common-rules-exists($selector-string) {
-  @each $rules in get-common-rules() {
-    @if ($rules == $selector-string) {
-      @return true;
-    }
-  }
-  @return false;
-}
-
-
-// Get common rules
-@function get-common-rules() {
-  @return $__BEM-common-rules__;
-} 
-
-
-// Set common rules
-@function set-common-rules($value) {
-  $__BEM-common-rules__: $value !global;
-  @return true;
-} 
-
-
-// log a common rules to the list of common rules; 
-// @param { String } the selector string
-// @return { Boolean }
-@function log-common-rules($selector-string) {
-  @if set-common-rules(append(get-common-rules(), $selector-string)) {
-    @return true;
-  }
-  @return false;
-} 
-
-
-// Make block's common rules placeholder
-@function rules-placeholder($string, $context) {
-  @return str-slice(get-BEM-block($context), 2) + "__CRS__" + $string;
-}
-

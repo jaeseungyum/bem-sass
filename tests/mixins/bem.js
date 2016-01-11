@@ -3,23 +3,28 @@ var Sassaby = require("sassaby");
 
 describe("BEM mixins", function() {
 
-  var sassaby, mixin;
+  var sassaby, sassabyWithVariables, mixin;
   beforeEach(function() {
-    sassaby = new Sassaby(
-      path.resolve("src/mixins", "_bem.scss"),
-      {
-        dependencies: [
-          path.resolve("src/functions", "_str.scss"),
-          path.resolve("src/functions", "_bem.scss")
-        ],
-        variables: {
-          "__BEM-entities__": ["component", "component__el"],
-          "__BEM-default-prefix__": "",
-          "__BEM-element-sep__": "__",
-          "__BEM-modifier-sep__": "_"
+    sassabyWithVariables = function(variables) {
+      return new Sassaby(
+        path.resolve("src/mixins", "_bem.scss"),
+        {
+          dependencies: [
+            path.resolve("src/_bundle.scss"),
+            path.resolve("tests/fixtures/default.scss")
+          ],
+          variables: variables
         }
-      }
-    );
+      );
+    }; 
+
+    sassaby = sassabyWithVariables({
+      "defaultPrefix": null, 
+      "blockTypes": null,
+      "elementSep": null,
+      "modifierSep": null
+    });
+
     mixin = sassaby.standaloneMixin("block");
   }); 
 

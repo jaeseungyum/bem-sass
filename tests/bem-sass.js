@@ -9,15 +9,7 @@ describe("dist/_bem-sass.scss", function() {
     );
   }); 
 
-  it("imports str functions", function() {
-    sassaby.imports("./../src/functions/str");
+  it("imports bundle", function() {
+    sassaby.imports("./../src/bundle");
   }); 
-
-  it("imports bem functions", function() {
-    sassaby.imports("./../src/functions/bem");
-  }); 
-
-  it("imports bem mixins", function() {
-    sassaby.imports("./../src/mixins/bem");
-  });
 });

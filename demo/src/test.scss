@@ -25,6 +25,7 @@
   } 
 } 
 
+
 @include configure-bem-sass((
   block-types: (
     component: c-,
@@ -74,3 +75,5 @@
     color: blue;
   }
 } 
+
+@debug get-bem-sass()
