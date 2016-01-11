@@ -31,7 +31,7 @@
 // @param { map } a BEM separator map (e.g (element: "__", modifier: "_"))
 @mixin configure-bem-sass($map:null) { 
 
-  @if is-BEM-configured() {
+  @if is-bem-sass-configured() {
     @error "bem-sass is already configured";
   } 
 
@@ -75,7 +75,7 @@
 //  }
 @mixin block($name, $type:null) {
 
-  $BEM-block-entity: make-BEM-block-selector($name, $type);
+  $BEM-block-entity: make-block-selector($name, $type);
 
   @if bem-sass-exists("entities", $BEM-block-entity) {
     @error "Attempt to reassign `#{$BEM-block-entity}`"
@@ -105,7 +105,7 @@
   }
 
   @at-root {
-    $BEM-element-entity: make-BEM-element-selector($name, is-a-modifier(&));
+    $BEM-element-entity: make-element-selector($name, is-a-modifier(&));
 
     @if bem-sass-exists("entities", $BEM-element-entity) {
       @error "Attempt to reassign `#{$BEM-element-entity}`"
@@ -130,7 +130,7 @@
   }
 
   @at-root {
-    $BEM-modifier-entity: make-BEM-modifier-selector($name, $value, is-an-element(&));
+    $BEM-modifier-entity: make-modifier-selector($name, $value, is-an-element(&));
     
     @if bem-sass-exists("entities", $BEM-modifier-entity) {
       @error "Attempt to reassign `#{$BEM-modifier-entity}`"
@@ -198,7 +198,7 @@
   }
 
   @if bem-sass-exists("common-rules", make-rules-selector($rule-name, $context)) {
-    @error "Attempt to reassign the common rules `#{$rule-name}` in `#{get-BEM-block($context)}`"
+    @error "Attempt to reassign the common rules `#{$rule-name}` in `#{get-block($context)}`"
   }
 
   @if (bem-sass-add("common-rules", make-rules-selector($rule-name, $context))) {
@@ -220,7 +220,7 @@
   } 
 
   @if (not bem-sass-exists("common-rules", make-rules-selector($rule-name, $context))) {
-    @error "There are no common rules `#{$rule-name}` in `#{get-BEM-block($context)}`";
+    @error "There are no common rules `#{$rule-name}` in `#{get-block($context)}`";
   }
 
   @extend %#{make-rules-selector($rule-name, $context)};

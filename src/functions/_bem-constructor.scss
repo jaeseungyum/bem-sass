@@ -1,17 +1,17 @@
-// ==============================
+// ======================================
 // 
-//        Functions - BEM
+//        Functions - BEM constructor
 //
-// ============================== 
+// ======================================
 
 // Construct BEM block selector string
 //
 // @param  { String } name of the block 
 // @param  { String } type of the block 
 // @return { String } the constructed BEM block selector string
-@function make-BEM-block-selector($name, $type) {
+@function make-block-selector($name, $type) {
   @return (
-    "." + get-BEM-block-prefix($type) + $name
+    "." + get-block-prefix-by-type($type) + $name
   );
 }
 
@@ -20,16 +20,16 @@
 // @param  { String } the element name
 // @param  { Boolean } called in a modifier context? 
 // @return { String } the constructed BEM element selector string
-@function make-BEM-element-selector($name, $in-a-modifier: false) {
+@function make-element-selector($name, $in-a-modifier: false) {
 
   @if ($in-a-modifier) {
     @return (
-      & + ">" + make-BEM-element-selector($name)
+      & + ">" + make-element-selector($name)
     );
   }
 
   @return (
-    get-BEM-block(&) + bem-sass-get("config", "element-sep") + $name
+    get-block(&) + bem-sass-get("config", "element-sep") + $name
   );
 }
 
@@ -38,12 +38,12 @@
 // @param { String } the modifier name
 // @param { Boolean } called in an element context?
 // @return { String } the constructed BEM modifier selector string
-@function make-BEM-modifier-selector($name, $value: null, $in-an-element: false) {
+@function make-modifier-selector($name, $value: null, $in-an-element: false) {
 
   @if ($value) {
     @return (
-      attach-value-to-BEM-modifier(
-        make-BEM-modifier-selector($name), 
+      attach-value-to-modifier(
+        make-modifier-selector($name), 
         $value
       )
     );
@@ -56,7 +56,7 @@
   }
 
   @return (
-    get-BEM-block(&) + bem-sass-get("config", "modifier-sep") + $name 
+    get-block(&) + bem-sass-get("config", "modifier-sep") + $name 
   );
 } 
 
@@ -65,7 +65,7 @@
 // @param { String } the modifier name
 // @param { String } the value 
 // @return { String } a value attached BEM modifier
-@function attach-value-to-BEM-modifier($BEM-modifier-selector-string, $value) {
+@function attach-value-to-modifier($BEM-modifier-selector-string, $value) {
   @return ( 
     $BEM-modifier-selector-string + bem-sass-get("config", "modifier-sep") + $value
   );
@@ -74,7 +74,7 @@
 
 // Make block's common rules placeholder
 @function make-rules-selector($string, $context) {
-  @return str-slice(get-BEM-block($context), 2) + "__CRS__" + $string;
+  @return str-slice(get-block($context), 2) + "__CRS__" + $string;
 } 
 
 
@@ -82,9 +82,9 @@
 // from given selector list
 // @param { List } the selector list
 // @return { Unquoted String } the BEM block selector
-@function get-BEM-block($selector) { 
+@function get-block($selector) { 
   @return (
-    slice-off-BEM-block(
+    get-block-part-from-string(
       selector-to-string($selector)
     )
   );
@@ -94,7 +94,7 @@
 // Get BEM block prefix by given type
 // @param { String } the type of the block
 // @return { String } the prefix of the block type
-@function get-BEM-block-prefix($type: null) { 
+@function get-block-prefix-by-type($type: null) { 
   @if ($type == null) {
     @return bem-sass-get("config", "default-prefix");
   } 
@@ -110,47 +110,37 @@
   }
 
   @return bem-sass-get("config", "block-types", $type);
-}
+} 
 
 
-// Get BEM element separator from settings 
-// @return { String } BEM element separator
-@function get-BEM-element-sep($null:null) {
-  @return bem-sass-get("config", "element-sep");
-}
-
-
-// Get BEM modifier separator from settings 
-// @return { String } BEM modifier separator
-@function get-BEM-modifier-sep($null:null) {
-  @return bem-sass-get("config", "modifier-sep");
-}
-
-
-// Slice off BEM block string
+// Get block part from given string 
 // from given selector string
 // @param   { String } the selector as string
 // @return  { Unquoted String } selector as unquoted string
 // @example
-//    slice-off-BEM-block(".b-block_mod") //=> ".b-block"
-@function slice-off-BEM-block($selector-string) {
+//    get-block-part-from-string(".b-block_mod") //=> ".b-block"
+@function get-block-part-from-string($selector-string) {
   @return (
-    attach-prefix(
+    attach-block-prefix(
       unquote(
         str-slice(
-          remove-prefix($selector-string), 
+          remove-block-prefix($selector-string), 
           1, 
           sep-start-at(
-            remove-prefix($selector-string)
+            remove-block-prefix($selector-string)
           )
         )
       ), 
-      get-prefix($selector-string)
+      get-block-prefix($selector-string)
     )
   );
 }
 
-@function remove-prefix($selector-string) {
+
+// Remove block prefix from string
+// @param   { String } a selector string
+// @return  { String } the string removed it's block prefix
+@function remove-block-prefix($selector-string) {
   @each $prefix in bem-sass-get("prefixes") {
     @if (str-index($selector-string, $prefix) == 2) {
       $selector-string: str-replace($selector-string, $prefix, "");
@@ -159,7 +149,10 @@
   @return $selector-string;
 }
 
-@function get-prefix($selector-string) {
+// Get block prefix from string
+// @param   { String } a selector string
+// @return  { String } the block prefix 
+@function get-block-prefix($selector-string) {
   @each $prefix in bem-sass-get("prefixes") {
     @if (str-index($selector-string, $prefix) == 2) {
       @return str-slice($selector-string, 2, 2 + length($prefix));
@@ -168,7 +161,11 @@
   @return "";
 }
 
-@function attach-prefix($selector-string, $prefix) {
+// Attach block prefix to selector string
+// @param   { String } a selector string
+// @param   { String } a block prefix 
+// @return  { String } the string which includes the block prefix 
+@function attach-block-prefix($selector-string, $prefix) {
   @return str-insert($selector-string, $prefix, 2);
 }
 
@@ -227,7 +224,7 @@
 @function is-a-modifier($selector) {
   @if (
     str-match(
-      remove-prefix(
+      remove-block-prefix(
         selector-to-string($selector)
       ),
       bem-sass-get("config", "modifier-sep")
@@ -245,7 +242,7 @@
 @function is-an-element($selector) {
   @if (
     str-match(
-      remove-prefix(
+      remove-block-prefix(
         selector-to-string($selector)
       ),
       bem-sass-get("config", "element-sep")

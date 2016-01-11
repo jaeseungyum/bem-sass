@@ -1,6 +1,6 @@
 // Check if bem-sass is configured or not
 // @return { Boolean }
-@function is-BEM-configured() {
+@function is-bem-sass-configured() {
   @if (bem-sass-get("state", "configured")) {
     @return true;
   }

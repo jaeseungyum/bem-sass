@@ -182,10 +182,6 @@ describe("BEM mixins", function() {
       });
 
       it("makes an element", function() { 
-        console.log(blockMixin.calledWithBlockAndArgs(
-          "@include element(item) { content: 'whatever';}",
-          "post"
-        ).css);
         blockMixin.calledWithBlockAndArgs(
           "@include element(item) { content: 'whatever';}",
           "post"
@@ -257,10 +253,6 @@ describe("BEM mixins", function() {
       });
 
       it("makes an element", function() { 
-        console.log(blockMixin.calledWithBlockAndArgs(
-          "@include element(item) { content: 'whatever';}",
-          "post"
-        ).css);
         blockMixin.calledWithBlockAndArgs(
           "@include element(item) { content: 'whatever';}",
           "post"
