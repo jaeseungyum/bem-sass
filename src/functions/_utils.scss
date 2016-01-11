@@ -32,10 +32,10 @@
     );
     $suspect: str-slice($string, $start, $end);  
 
-    @if (
-      $suspect == $search and
-      $next-chr != $search 
-    ) { @return $suspect; } 
+    @if ($suspect == $search and $next-chr != $search) { 
+      @return $suspect; 
+    } 
+
     @return str-match(str-slice($string, $end + str-length($search) + 1), $search);
   }
 

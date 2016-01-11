@@ -135,14 +135,41 @@
 //    slice-off-BEM-block(".b-block_mod") //=> ".b-block"
 @function slice-off-BEM-block($selector-string) {
   @return (
-    unquote(
-      str-slice(
-        $selector-string,
-        1,
-        sep-start-at($selector-string)
-      )
+    attach-prefix(
+      unquote(
+        str-slice(
+          remove-prefix($selector-string), 
+          1, 
+          sep-start-at(
+            remove-prefix($selector-string)
+          )
+        )
+      ), 
+      get-prefix($selector-string)
     )
   );
+}
+
+@function remove-prefix($selector-string) {
+  @each $prefix in bem-sass-get("prefixes") {
+    @if (str-index($selector-string, $prefix) == 2) {
+      $selector-string: str-replace($selector-string, $prefix, "");
+    }
+  }
+  @return $selector-string;
+}
+
+@function get-prefix($selector-string) {
+  @each $prefix in bem-sass-get("prefixes") {
+    @if (str-index($selector-string, $prefix) == 2) {
+      @return str-slice($selector-string, 2, 2 + length($prefix));
+    }
+  }
+  @return "";
+}
+
+@function attach-prefix($selector-string, $prefix) {
+  @return str-insert($selector-string, $prefix, 2);
 }
 
 
@@ -198,7 +225,14 @@
 // @param  { List } the selector
 // @return { Boolean }
 @function is-a-modifier($selector) {
-  @if (str-match(selector-to-string($selector), bem-sass-get("config", "modifier-sep"))) {
+  @if (
+    str-match(
+      remove-prefix(
+        selector-to-string($selector)
+      ),
+      bem-sass-get("config", "modifier-sep")
+    )
+  ) {
     @return true;
   }
   @return false;
@@ -209,7 +243,14 @@
 // @param  { List } the selector
 // @return { Boolean }
 @function is-an-element($selector) {
-  @if (str-match(selector-to-string($selector), bem-sass-get("config", "element-sep"))) {
+  @if (
+    str-match(
+      remove-prefix(
+        selector-to-string($selector)
+      ),
+      bem-sass-get("config", "element-sep")
+    )
+  ) {
     @return true;
   }
   @return false;
