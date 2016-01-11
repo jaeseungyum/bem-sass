@@ -6,113 +6,267 @@ describe("BEM mixins", function() {
   var sassaby;
   var sassabyWithVariables; 
   var blockMixin;
-  beforeEach(function() {
-    sassabyWithVariables = function(variables) {
-      return new Sassaby(
-        path.resolve("src/mixins", "_bem.scss"),
-        {
-          dependencies: [
-            path.resolve("src/_bundle.scss"),
-            path.resolve("tests/fixtures/default.scss")
-          ],
-          variables: variables
-        }
-      );
-    }; 
 
-    sassaby = sassabyWithVariables({
-      "defaultPrefix": null, 
-      "blockTypes": null,
-      "elementSep": null,
-      "modifierSep": null
-    });
-
-    blockMixin = sassaby.standaloneMixin("block");
-  }); 
-
-
-  describe("block", function() {
-
-    var calledWithPrefix;
+  describe("default style separators: __, _", function() {
     beforeEach(function() {
-      calledWithPrefix = function(name) {
-        return(
-          blockMixin.calledWithBlockAndArgs("content: 'whatever';", name)
+      sassabyWithVariables = function(variables) {
+        return new Sassaby(
+          path.resolve("src/mixins", "_bem.scss"),
+          {
+            dependencies: [
+              path.resolve("src/_bundle.scss"),
+              path.resolve("tests/fixtures/default.scss")
+            ],
+            variables: variables
+          }
         );
-      };
-    });
+      }; 
 
-    it("makes BEM block with given block prefix", function() {
-      calledWithPrefix("block-name").createsSelector(".block-name");
-    });
-  }); 
+      sassaby = sassabyWithVariables({
+        "defaultPrefix": null, 
+        "blockTypes": null,
+        "elementSep": null,
+        "modifierSep": null
+      });
+
+      blockMixin = sassaby.standaloneMixin("block");
+    }); 
 
 
-  describe("element", function() {
+    describe("block", function() {
 
-    describe("inside BEM block", function() {
-      it("makes BEM element", function() {
-        blockMixin.calledWithBlockAndArgs(
-          "@include element(elem) { content: 'whatever'; }", 
-          "block-name"
-        ).createsSelector(".block-name__elem");
+      var calledWithPrefix;
+      beforeEach(function() {
+        calledWithPrefix = function(name) {
+          return(
+            blockMixin.calledWithBlockAndArgs("content: 'whatever';", name)
+          );
+        };
+      });
+
+      it("makes BEM block with given block prefix", function() {
+        calledWithPrefix("block-name").createsSelector(".block-name");
       });
     }); 
 
-    describe("inside BEM modifier which is inside BEM block", function() {
-      it("makes BEM element in the given modifier context", function() { 
-        blockMixin.calledWithBlockAndArgs(
-          "@include modifier(mod) { @include element(elem) { content: 'whatever'; } }", 
-          "block-name"
-        ).createsSelector(".block-name_mod>.block-name__elem");
+
+    describe("element", function() {
+
+      describe("inside BEM block", function() {
+        it("makes BEM element", function() {
+          blockMixin.calledWithBlockAndArgs(
+            "@include element(elem) { content: 'whatever'; }", 
+            "block-name"
+          ).createsSelector(".block-name__elem");
+        });
+      }); 
+
+      describe("inside BEM modifier which is inside BEM block", function() {
+        it("makes BEM element in the given modifier context", function() { 
+          blockMixin.calledWithBlockAndArgs(
+            "@include modifier(mod) { @include element(elem) { content: 'whatever'; } }", 
+            "block-name"
+          ).createsSelector(".block-name_mod>.block-name__elem");
+        });
+
+        it("makes adjacent sibling BEM elements in the given modifier context", function() {
+          blockMixin.calledWithBlockAndArgs(
+            "@include modifier(mod) { @include element(elem) { @include adjacent-siblings { content: 'whatever';} } }", 
+            "block-name"
+          ).createsSelector(".block-name_mod>.block-name__elem+.block-name__elem"); 
+        });
+      }); 
+    });
+
+
+    describe("modifier", function() {
+
+      describe("inside BEM block", function() {
+        it("makes BEM modifier", function() {
+          blockMixin.calledWithBlockAndArgs(
+            "@include modifier(mod) { content: 'whatever'; }", 
+            "block-name"
+          ).createsSelector(".block-name_mod");
+        });
+      }); 
+
+      describe("inside BEM element which is inside BEM block", function() {
+        it("makes BEM modifier of the given element", function() { 
+          blockMixin.calledWithBlockAndArgs(
+            "@include element(elem) { @include modifier(mod) { content: 'whatever'; } }", 
+            "block-name"
+          ).createsSelector(".block-name__elem_mod");
+        });
       });
 
-      it("makes adjacent sibling BEM elements in the given modifier context", function() {
-        blockMixin.calledWithBlockAndArgs(
-          "@include modifier(mod) { @include element(elem) { @include adjacent-siblings { content: 'whatever';} } }", 
-          "block-name"
-        ).createsSelector(".block-name_mod>.block-name__elem+.block-name__elem"); 
+      describe("with a single argument", function() {
+        it("makes a boolean modifier", function() {
+          blockMixin.calledWithBlockAndArgs(
+            "@include modifier(mod) { content: 'whatever'; }",
+            "block-name"
+          ).createsSelector(".block-name_mod");
+        });
+      });
+
+      describe("with 2 arguments", function() {
+        it("makes a key-value type modifier", function() {
+          blockMixin.calledWithBlockAndArgs(
+            "@include modifier(mod, value) { content: 'whatever'; }",
+            "block-name"
+          ).createsSelector(".block-name_mod_value");
+        });
       });
     }); 
+
+    describe("with block prefix: *-", function() {
+      beforeEach(function() {
+        sassaby = sassabyWithVariables({
+          "defaultPrefix": "b-", 
+          "blockTypes": null,
+          "elementSep": null,
+          "modifierSep": null 
+        });
+        blockMixin = sassaby.standaloneMixin("block");
+      });
+
+      it("makes a block", function() {
+        blockMixin.calledWithBlockAndArgs(
+          "content: 'whatever';",
+          "post"
+        ).createsSelector(".b-post");
+      });
+
+      it("makes an element", function() { 
+        blockMixin.calledWithBlockAndArgs(
+          "@include element(item) { content: 'whatever';}",
+          "post"
+        ).createsSelector(".b-post__item");
+      });
+
+      it("makes a modifier", function() { 
+        blockMixin.calledWithBlockAndArgs(
+          "@include modifier(sub) { content: 'whatever';}",
+          "post"
+        ).createsSelector(".b-post_sub");
+
+        blockMixin.calledWithBlockAndArgs(
+          "@include modifier(type, article) { content: 'whatever';}",
+          "post"
+        ).createsSelector(".b-post_type_article");
+      });
+
+      it("makes a modifies element", function() { 
+        blockMixin.calledWithBlockAndArgs(
+          "@include modifier(sub) { @include element(item) { content: 'whatever'; }}",
+          "post"
+        ).createsSelector(".b-post_sub>.b-post__item");
+      });
+    });
+
+    describe("with block prefix: *_", function() {
+      beforeEach(function() {
+        sassaby = sassabyWithVariables({
+          "defaultPrefix": "b_", 
+          "blockTypes": null,
+          "elementSep": null,
+          "modifierSep": null 
+        });
+        blockMixin = sassaby.standaloneMixin("block");
+      });
+
+      it("makes a block", function() {
+        blockMixin.calledWithBlockAndArgs(
+          "content: 'whatever';",
+          "post"
+        ).createsSelector(".b_post");
+      });
+
+      it("makes an element", function() { 
+        console.log(blockMixin.calledWithBlockAndArgs(
+          "@include element(item) { content: 'whatever';}",
+          "post"
+        ).css);
+        blockMixin.calledWithBlockAndArgs(
+          "@include element(item) { content: 'whatever';}",
+          "post"
+        ).createsSelector(".b_post__item");
+      });
+    });
   });
 
-
-  describe("modifier", function() {
-
-    describe("inside BEM block", function() {
-      it("makes BEM modifier", function() {
-        blockMixin.calledWithBlockAndArgs(
-          "@include modifier(mod) { content: 'whatever'; }", 
-          "block-name"
-        ).createsSelector(".block-name_mod");
+  describe("medium style separators: -,--", function() {
+    beforeEach(function() {
+      sassaby = sassabyWithVariables({
+        "defaultPrefix": null, 
+        "blockTypes": null,
+        "elementSep": "'-'",
+        "modifierSep": "'--'"
       });
-    }); 
+      blockMixin = sassaby.standaloneMixin("block");
+    });
 
-    describe("inside BEM element which is inside BEM block", function() {
-      it("makes BEM modifier of the given element", function() { 
+    it("makes a block", function() {
+      blockMixin.calledWithBlockAndArgs(
+        "content: 'whatever';",
+        "post"
+      ).createsSelector(".post");
+    });
+
+    it("makes an element", function() { 
+      blockMixin.calledWithBlockAndArgs(
+        "@include element(item) { content: 'whatever';}",
+        "post"
+      ).createsSelector(".post-item");
+    });
+
+    it("makes a modifier", function() { 
+      blockMixin.calledWithBlockAndArgs(
+        "@include modifier(sub) { content: 'whatever';}",
+        "post"
+      ).createsSelector(".post--sub");
+
+      blockMixin.calledWithBlockAndArgs(
+        "@include modifier(type, article) { content: 'whatever';}",
+        "post"
+      ).createsSelector(".post--type--article");
+    });
+
+    it("makes a modifies element", function() { 
+      blockMixin.calledWithBlockAndArgs(
+        "@include modifier(sub) { @include element(item) { content: 'whatever'; }}",
+        "post"
+      ).createsSelector(".post--sub>.post-item");
+    });
+
+    describe("with block prefix: *-", function() {
+      beforeEach(function() {
+        sassaby = sassabyWithVariables({
+          "defaultPrefix": "b-", 
+          "blockTypes": null,
+          "elementSep": "'-'",
+          "modifierSep": "'--'"
+        });
+        blockMixin = sassaby.standaloneMixin("block");
+      });
+
+      it("makes a block", function() {
         blockMixin.calledWithBlockAndArgs(
-          "@include element(elem) { @include modifier(mod) { content: 'whatever'; } }", 
-          "block-name"
-        ).createsSelector(".block-name__elem_mod");
+          "content: 'whatever';",
+          "post"
+        ).createsSelector(".b-post");
+      });
+
+      it("makes an element", function() { 
+        console.log(blockMixin.calledWithBlockAndArgs(
+          "@include element(item) { content: 'whatever';}",
+          "post"
+        ).css);
+        blockMixin.calledWithBlockAndArgs(
+          "@include element(item) { content: 'whatever';}",
+          "post"
+        ).createsSelector(".b-post-item");
       });
     });
 
-    describe("with a single argument", function() {
-      it("makes a boolean modifier", function() {
-        blockMixin.calledWithBlockAndArgs(
-          "@include modifier(mod) { content: 'whatever'; }",
-          "block-name"
-        ).createsSelector(".block-name_mod");
-      });
-    });
-
-    describe("with 2 arguments", function() {
-      it("makes a key-value type modifier", function() {
-        blockMixin.calledWithBlockAndArgs(
-          "@include modifier(mod, value) { content: 'whatever'; }",
-          "block-name"
-        ).createsSelector(".block-name_mod_value");
-      });
-    });
-  }); 
+  });
 }); 
