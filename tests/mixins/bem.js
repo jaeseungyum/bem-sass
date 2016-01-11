@@ -3,7 +3,9 @@ var Sassaby = require("sassaby");
 
 describe("BEM mixins", function() {
 
-  var sassaby, sassabyWithVariables, mixin;
+  var sassaby;
+  var sassabyWithVariables; 
+  var blockMixin;
   beforeEach(function() {
     sassabyWithVariables = function(variables) {
       return new Sassaby(
@@ -25,7 +27,7 @@ describe("BEM mixins", function() {
       "modifierSep": null
     });
 
-    mixin = sassaby.standaloneMixin("block");
+    blockMixin = sassaby.standaloneMixin("block");
   }); 
 
 
@@ -35,7 +37,7 @@ describe("BEM mixins", function() {
     beforeEach(function() {
       calledWithPrefix = function(name) {
         return(
-          mixin.calledWithBlockAndArgs("content: 'whatever';", name)
+          blockMixin.calledWithBlockAndArgs("content: 'whatever';", name)
         );
       };
     });
@@ -50,7 +52,7 @@ describe("BEM mixins", function() {
 
     describe("inside BEM block", function() {
       it("makes BEM element", function() {
-        mixin.calledWithBlockAndArgs(
+        blockMixin.calledWithBlockAndArgs(
           "@include element(elem) { content: 'whatever'; }", 
           "block-name"
         ).createsSelector(".block-name__elem");
@@ -59,14 +61,14 @@ describe("BEM mixins", function() {
 
     describe("inside BEM modifier which is inside BEM block", function() {
       it("makes BEM element in the given modifier context", function() { 
-        mixin.calledWithBlockAndArgs(
+        blockMixin.calledWithBlockAndArgs(
           "@include modifier(mod) { @include element(elem) { content: 'whatever'; } }", 
           "block-name"
         ).createsSelector(".block-name_mod>.block-name__elem");
       });
 
       it("makes adjacent sibling BEM elements in the given modifier context", function() {
-        mixin.calledWithBlockAndArgs(
+        blockMixin.calledWithBlockAndArgs(
           "@include modifier(mod) { @include element(elem) { @include adjacent-siblings { content: 'whatever';} } }", 
           "block-name"
         ).createsSelector(".block-name_mod>.block-name__elem+.block-name__elem"); 
@@ -79,16 +81,16 @@ describe("BEM mixins", function() {
 
     describe("inside BEM block", function() {
       it("makes BEM modifier", function() {
-        mixin.calledWithBlockAndArgs(
+        blockMixin.calledWithBlockAndArgs(
           "@include modifier(mod) { content: 'whatever'; }", 
           "block-name"
         ).createsSelector(".block-name_mod");
       });
-    });
+    }); 
 
     describe("inside BEM element which is inside BEM block", function() {
       it("makes BEM modifier of the given element", function() { 
-        mixin.calledWithBlockAndArgs(
+        blockMixin.calledWithBlockAndArgs(
           "@include element(elem) { @include modifier(mod) { content: 'whatever'; } }", 
           "block-name"
         ).createsSelector(".block-name__elem_mod");
@@ -97,7 +99,7 @@ describe("BEM mixins", function() {
 
     describe("with a single argument", function() {
       it("makes a boolean modifier", function() {
-        mixin.calledWithBlockAndArgs(
+        blockMixin.calledWithBlockAndArgs(
           "@include modifier(mod) { content: 'whatever'; }",
           "block-name"
         ).createsSelector(".block-name_mod");
@@ -106,7 +108,7 @@ describe("BEM mixins", function() {
 
     describe("with 2 arguments", function() {
       it("makes a key-value type modifier", function() {
-        mixin.calledWithBlockAndArgs(
+        blockMixin.calledWithBlockAndArgs(
           "@include modifier(mod, value) { content: 'whatever'; }",
           "block-name"
         ).createsSelector(".block-name_mod_value");
