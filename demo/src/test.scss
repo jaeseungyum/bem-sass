@@ -27,6 +27,7 @@
 
 
 @include configure-bem-sass((
+  default-prefix: "b-",
   block-types: (
     component: c-,
     object:    o-
@@ -76,4 +77,4 @@
   }
 } 
 
-@debug get-bem-sass()
+@debug bem-sass-get("prefixes");

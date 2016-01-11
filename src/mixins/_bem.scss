@@ -40,6 +40,19 @@
     $map: unquotize-map-string($map, "element-sep");
     $map: unquotize-map-string($map, "modifier-sep"); 
 
+    // Store default-prefix to prefixes;
+    @if (
+      map-has-key($map, "default-prefix") and 
+      bem-sass-add("prefixes", map-get($map, "default-prefix"))
+    ) {};
+
+    // Store prefixes of block types to prefixes;
+    @if (map-has-key($map, "block-types")) {
+      @each $prefix in map-values(map-get($map, "block-types")) {
+        @if (bem-sass-add("prefixes", $prefix)) {};
+      }
+    }; 
+
     @if (
       bem-sass-set("config", map-merge(bem-sass-get("config"), $map)) and
       bem-sass-set("state" "configured", true)
