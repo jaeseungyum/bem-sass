@@ -91,3 +91,5 @@
 @each $type in map-keys(bem-sass-get("config", "block-types")) {
   @include shared-examples($type);
 }
+
+@debug length(bem-sass-get("block-levels"));

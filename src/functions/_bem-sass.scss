@@ -79,8 +79,9 @@
 // @access  public
 // @param   {String} $attr - attribute name
 // @param   {*} $value
+// @param   {Boolean} $strict - (true: exclude null)
 // @return  {Boolean}
-@function bem-sass-add($attr, $value) {
+@function bem-sass-add($attr, $value, $strict: false) {
 
   @if type-of(bem-sass-get($attr)) != "list" {
     @error "#{$attr} is not a list";
@@ -90,11 +91,13 @@
     $value: unquote($value);
   }
 
-  @if bem-sass-set($attr, append(bem-sass-get($attr), $value)) {
-    @return true;
-  }
+  @if (
+   not $strict
+   and bem-sass-set($attr, append(bem-sass-get($attr), $value))
+  ) {}
 
-  @return false;
+  @return true;
+
 } 
 
 
