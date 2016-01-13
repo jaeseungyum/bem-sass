@@ -1,0 +1,25 @@
+// ======================================
+// 
+//                is-a-bem
+//
+// ======================================
+
+// Check which BEM entity type  a given selector represents
+// @author  Yum<ym.jsng@gmail.com>
+// @access  public
+// @param   {String} $entity-type (e.g element, modifier)
+// @param   {List} selector
+// @return  {Boolean}
+@function is-a-bem($entity-type, $selector) {
+  @if (
+    str-match(
+      remove-block-prefix(
+        selector-to-string($selector)
+      ),
+      bem-sass-get("config", "#{$entity-type}-sep")
+    )
+  ) {
+    @return true;
+  }
+  @return false;
+} 

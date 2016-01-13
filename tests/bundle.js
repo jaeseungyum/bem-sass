@@ -11,9 +11,11 @@ describe("src/_bundle.scss", function() {
 
   it("imports dependencies", function() {
     sassaby.imports("./functions/utils");
+    sassaby.imports("./functions/selector-to-string");
     sassaby.imports("./functions/bem-sass");
-    sassaby.imports("./functions/bem-config");
-    sassaby.imports("./functions/bem-constructor");
+    sassaby.imports("./functions/is-a-bem");
+    sassaby.imports("./functions/get-block");
+    sassaby.imports("./functions/create-selector");
     sassaby.imports("./mixins/bem");
   }); 
 });

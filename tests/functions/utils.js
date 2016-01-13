@@ -8,7 +8,7 @@ describe("Custom utils functions", function() {
   beforeEach(function() { 
     sassabyWithVariables = function(variables) {
       return new Sassaby(
-        path.resolve("src/functions", "_bem-constructor.scss"),
+        path.resolve("src/functions", "_is-a-bem.scss"),
         {
           dependencies: [
             path.resolve("src/_bundle.scss"),

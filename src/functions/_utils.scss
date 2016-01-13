@@ -7,10 +7,10 @@
 
 // Replace `$search` with `$replace` in `$string`
 // @author Hugo Giraudel
-// @param {String} $string - Initial string
-// @param {String} $search - Substring to replace
-// @param {String} $replace ('') - New value
-// @return {String} - Updated string
+// @param   {String} $string - Initial string
+// @param   {String} $search - Substring to replace
+// @param   {String} $replace ('') - New value
+// @return  {String} - Updated string
 @function str-replace($string, $search, $replace: '') {
   $index: str-index($string, $search);
   
@@ -21,12 +21,12 @@
   @return $string;
 }
 
+
 // Return matched string
 // @author Yum
-// @param { String } $string - string
-// @param { String } $search - searching string
-// @return { String | null } - matched string
-
+// @param   { String } $string - string
+// @param   { String } $search - searching string
+// @return  { String | null } - matched string 
 @function str-match($string, $search) { 
   @if (str-index($string, $search)) {
 
@@ -49,23 +49,6 @@
   @return null;
 }
 
-@function str-rm-comma($string) {
-  @return str-replace($string, ",", "");
-}
-
-@function str-rm-parenthesis($string) {
-  @return(
-    str-replace(
-      str-replace(
-        $string, 
-        "(", 
-        ""
-      ),
-      ")",
-      ""
-    )
-  );
-} 
 
 // Map deep get
 // @author Hugo Giraudel
@@ -79,6 +62,7 @@
     }
     @return $map;
 }
+
 
 /// Deep set function to set a value in nested maps
 /// @author Hugo Giraudel
@@ -128,3 +112,33 @@
   // Return result
   @return $result;
 }
+
+
+// Unquote values in a given map
+// @author Yum
+// @access public
+// @param {Map} $map - map
+// @return {Map}
+@function unquote-map-values($map) {
+  @each $key in map-keys($map) {
+    @if (type-of(map-get($map, $key)) == "string" and map-get($map, $key) != "") {
+      $map: map-deep-set($map, $key, unquote(map-get($map, $key)));
+    }
+  }
+  @return $map;
+}
+
+
+// Remove block prefix from string
+// @access  public
+// @author  Yum<ym.jsng@gmail.com>
+// @param   {String} a selector string
+// @return  {String} the string removed it's block prefix 
+@function remove-block-prefix($selector-string) {
+  @each $prefix in bem-sass-get("prefixes") {
+    @if (str-index($selector-string, $prefix) == 2) {
+      $selector-string: str-replace($selector-string, $prefix, "");
+    }
+  }
+  @return $selector-string;
+} 

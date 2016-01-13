@@ -1,0 +1,87 @@
+// ======================================
+// 
+//               get-block 
+//
+// ======================================
+
+// Get BEM block selector(e.g "b-block") 
+// from given selector list
+// @param { List } the selector list
+// @return { Unquoted String } the BEM block selector
+
+@function get-block($selector) { 
+  @return (
+    _get-block-part-from-string(
+      selector-to-string($selector)
+    )
+  );
+} 
+
+
+// Get block part from given string 
+// from given selector string
+// @param   { String } the selector as string
+// @return  { Unquoted String } selector as unquoted string
+// @example
+//    _get-block-part-from-string(".b-block_mod") //=> ".b-block"
+@function _get-block-part-from-string($selector-string) {
+  @return (
+    _attach-block-prefix(
+      unquote(
+        str-slice(
+          remove-block-prefix($selector-string), 
+          1, 
+          _sep-start-at(
+            remove-block-prefix($selector-string)
+          )
+        )
+      ), 
+      _get-block-prefix($selector-string)
+    )
+  );
+}
+
+
+// Get block prefix from string
+// @param   { String } a selector string
+// @return  { String } the block prefix 
+@function _get-block-prefix($selector-string) {
+  @each $prefix in bem-sass-get("prefixes") {
+    @if (str-index($selector-string, $prefix) == 2) {
+      @return str-slice($selector-string, 2, 2 + length($prefix));
+    }
+  }
+  @return "";
+}
+
+// Attach block prefix to selector string
+// @param   { String } a selector string
+// @param   { String } a block prefix 
+// @return  { String } the string which includes the block prefix 
+@function _attach-block-prefix($selector-string, $prefix) {
+  @return str-insert($selector-string, $prefix, 2);
+}
+
+
+// Get an index of the first elem/modifier separator
+// from a given selector string
+// @param   { String } the selector as string
+// @return  { Number } index of the separator
+@function _sep-start-at($selector-string) {
+  $index-element-sep: str-index($selector-string, bem-sass-get("config", "element-sep"));
+  $index-modifier-sep: str-index($selector-string, bem-sass-get("config", "modifier-sep"));
+
+  @if ($index-element-sep and $index-modifier-sep) {
+    @return min($index-element-sep, $index-modifier-sep) - 1;
+  } 
+
+  @if ($index-element-sep) {
+    @return $index-element-sep - 1;
+  } 
+
+  @if ($index-modifier-sep) {
+    @return $index-modifier-sep - 1;
+  } 
+
+  @return -1; 
+} 

@@ -1,5 +1,7 @@
 @import "./functions/utils";
+@import "./functions/selector-to-string";
 @import "./functions/bem-sass";
-@import "./functions/bem-config";
-@import "./functions/bem-constructor";
+@import "./functions/is-a-bem";
+@import "./functions/get-block";
+@import "./functions/create-selector";
 @import "./mixins/bem"; 

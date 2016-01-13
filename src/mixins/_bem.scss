@@ -4,7 +4,10 @@
 //
 // ============================== 
 
-@mixin init-bem-sass() {
+// Initialize bem-sass
+// @author  Yum<ym.jsng@gmail.com>
+// @acess   public
+@mixin init-bem-sass {
 
   @if is-bem-sass-initialized() {
     @error "bem-sass is already initialized";
@@ -26,35 +29,32 @@
   ) !global;
 }
 
-// Set BEM config 
-//
-// @param { map } a BEM separator map (e.g (element: "__", modifier: "_"))
-@mixin configure-bem-sass($map:null) { 
+// Configure bem-sass options 
+// @author  Yum<ym.jsng@gmail.com>
+// @acess   public
+// @param   {Map} $options
+@mixin configure-bem-sass($options:null) { 
 
-  @if is-bem-sass-configured() {
-    @error "bem-sass is already configured";
-  } 
+  @if is-bem-sass-configured() { @error "bem-sass is already configured"; } 
 
-  @if $map { 
-    $map: unquotize-map-string($map, "default-prefix");
-    $map: unquotize-map-string($map, "element-sep");
-    $map: unquotize-map-string($map, "modifier-sep"); 
+  @if $options { 
+    $options: unquote-map-values($options);
 
     // Store default-prefix to prefixes;
     @if (
-      map-has-key($map, "default-prefix") and 
-      bem-sass-add("prefixes", map-get($map, "default-prefix"))
+      map-has-key($options, "default-prefix") and 
+      bem-sass-add("prefixes", map-get($options, "default-prefix"))
     ) {};
 
     // Store prefixes of block types to prefixes;
-    @if (map-has-key($map, "block-types")) {
-      @each $prefix in map-values(map-get($map, "block-types")) {
+    @if (map-has-key($options, "block-types")) {
+      @each $prefix in map-values(map-get($options, "block-types")) {
         @if (bem-sass-add("prefixes", $prefix)) {};
       }
     }; 
 
     @if (
-      bem-sass-set("config", map-merge(bem-sass-get("config"), $map)) and
+      bem-sass-set("config", map-merge(bem-sass-get("config"), $options)) and
       bem-sass-set("state" "configured", true)
     ) {};
   } 
@@ -62,10 +62,10 @@
 
 
 // Generate BEM block selector 
-//
-// @param { String } name of the block
-// @param { String } type of the block
-// @author Yum<ym.jsng@gmail.com>
+// @author  Yum<ym.jsng@gmail.com>
+// @acess   public
+// @param   {String} $name -  name of the block
+// @param   {String} $type - type of the block
 // @example
 //  @include block(promo) {
 //    ...styles here...
@@ -75,14 +75,14 @@
 //  }
 @mixin block($name, $type:null) {
 
-  $BEM-block-entity: make-block-selector($name, $type);
+  $selector-string: create-selector(block, $name, (type: $type));
 
-  @if bem-sass-exists("entities", $BEM-block-entity) {
-    @error "Attempt to reassign `#{$BEM-block-entity}`"
+  @if bem-sass-exists(entities, $selector-string) {
+    @error "Attempt to reassign `#{$selector-string}`"
   } 
 
-  @if (bem-sass-add("entities", $BEM-block-entity)) {
-    #{$BEM-block-entity} {
+  @if (bem-sass-add(entities, $selector-string)) {
+    #{$selector-string} {
       @content;
     }
   };
@@ -91,28 +91,23 @@
 
 
 // Generate BEM element selector 
-//
-// @param { String } name of the element
-// @author Yum<ym.jsng@gmail.com>
+// @acess   public
+// @author  Yum<ym.jsng@gmail.com>
+// @param   {String} $name 
 @mixin element($name) { 
 
-  @if (& == null) {
-    @error "element should be inside of a block"
-  }
-
-  @if (is-an-element(&)) {
-    @error "element should not be within another element"
-  }
+  @if (not &) { @error "element should be inside of a block" } 
+  @if (is-a-bem(element, &)) { @error "element should not be within another element" }
 
   @at-root {
-    $BEM-element-entity: make-element-selector($name, is-a-modifier(&));
+    $selector-string: create-selector(element, $name, (in-a-modifier: is-a-bem(modifier, &)));
 
-    @if bem-sass-exists("entities", $BEM-element-entity) {
-      @error "Attempt to reassign `#{$BEM-element-entity}`"
+    @if bem-sass-exists(entities, $selector-string) {
+      @error "Attempt to reassign `#{$selector-string}`"
     }
 
-    @if (bem-sass-add("entities", $BEM-element-entity)) {
-      #{$BEM-element-entity} {
+    @if (bem-sass-add(entities, $selector-string)) {
+      #{$selector-string} {
         @content;
       }
     }
@@ -121,23 +116,23 @@
 
 
 // Generate BEM modifier selector 
-//
-// @param { String } name of the modifier 
-// @author Yum<ym.jsng@gmail.com>
+// @acess   public
+// @author  Yum<ym.jsng@gmail.com>
+// @param   {String} $name 
 @mixin modifier($name, $value: null) { 
-  @if (& == null) {
-    @error "modifier should be inside of a block"
-  }
+
+  @if (not &) { @error "modifier should be inside of a block" }
+  @if (is-a-bem(modifier, &)) { @error "modifier should not be within another modifier" }
 
   @at-root {
-    $BEM-modifier-entity: make-modifier-selector($name, $value, is-an-element(&));
+    $selector-string: create-selector(modifier, $name, (value: $value, in-an-element: is-a-bem(element, &)));
     
-    @if bem-sass-exists("entities", $BEM-modifier-entity) {
-      @error "Attempt to reassign `#{$BEM-modifier-entity}`"
+    @if bem-sass-exists(entities, $selector-string) {
+      @error "Attempt to reassign `#{$selector-string}`"
     }
 
-    @if bem-sass-add("entities", $BEM-modifier-entity) {
-      #{$BEM-modifier-entity} {
+    @if bem-sass-add(entities, $selector-string) {
+      #{$selector-string} {
         @content;
       }
     }
@@ -145,6 +140,8 @@
 }
 
 // Generate adjacent sibling selector of an element in a given modifier context
+// @acess   public
+// @author  Yum<ym.jsng@gmail.com>
 // @example
 //
 //  In scss:
@@ -167,10 +164,7 @@
 //
 @mixin adjacent-siblings {
 
-  @if (& == null) {
-    @error "No context given";
-  }
-
+  @if (not &) { @error "No context given"; } 
   @if (str-index(inspect(&), " ") == null) {
     @error "mixin `adjacent-siblings` is declared in invalid position";
   }
@@ -188,21 +182,22 @@
 } 
 
 
-// Define common css rules to be share with elements inside a given block
-// @param { String } rule-name
+// Define common css rules to be shared with entities inside a given block
+// @acess   public
+// @author  Yum<ym.jsng@gmail.com>
+// @param   {String} $rule-name
 @mixin def-rules($rule-name) {
-  $context: &;
 
-  @if ($context == null) {
-    @error "`def-rules` should be inside of a block";
-  }
+  @if (not &) { @error "`def-rules` should be inside of a block"; }
 
-  @if bem-sass-exists("common-rules", make-rules-selector($rule-name, $context)) {
+  $context: &; 
+  $selector-string: create-selector(common-rules, $rule-name, (context: $context)); 
+  @if bem-sass-exists(common-rules, $selector-string) {
     @error "Attempt to reassign the common rules `#{$rule-name}` in `#{get-block($context)}`"
   }
 
-  @if (bem-sass-add("common-rules", make-rules-selector($rule-name, $context))) {
-    @at-root %#{make-rules-selector($rule-name, $context)} {
+  @if (bem-sass-add(common-rules, $selector-string)) {
+    @at-root #{create-selector("common-rules", $rule-name, (context: $context))} {
       @content
     }
   }
@@ -211,17 +206,17 @@
 
 
 // Get common css rules inside a given block
-// @param { String } rule-name
+// @acess   public
+// @author  Yum<ym.jsng@gmail.com>
+// @param   {String} $rule-name
 @mixin get-rules($rule-name) {
-  $context: &;
+  $context: &; 
+  @if (not $context) { @error "`rules` should be inside of a block"; } 
 
-  @if ($context == null) {
-    @error "`rules` should be inside of a block";
-  } 
-
-  @if (not bem-sass-exists("common-rules", make-rules-selector($rule-name, $context))) {
+  $selector-string: create-selector(common-rules, $rule-name, (context: $context)); 
+  @if (not bem-sass-exists("common-rules", $selector-string)) {
     @error "There are no common rules `#{$rule-name}` in `#{get-block($context)}`";
   }
 
-  @extend %#{make-rules-selector($rule-name, $context)};
+  @extend #{$selector-string};
 }

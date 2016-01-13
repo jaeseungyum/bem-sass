@@ -1,0 +1,141 @@
+// ======================================
+// 
+//            create-selector
+//
+// ======================================
+
+
+// Create valid CSS selector
+// @author Yum<ym.jsng@gmail.com>
+// @access public
+// @param  {String} $object-type
+// @param  {String} $namestring
+// @return {String} 
+@function create-selector($object-type, $namestring, $options:null) {
+
+  @if ($object-type == "block") {
+    @return _create-selector-block($namestring, map-get($options, type));
+  }
+
+  @if ($object-type == "element") {
+    @return _create-selector-element($namestring, map-get($options, in-a-modifier));
+  }
+
+  @if ($object-type == "modifier") {
+    @return _create-selector-modifier($namestring, map-get($options, value), map-get($options, in-an-element));
+  }
+
+  @if ($object-type == "common-rules") {
+    @return _create-selector-common-rules($namestring, map-get($options, context));
+  }
+}
+
+
+// Create valid CSS selector for BEM block
+// @author Yum<ym.jsng@gmail.com>
+// @access private 
+// @param  {String}  $name
+// @param  {String=} $type - a block type
+// @return {String} 
+@function _create-selector-block($name, $type:null) {
+  @return (
+    "." + _get-block-prefix-by-type($type) + $name
+  );
+}
+
+
+// Create valid CSS selector for BEM element
+// @author Yum<ym.jsng@gmail.com>
+// @access private 
+// @param  {String}  $name
+// @param  {String=} $in-a-modifier - Test if the statement is in a modifier context
+// @return {String} 
+@function _create-selector-element($name, $in-a-modifier:false) {
+  @if ($in-a-modifier) {
+    @return (
+      & + ">" + _create-selector-element($name)
+    );
+  }
+
+  @return (
+    get-block(&) + bem-sass-get("config", "element-sep") + $name
+  );
+}
+
+
+// Create valid CSS selector for BEM element
+// @author Yum<ym.jsng@gmail.com>
+// @access private 
+// @param  {String}  $name
+// @param  {String=} $in-an-element- Test if the statement is in a element context
+// @return {String} 
+@function _create-selector-modifier($name, $value:null, $in-an-element:false) {
+  @if ($value) {
+    @return (
+      _attach-value-to-modifier(
+        _create-selector-modifier($name), 
+        $value
+      )
+    );
+  }
+
+  @if ($in-an-element) {
+    @return (
+      & + bem-sass-get("config", "modifier-sep") + $name 
+    )
+  }
+
+  @return (
+    get-block(&) + bem-sass-get("config", "modifier-sep") + $name 
+  );
+} 
+
+
+// Create namespaced placeholder for common rules inside a block
+// @author Yum<ym.jsng@gmail.com>
+// @access private 
+// @param  {String} 
+// @param  {List} $context - parent selector
+// @return {String} 
+@function _create-selector-common-rules($name-partial, $context) {
+  @return "%" + str-slice(get-block($context), 2) + "__CRS__" + $name-partial;
+} 
+
+
+// Add a value string to given BEM modifier selector string
+// @author  Yum<ym.jsng@gmail.com>
+// @access  private 
+// @param   {String} the modifier name
+// @param   {String} the value 
+// @return  {String} a value attached BEM modifier
+
+@function _attach-value-to-modifier($BEM-modifier-selector-string, $value) {
+  @return ( 
+    $BEM-modifier-selector-string + bem-sass-get("config", "modifier-sep") + $value
+  );
+} 
+
+
+// Get BEM block prefix by given type
+// @author  Yum<ym.jsng@gmail.com>
+// @access  private 
+// @param   {String} the type of the block
+// @return  {String} the prefix of the block type
+@function _get-block-prefix-by-type($type: null) { 
+  @if ($type == null) {
+    @return bem-sass-get("config", "default-prefix");
+  } 
+
+  @if (
+    bem-sass-get(
+      "config", 
+      "block-types", 
+      $type
+    )  == null
+  ) {
+    @error "block type `#{$type}` has not been declared";
+  }
+
+  @return bem-sass-get("config", "block-types", $type);
+} 
+

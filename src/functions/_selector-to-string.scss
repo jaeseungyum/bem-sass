@@ -1,0 +1,48 @@
+// ======================================
+// 
+//          selector-to-string
+//
+// ======================================
+//
+// Convert selector to unquoted string
+// @param { List } the selector
+// @param { Unquoted String } the selector as unquoted string
+//
+// This ensures a given selector is valid string like below:
+//
+//  (.selector) -> .selector #unquoted string
+//
+// @note
+// Just using 'inspect' function doesn't meet the demand 
+// since ruby-sass keeps parenthesis / comma in list
+@function selector-to-string($selector) {
+  @return(
+    unquote(
+      _remove-parenthesis(
+        _remove-comma(
+          inspect($selector)
+        )
+      )
+    )
+  );
+} 
+
+// Strip comma
+@function _remove-comma($string) {
+  @return str-replace($string, ",", "");
+}
+
+// Strip parenthesis
+@function _remove-parenthesis($string) {
+  @return(
+    str-replace(
+      str-replace(
+        $string, 
+        "(", 
+        ""
+      ),
+      ")",
+      ""
+    )
+  );
+} 

@@ -5,7 +5,9 @@
 // =======================================
 
 // Getter: bem-sass struct 
-// @return { Map } the bem-sass struct
+// @author  Yum<ym.jsng@gmail.com>
+// @access  public
+// @return {Map}
 @function get-bem-sass() { 
   @if not is-bem-sass-initialized() {
     @return null;
@@ -15,8 +17,10 @@
 
 
 // Setter: bem-sass struct
-// @param  { * } value - a value
-// @return { Boolean }
+// @author  Yum<ym.jsng@gmail.com>
+// @access  public
+// @param   {*} $value 
+// @return  {Boolean}
 @function set-bem-sass($value) {
   @if not is-bem-sass-initialized() {
     @error "bem-sass is not initialized";
@@ -27,8 +31,10 @@
 
 
 // Check if a value exists in a bem-sass struct attribute
-// @param  { String } attr - attribute name
-// @param  { * } value - a value
+// @author  Yum<ym.jsng@gmail.com>
+// @access  public
+// @param  {String} $attr
+// @param  {*} $value 
 // @return { Boolean }
 @function bem-sass-exists($attr, $value) {
   @each $item in bem-sass-get($attr) {
@@ -40,9 +46,11 @@
 }
 
 
-// Get bem-sass attribute
-// @param  { Argument List } attrs - attribute names
-// @return { * } the attribute
+// Get a bem-sass attribute
+// @author  Yum<ym.jsng@gmail.com>
+// @access  public
+// @param  {Argument List} $attrs 
+// @return {*} the attribute
 @function bem-sass-get($attrs...) {
   @return (
     is-bem-sass-initialized() and 
@@ -51,10 +59,12 @@
 } 
 
 
-// Set bem-sass attribute
-// @param  { List } attrs - attribute as list
-// @param  { * } a value
-// @return { Boolean } 
+// Set value to a bem-sass attribute
+// @author  Yum<ym.jsng@gmail.com>
+// @access  public
+// @param   {List} $attrs - attribute as list
+// @param   {*} $value 
+// @return  {Boolean} 
 @function bem-sass-set($attrs, $value) {
   @if (set-bem-sass(map-deep-set(get-bem-sass(), $attrs, $value))) {
     @return true;
@@ -65,7 +75,11 @@
 
 
 // Add element to bem-sass attribute(list)
-// @param { String } attr - attribute name
+// @author  Yum<ym.jsng@gmail.com>
+// @access  public
+// @param   {String} $attr - attribute name
+// @param   {*} $value
+// @return  {Boolean}
 @function bem-sass-add($attr, $value) {
 
   @if type-of(bem-sass-get($attr)) != "list" {
@@ -85,6 +99,8 @@
 
 
 // Check if bem-sass is initialized or not
+// @author  Yum<ym.jsng@gmail.com>
+// @access  public
 // @return { Boolean }
 @function is-bem-sass-initialized() {
   @if (variable-exists("__bem-sass__")) {
@@ -92,3 +108,14 @@
   } 
   @return false;
 }
+
+// Check if bem-sass is configured or not
+// @author  Yum<ym.jsng@gmail.com>
+// @access  public
+// @return { Boolean }
+@function is-bem-sass-configured() {
+  @if (bem-sass-get("state", "configured")) {
+    @return true;
+  }
+  @return false;
+} 

@@ -8,7 +8,7 @@ describe("BEM functions", function() {
   beforeEach(function() {
     sassabyWithVariables = function(variables) {
       return new Sassaby(
-        path.resolve("src/functions", "_bem-constructor.scss"),
+        path.resolve("src/functions", "_is-a-bem.scss"),
         {
           dependencies: [
             path.resolve("src/_bundle.scss"),
@@ -46,52 +46,44 @@ describe("BEM functions", function() {
     }); 
   }); 
 
-
-  describe("#is-a-modifier", function() {
+  describe("#is-a-bem", function() {
 
     var func;
     beforeEach(function() {
-      func = sassaby.func("is-a-modifier");
+      func = sassaby.func("is-a-bem");
     });
 
     it("tests whether a given selector is a BEM modifier or not", function() {
 
       func.calledWithArgs(
+        "modifier",
         "unquote('.' + b-block)"
       ).isFalse();
 
       func.calledWithArgs(
+        "modifier",
         "unquote('.' + b-block_mod)"
       ).isTrue();
 
       func.calledWithArgs(
+        "modifier",
         "unquote('.' + b-block__elem)"
       ).isFalse();
-    });
-
-  });
-
-
-  describe("is-an-element", function() {
-
-    var func;
-    beforeEach(function() {
-      func = sassaby.func("is-an-element");
-    });
-
-    it("tests whether a given selector is a BEM element or not", function() {
 
       func.calledWithArgs(
+        "element",
         "unquote('.' + b-block)"
       ).isFalse();
 
       func.calledWithArgs(
+        "element",
         "unquote('.' + b-block__elem)"
       ).isTrue();
     });
+
   }); 
 
-  describe("BEM-entity-exists", function() {
+  describe("bem-sass-exists", function() {
 
     var func;
     beforeEach(function() {
