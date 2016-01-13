@@ -121,7 +121,15 @@
 // @return {Map}
 @function unquote-map-values($map) {
   @each $key in map-keys($map) {
-    @if (type-of(map-get($map, $key)) == "string" and map-get($map, $key) != "") {
+
+    @if (type-of(map-get($map, $key)) == "map") {
+      $map: map-deep-set($map, $key, unquote-map-values(map-get($map, $key)));
+    }
+
+    @if (
+      type-of(map-get($map, $key)) == "string" 
+      and map-get($map, $key) != ""
+    ) {
       $map: map-deep-set($map, $key, unquote(map-get($map, $key)));
     }
   }
@@ -137,7 +145,7 @@
 @function remove-block-prefix($selector-string) {
   @each $prefix in bem-sass-get("prefixes") {
     @if (str-index($selector-string, $prefix) == 2) {
-      $selector-string: str-replace($selector-string, $prefix, "");
+      @return str-replace($selector-string, "." + $prefix, "."); // . to remove only the first match
     }
   }
   @return $selector-string;

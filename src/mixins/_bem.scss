@@ -192,6 +192,7 @@
 
   $context: &; 
   $selector-string: create-selector(common-rules, $rule-name, (context: $context)); 
+
   @if bem-sass-exists(common-rules, $selector-string) {
     @error "Attempt to reassign the common rules `#{$rule-name}` in `#{get-block($context)}`"
   }

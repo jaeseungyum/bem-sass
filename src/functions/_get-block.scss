@@ -7,8 +7,7 @@
 // Get BEM block selector(e.g "b-block") 
 // from given selector list
 // @param { List } the selector list
-// @return { Unquoted String } the BEM block selector
-
+// @return { Unquoted String } the BEM block selector 
 @function get-block($selector) { 
   @return (
     _get-block-part-from-string(
@@ -48,7 +47,7 @@
 @function _get-block-prefix($selector-string) {
   @each $prefix in bem-sass-get("prefixes") {
     @if (str-index($selector-string, $prefix) == 2) {
-      @return str-slice($selector-string, 2, 2 + length($prefix));
+      @return str-slice($selector-string, 2, 1 + str-length($prefix));
     }
   }
   @return "";

@@ -121,7 +121,7 @@ describe("BEM mixins", function() {
     describe("with block prefix: *-", function() {
       beforeEach(function() {
         sassaby = sassabyWithVariables({
-          "defaultPrefix": "b-", 
+          "defaultPrefix": "o-", 
           "blockTypes": null,
           "elementSep": null,
           "modifierSep": null 
@@ -132,34 +132,34 @@ describe("BEM mixins", function() {
       it("makes a block", function() {
         blockMixin.calledWithBlockAndArgs(
           "content: 'whatever';",
-          "post"
-        ).createsSelector(".b-post");
+          "media"
+        ).createsSelector(".o-media");
       });
 
       it("makes an element", function() { 
         blockMixin.calledWithBlockAndArgs(
           "@include element(item) { content: 'whatever';}",
-          "post"
-        ).createsSelector(".b-post__item");
+          "media"
+        ).createsSelector(".o-media__item");
       });
 
       it("makes a modifier", function() { 
         blockMixin.calledWithBlockAndArgs(
           "@include modifier(sub) { content: 'whatever';}",
-          "post"
-        ).createsSelector(".b-post_sub");
+          "media"
+        ).createsSelector(".o-media_sub");
 
         blockMixin.calledWithBlockAndArgs(
           "@include modifier(type, article) { content: 'whatever';}",
-          "post"
-        ).createsSelector(".b-post_type_article");
+          "media"
+        ).createsSelector(".o-media_type_article");
       });
 
       it("makes a modifies element", function() { 
         blockMixin.calledWithBlockAndArgs(
           "@include modifier(sub) { @include element(item) { content: 'whatever'; }}",
-          "post"
-        ).createsSelector(".b-post_sub>.b-post__item");
+          "media"
+        ).createsSelector(".o-media_sub>.o-media__item");
       });
     });
 

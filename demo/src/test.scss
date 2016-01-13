@@ -1,7 +1,8 @@
 @import '../../dist/bem-sass'; 
 
+
 /* block */
-@include block(block) {
+@include block(media) {
   color: red;
 
   @include element(elem) {
@@ -25,54 +26,68 @@
   } 
 } 
 
-
 @include configure-bem-sass((
-  default-prefix: "b_",
+  default-prefix: "b-",
   block-types: (
-    component: c_,
-    object:    o_
+    object:      "ob-",
+    component:   "c-",
+    module:      "m",
+    hack:        "_",
+    hack2:       "--",
+    hack3:       "-_-",
+    hack4:       "______________",
+    korean:      "뒑",
+    uchar:       "♫-",
+    escape:      "\\@"
   ),
-  element-sep: "__",
-  modifier-sep: "_"
+  element-sep: "-",
+  modifier-sep: "--"
 )); 
 
-/* block: (object: "o-") */
-@include block(media, object) {
-  color: blue;
+@mixin shared-examples($block-type) {
+  @include block(media, $block-type) {
+    color: blue;
 
-  @include element(item) {
-    color: yellow;
-  }
-
-  @include element(body) {
-    color: yellow;
-  }
-
-  @include modifier(horiz) {
     @include element(item) {
-      color: blue;
+      color: yellow; 
     }
+
     @include element(body) {
-      color: blue;
+      color: yellow;
     }
-  }
-} 
 
-/* block: (component: "c-") */
-@include block(nav, component) {
-  color: blue;
-
-  @include def-rules("nav-item") {
-    font-size: 1em;
+    @include modifier(horiz) {
+      @include element(item) {
+        color: blue;
+        @include adjacent-siblings {
+          border-top: 1px solid #ddd;
+        }
+      }
+      @include element(body) {
+        color: blue;
+      }
+    }
   } 
 
-  @include element(header) {
-    @include get-rules("nav-item");
-    color: red;
-  }
-
-  @include element(search) {
-    @include get-rules("nav-item");
+  @include block(nav, $block-type) {
     color: blue;
-  }
+
+    @include def-rules("nav-item") {
+      font-size: 1em;
+    } 
+
+    @include element(header) {
+      @include get-rules("nav-item");
+      color: red;
+    }
+
+    @include element(search) {
+      @include get-rules("nav-item");
+      color: blue;
+    }
+  } 
 } 
+
+@each $type in map-keys(bem-sass-get("config", "block-types")) {
+  @include shared-examples($type);
+}
