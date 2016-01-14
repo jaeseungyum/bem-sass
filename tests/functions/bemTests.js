@@ -1,30 +1,15 @@
-var path    = require("path");
-var Sassaby = require("sassaby");
+var path        = require("path");
+var SassabyVarz = require(path.resolve("tests/helpers/", "sassabyWithVarz"));
 
 describe("BEM functions", function() {
 
   var sassaby;
-  var sassabyWithVariables;
-  beforeEach(function() {
-    sassabyWithVariables = function(variables) {
-      return new Sassaby(
-        path.resolve("src/functions", "_is-a-bem.scss"),
-        {
-          dependencies: [
-            path.resolve("src/_bundle.scss"),
-            path.resolve("tests/fixtures/default.scss")
-          ],
-          variables: variables
-        }
-      );
-    }; 
-
-    sassaby = sassabyWithVariables({
-      "defaultPrefix": null, 
-      "blockTypes": null,
+  var sassabyWithVarz;
+  beforeEach(function() { 
+    sassaby = SassabyVarz({
       "elementSep": "__",
       "modifierSep": "_"
-    }); 
+    });
   }); 
 
   describe("#get-block", function() {
@@ -87,6 +72,9 @@ describe("BEM functions", function() {
 
     var func;
     beforeEach(function() {
+      sassaby = SassabyVarz({
+        entities: ["block", "block__elem"]
+      });
       func = sassaby.func("bem-sass-exists");
     });
 

@@ -1,34 +1,14 @@
 var path    = require("path");
-var Sassaby = require("sassaby");
+var SassabyVarz = require(path.resolve("tests/helpers/", "SassabyWithVarz"));
 
 describe("BEM mixins", function() {
 
   var sassaby;
-  var sassabyWithVariables; 
   var blockMixin;
 
   describe("default style separators: __, _", function() {
     beforeEach(function() {
-      sassabyWithVariables = function(variables) {
-        return new Sassaby(
-          path.resolve("src/mixins", "_bem.scss"),
-          {
-            dependencies: [
-              path.resolve("src/_bundle.scss"),
-              path.resolve("tests/fixtures/default.scss")
-            ],
-            variables: variables
-          }
-        );
-      }; 
-
-      sassaby = sassabyWithVariables({
-        "defaultPrefix": null, 
-        "blockTypes": null,
-        "elementSep": null,
-        "modifierSep": null
-      });
-
+      sassaby = SassabyVarz(); 
       blockMixin = sassaby.standaloneMixin("block");
     }); 
 
@@ -120,12 +100,9 @@ describe("BEM mixins", function() {
 
     describe("with block prefix: *-", function() {
       beforeEach(function() {
-        sassaby = sassabyWithVariables({
+        sassaby = SassabyVarz({
           "defaultPrefix": "o-", 
-          "blockTypes": null,
-          "elementSep": null,
-          "modifierSep": null 
-        });
+        }); 
         blockMixin = sassaby.standaloneMixin("block");
       });
 
@@ -165,14 +142,11 @@ describe("BEM mixins", function() {
 
     describe("with block prefix: *_", function() {
       beforeEach(function() {
-        sassaby = sassabyWithVariables({
+        sassaby = SassabyVarz({
           "defaultPrefix": "b_", 
-          "blockTypes": null,
-          "elementSep": null,
-          "modifierSep": null 
-        });
+        }); 
         blockMixin = sassaby.standaloneMixin("block");
-      });
+      }); 
 
       it("makes a block", function() {
         blockMixin.calledWithBlockAndArgs(
@@ -192,9 +166,7 @@ describe("BEM mixins", function() {
 
   describe("medium style separators: -,--", function() {
     beforeEach(function() {
-      sassaby = sassabyWithVariables({
-        "defaultPrefix": null, 
-        "blockTypes": null,
+      sassaby = SassabyVarz({
         "elementSep": "'-'",
         "modifierSep": "'--'"
       });
@@ -236,9 +208,8 @@ describe("BEM mixins", function() {
 
     describe("with block prefix: *-", function() {
       beforeEach(function() {
-        sassaby = sassabyWithVariables({
+        sassaby = SassabyVarz({
           "defaultPrefix": "b-", 
-          "blockTypes": null,
           "elementSep": "'-'",
           "modifierSep": "'--'"
         });

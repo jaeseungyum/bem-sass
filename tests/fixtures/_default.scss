@@ -6,5 +6,8 @@
   modifier-sep: $modifierSep or "_"
 ));
 
-@if (bem-sass-add("entities", "block")) {};
-@if (bem-sass-add("entities", "block__elem")) {};
+@if ($entities != null) {
+  @each $entity in $entities {
+    @if (bem-sass-add("entities", $entity)) {};
+  } 
+}

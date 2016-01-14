@@ -104,7 +104,7 @@
 // Check if bem-sass is initialized or not
 // @author  Yum<ym.jsng@gmail.com>
 // @access  public
-// @return { Boolean }
+// @return  {Boolean}
 @function is-bem-sass-initialized() {
   @if (variable-exists("__bem-sass__")) {
     @return true;
@@ -115,10 +115,19 @@
 // Check if bem-sass is configured or not
 // @author  Yum<ym.jsng@gmail.com>
 // @access  public
-// @return { Boolean }
+// @return  {Boolean}
 @function is-bem-sass-configured() {
   @if (bem-sass-get("state", "configured")) {
     @return true;
   }
   @return false;
 } 
+
+// Check if the given level has valid order or not
+// @author  Yum<ym.jsng@gmail.com>
+// @access  public
+// @return  {Boolean}
+@function bem-sass-validate-levels($level) { 
+  @return false;
+  @debug nth(bem-sass-get(levels), bem-sass-get(levels))
+}

@@ -1,30 +1,11 @@
 var path    = require("path");
-var Sassaby = require("sassaby");
+var SassabyVarz = require(path.resolve("tests/helpers/", "SassabyWithVarz"));
 
 describe("Custom utils functions", function() {
 
   var sassaby;
-  var sassabyWithVariables;
   beforeEach(function() { 
-    sassabyWithVariables = function(variables) {
-      return new Sassaby(
-        path.resolve("src/functions", "_is-a-bem.scss"),
-        {
-          dependencies: [
-            path.resolve("src/_bundle.scss"),
-            path.resolve("tests/fixtures/default.scss")
-          ],
-          variables: variables
-        }
-      );
-    }; 
-
-    sassaby = sassabyWithVariables({
-      "defaultPrefix": null, 
-      "blockTypes": null,
-      "elementSep": null,
-      "modifierSep": null
-    }); 
+    sassaby = SassabyVarz(); 
   }); 
 
   describe("str-match", function() {

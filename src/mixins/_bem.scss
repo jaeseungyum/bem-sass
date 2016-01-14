@@ -19,7 +19,7 @@
     entities: (), 
   
     // a logger to check block level order(ITCSS) 
-    block-levels: (), 
+    levels: (), 
 
     // a logger to keep common rules immutable
     common-rules: (),
@@ -93,9 +93,13 @@
     @error "Attempt to reassign `#{$selector-string}`"
   } 
 
+  @if bem-sass-validate-levels($type) {
+    @error "Invalid block order";
+  } 
+
   @if (
-    bem-sass-add(entities, $selector-string)
-    and bem-sass-add(block-levels, $type, $type == null)
+    bem-sass-add(entities, $selector-string) and 
+    bem-sass-add(levels, $type, $type == null)
   ) {
     #{$selector-string} {
       @content;
