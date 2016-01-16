@@ -21,11 +21,11 @@
     // a logger to check block level order(ITCSS) 
     levels-log: (), 
 
-    // a logger to keep common rules immutable
+    // a logger to keep shared rules immutable
     shared-rules-log: (),
 
     // a storage to save block prefixes 
-    prefixes: (),
+    prefix-log: (),
 
     // configurations
     config: (
@@ -52,16 +52,16 @@
   @if $options { 
     $options: unquote-map-values($options);
 
-    // Store default-prefix to prefixes;
+    // Store default-prefix to prefix-log;
     @if (
       map-has-key($options, "default-prefix") and 
-      bem-sass-add("prefixes", map-get($options, "default-prefix"))
+      bem-sass-add("prefix-log", map-get($options, "default-prefix"))
     ) {};
 
-    // Store prefixes of block types to prefixes;
+    // Store prefixes of block types to prefix-log;
     @if (map-has-key($options, "block-types")) {
       @each $prefix in map-values(map-get($options, "block-types")) {
-        @if (bem-sass-add("prefixes", $prefix)) {};
+        @if (bem-sass-add("prefix-log", $prefix)) {};
       }
     }; 
 

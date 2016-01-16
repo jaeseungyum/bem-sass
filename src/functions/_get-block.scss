@@ -45,7 +45,7 @@
 // @param   { String } a selector string
 // @return  { String } the block prefix 
 @function _get-block-prefix($selector-string) {
-  @each $prefix in bem-sass-get("prefixes") {
+  @each $prefix in bem-sass-get("prefix-log") {
     @if (str-index($selector-string, $prefix) == 2) {
       @return str-slice($selector-string, 2, 1 + str-length($prefix));
     }

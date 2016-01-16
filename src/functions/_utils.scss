@@ -143,7 +143,7 @@
 // @param   {String} a selector string
 // @return  {String} the string removed it's block prefix 
 @function remove-block-prefix($selector-string) {
-  @each $prefix in bem-sass-get("prefixes") {
+  @each $prefix in bem-sass-get("prefix-log") {
     @if (str-index($selector-string, $prefix) == 2) {
       @return str-replace($selector-string, "." + $prefix, "."); // . to remove only the first match
     }
