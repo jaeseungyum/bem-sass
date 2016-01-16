@@ -79,9 +79,9 @@ describe("BEM functions", function() {
     });
 
     it("tests whether a given BEM entity is already declared or not", function() { 
-      func.calledWithArgs("entities-log", "block").isTrue(); 
-      func.calledWithArgs("entities-log", "block__elem").isTrue(); 
-      func.calledWithArgs("entities-log", "block_mod").isFalse(); 
+      func.calledWithArgs("logged-entities", "block").isTrue(); 
+      func.calledWithArgs("logged-entities", "block__elem").isTrue(); 
+      func.calledWithArgs("logged-entities", "block_mod").isFalse(); 
     });
   }); 
 }); 

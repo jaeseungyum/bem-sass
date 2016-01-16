@@ -8,6 +8,6 @@
 
 @if ($entitiesLog != null) {
   @each $entity in $entitiesLog {
-    @if (bem-sass-add("entities-log", $entity)) {};
+    @if (bem-sass-add("logged-entities", $entity)) {};
   } 
 }

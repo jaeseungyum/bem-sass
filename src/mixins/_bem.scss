@@ -15,17 +15,17 @@
 
   $__bem-sass__: (
 
-    // a logger to keep BEM entities immutable 
-    entities-log: (), 
+    // To check immutability of BEM entities
+    logged-entities: (), 
   
-    // a logger to check block level order(ITCSS) 
-    levels-log: (), 
+    // To check order of block levels
+    logged-block-levels: (), 
 
-    // a logger to keep shared rules immutable
-    shared-rules-log: (),
+    // To check uniqueness of shared rules
+    logged-shared-rules: (),
 
-    // a storage to save block prefixes 
-    prefix-log: (),
+    // A storage for block prefixes
+    logged-prefixes: (),
 
     // configurations
     config: (
@@ -38,6 +38,7 @@
     state: (
       configured: false
     )
+
   ) !global;
 }
 
@@ -52,16 +53,16 @@
   @if $options { 
     $options: unquote-map-values($options);
 
-    // Store default-prefix to prefix-log;
+    // Store default-prefix to logged-prefixes;
     @if (
       map-has-key($options, "default-prefix") and 
-      bem-sass-add("prefix-log", map-get($options, "default-prefix"))
+      bem-sass-add("logged-prefixes", map-get($options, "default-prefix"))
     ) {};
 
-    // Store prefixes of block types to prefix-log;
+    // Store prefixes of block types to logged-prefixes;
     @if (map-has-key($options, "block-types")) {
       @each $prefix in map-values(map-get($options, "block-types")) {
-        @if (bem-sass-add("prefix-log", $prefix)) {};
+        @if (bem-sass-add("logged-prefixes", $prefix)) {};
       }
     }; 
 
@@ -89,7 +90,7 @@
 
   $selector-string: create-selector("block", $name, (type: $type));
 
-  @if bem-sass-exists(entities-log, $selector-string) {
+  @if bem-sass-exists(logged-entities, $selector-string) {
     @error "Attempt to reassign `#{$selector-string}`"
   } 
 
@@ -98,8 +99,8 @@
   } 
 
   @if (
-    bem-sass-add(entities-log, $selector-string) and 
-    bem-sass-add(levels-log, $type, $type == null)
+    bem-sass-add(logged-entities, $selector-string) and 
+    bem-sass-add(logged-block-levels, $type, $type == null)
   ) {
     #{$selector-string} {
       @content;
@@ -121,11 +122,11 @@
   @at-root {
     $selector-string: create-selector("element", $name, (in-a-modifier: is-a-bem(modifier, &)));
 
-    @if bem-sass-exists(entities-log, $selector-string) {
+    @if bem-sass-exists(logged-entities, $selector-string) {
       @error "Attempt to reassign `#{$selector-string}`"
     }
 
-    @if (bem-sass-add(entities-log, $selector-string)) {
+    @if (bem-sass-add(logged-entities, $selector-string)) {
       #{$selector-string} {
         @content;
       }
@@ -146,11 +147,11 @@
   @at-root {
     $selector-string: create-selector("modifier", $name, (value: $value, in-an-element: is-a-bem(element, &)));
     
-    @if bem-sass-exists(entities-log, $selector-string) {
+    @if bem-sass-exists(logged-entities, $selector-string) {
       @error "Attempt to reassign `#{$selector-string}`"
     }
 
-    @if bem-sass-add(entities-log, $selector-string) {
+    @if bem-sass-add(logged-entities, $selector-string) {
       #{$selector-string} {
         @content;
       }
@@ -212,11 +213,11 @@
   $context: &; 
   $selector-string: create-selector("shared-rule", $name, (context: $context)); 
 
-  @if bem-sass-exists(shared-rules-log, $selector-string) {
+  @if bem-sass-exists(logged-shared-rules, $selector-string) {
     @error "Attempt to reassign the shared rule `#{$name}` in `#{get-block($context)}`"
   }
 
-  @if (bem-sass-add(shared-rules-log, $selector-string)) {
+  @if (bem-sass-add(logged-shared-rules, $selector-string)) {
     @at-root #{create-selector("shared-rule", $name, (context: $context))} {
       @content
     }
@@ -234,7 +235,7 @@
   @if (not $context) { @error "`rules` should be inside of a block"; } 
 
   $selector-string: create-selector("shared-rule", $name, (context: $context)); 
-  @if (not bem-sass-exists("shared-rules-log", $selector-string)) {
+  @if (not bem-sass-exists("logged-shared-rules", $selector-string)) {
     @error "There are no shared rule `#{$name}` in `#{get-block($context)}`";
   }
 
