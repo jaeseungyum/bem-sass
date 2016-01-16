@@ -1,6 +1,6 @@
 var path    = require("path");
 var Sassaby = require("sassaby");
-var Object.assign = require("object-assign");
+Object.assign = require("object-assign");
 
 module.exports = function(varz) {
 
