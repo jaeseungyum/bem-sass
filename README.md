@@ -6,7 +6,7 @@
 
 `bem-sass` is a Sass library for organizing CSS objects. It helps you apply BEM architecture to CSS you write with no compatibility issues with both RubySass(>= 3.4) and LibSass(>=3.3).
 
-`bem-sass` is heavily inspired by [Immutable CSS](http://csswizardry.com/2015/03/immutable-css/) and [ITCSS](http://itcss.io/) as well as the original BEM concept. It is an Sass-only implementation of both concepts.
+`bem-sass` is heavily inspired by [Immutable CSS](http://csswizardry.com/2015/03/immutable-css/) and [ITCSS](http://itcss.io/) as well as the original BEM methodology. It is a pure Sass implementation of those concepts.
 
 ## Quick Start
 + Install with [Bower](http://bower.io): ```bower install --save-dev bem-sass```
