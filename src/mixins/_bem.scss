@@ -19,10 +19,10 @@
     entities-log: (), 
   
     // a logger to check block level order(ITCSS) 
-    levels: (), 
+    levels-log: (), 
 
     // a logger to keep common rules immutable
-    common-rules: (),
+    shared-rules-log: (),
 
     // a storage to save block prefixes 
     prefixes: (),
@@ -99,7 +99,7 @@
 
   @if (
     bem-sass-add(entities-log, $selector-string) and 
-    bem-sass-add(levels, $type, $type == null)
+    bem-sass-add(levels-log, $type, $type == null)
   ) {
     #{$selector-string} {
       @content;
@@ -205,19 +205,19 @@
 // @acess   public
 // @author  Yum<ym.jsng@gmail.com>
 // @param   {String} $rule-name
-@mixin def-rules($rule-name) {
+@mixin def-shared-rules($rule-name) {
 
-  @if (not &) { @error "`def-rules` should be inside of a block"; }
+  @if (not &) { @error "`def-shared-rules` should be inside of a block"; }
 
   $context: &; 
-  $selector-string: create-selector(common-rules, $rule-name, (context: $context)); 
+  $selector-string: create-selector(shared-rules, $rule-name, (context: $context)); 
 
-  @if bem-sass-exists(common-rules, $selector-string) {
+  @if bem-sass-exists(shared-rules-log, $selector-string) {
     @error "Attempt to reassign the common rules `#{$rule-name}` in `#{get-block($context)}`"
   }
 
-  @if (bem-sass-add(common-rules, $selector-string)) {
-    @at-root #{create-selector("common-rules", $rule-name, (context: $context))} {
+  @if (bem-sass-add(shared-rules-log, $selector-string)) {
+    @at-root #{create-selector("shared-rules", $rule-name, (context: $context))} {
       @content
     }
   }
@@ -229,12 +229,12 @@
 // @acess   public
 // @author  Yum<ym.jsng@gmail.com>
 // @param   {String} $rule-name
-@mixin get-rules($rule-name) {
+@mixin shared-rules($rule-name) {
   $context: &; 
   @if (not $context) { @error "`rules` should be inside of a block"; } 
 
-  $selector-string: create-selector(common-rules, $rule-name, (context: $context)); 
-  @if (not bem-sass-exists("common-rules", $selector-string)) {
+  $selector-string: create-selector(shared-rules, $rule-name, (context: $context)); 
+  @if (not bem-sass-exists("shared-rules-log", $selector-string)) {
     @error "There are no common rules `#{$rule-name}` in `#{get-block($context)}`";
   }
 

@@ -192,17 +192,17 @@ Given that `nav__item` and `nav__link` have common css rules. Since bem-sass enf
 ```scss
 @include block(nav) { 
 
-  %common-rules {
+  %shared-rules {
     display: inline-block;
     height: 100%;
   }
 
   @include element(item) {
-    @extend %common-rules;
+    @extend %shared-rules;
   }
 
   @include element(link) {
-    @extend %common-rules;
+    @extend %shared-rules;
   }
 }
 ```
@@ -216,21 +216,21 @@ But when compiled, this produces unexpected nested selectors like below:
 }
 ```
 
-To avoid this, bem-sass provides `def-rules` and `get-rules`.
+To avoid this, bem-sass provides `def-shared-rules` and `shared-rules`.
 ```scss
 @include block(nav) {
 
-  @include def-rules("items") {
+  @include def-shared-rules("items") {
     display: inline-block;
     height: 100%;
   }
 
   @include element(item) {
-    @include get-rules("items");
+    @include shared-rules("items");
   }
 
   @include element(link) {
-    @include get-rules("items");
+    @include shared-rules("items");
   }
 }
 ```
@@ -241,7 +241,7 @@ To avoid this, bem-sass provides `def-rules` and `get-rules`.
   height: 100%;
 }
 ```
-Note that `def-rules` and `get-rules` should be inside of a block.
+Note that `def-shared-rules` and `shared-rules` should be inside of a block.
 
 
 ## Custom Configurations

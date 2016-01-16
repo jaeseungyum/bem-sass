@@ -72,17 +72,17 @@
   @include block(nav, $block-type) {
     color: blue;
 
-    @include def-rules("nav-item") {
+    @include def-shared-rules("nav-item") {
       font-size: 1em;
     } 
 
     @include element(header) {
-      @include get-rules("nav-item");
+      @include shared-rules("nav-item");
       color: red;
     }
 
     @include element(search) {
-      @include get-rules("nav-item");
+      @include shared-rules("nav-item");
       color: blue;
     }
   } 
@@ -92,4 +92,4 @@
   @include shared-examples($type);
 }
 
-@debug length(bem-sass-get("levels"));
+@debug length(bem-sass-get("levels-log"));

@@ -25,8 +25,8 @@
     @return _create-selector-modifier($namestring, map-get($options, value), map-get($options, in-an-element));
   }
 
-  @if ($object-type == "common-rules") {
-    @return _create-selector-common-rules($namestring, map-get($options, context));
+  @if ($object-type == "shared-rules") {
+    @return _create-selector-shared-rules($namestring, map-get($options, context));
   }
 }
 
@@ -97,7 +97,7 @@
 // @param  {String} 
 // @param  {List} $context - parent selector
 // @return {String} 
-@function _create-selector-common-rules($name-partial, $context) {
+@function _create-selector-shared-rules($name-partial, $context) {
   @return "%" + str-slice(get-block($context), 2) + "__CRS__" + $name-partial;
 } 
 

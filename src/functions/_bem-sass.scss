@@ -129,5 +129,5 @@
 // @return  {Boolean}
 @function bem-sass-validate-levels($level) { 
   @return false;
-  @debug nth(bem-sass-get(levels), bem-sass-get(levels))
+  @debug nth(bem-sass-get(levels-log), bem-sass-get(levels-log))
 }
