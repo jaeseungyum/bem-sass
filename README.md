@@ -334,7 +334,7 @@ Note that the order of the block level is important. For example, the following 
 }
 ```
 ```
-Error: the `component` menu should not be ahead of any `object`s
+Error: the `object` media should not be behind of of any `components`s. Your block levels are: object, component
 ```
 
 #### ```element-sep```, ```modifier-sep```

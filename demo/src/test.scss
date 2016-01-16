@@ -44,6 +44,7 @@
   modifier-sep: "--"
 )); 
 
+
 @mixin shared-examples($block-type) {
   @include block(media, $block-type) {
     color: blue;

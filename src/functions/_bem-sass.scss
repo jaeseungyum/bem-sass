@@ -127,7 +127,18 @@
 // @author  Yum<ym.jsng@gmail.com>
 // @access  public
 // @return  {Boolean}
-@function bem-sass-validate-levels($level) { 
-  @return false;
-  @debug nth(bem-sass-get(logged-block-levels), bem-sass-get(logged-block-levels))
+@function validate-block-level-order($level, $name: "") { 
+  @if length(bem-sass-get("logged-block-levels")) > 0 {
+    $index-levels: map-keys(bem-sass-get("config", "block-levels"));
+    $lastest-level: nth(
+      bem-sass-get("logged-block-levels"), 
+      length(bem-sass-get("logged-block-levels"))
+    );
+    $index-current: index($index-levels, $level);
+    $index-lastest: index($index-levels, $lastest-level);
+    @if $index-current < $index-lastest {
+      @error "the `#{$level}` #{$name} should not be behind of any `#{$lastest-level}`s. Your block levels are: #{$index-levels}";
+    }
+  }
+  @return null;
 }

@@ -86,21 +86,19 @@
 //  @include block(media, "object") {
 //    ...styles here...
 //  }
-@mixin block($name, $type:null) {
+@mixin block($name, $level:null) {
 
-  $selector-string: create-selector("block", $name, (type: $type));
+  $selector-string: create-selector("block", $name, (level: $level));
 
   @if bem-sass-exists(logged-entities, $selector-string) {
     @error "Attempt to reassign `#{$selector-string}`"
   } 
 
-  @if bem-sass-validate-levels($type) {
-    @error "Invalid block order";
-  } 
+  @if validate-block-level-order($level, $name) {} 
 
   @if (
     bem-sass-add(logged-entities, $selector-string) and 
-    bem-sass-add(logged-block-levels, $type, $type == null)
+    bem-sass-add(logged-block-levels, $level, $level == null)
   ) {
     #{$selector-string} {
       @content;

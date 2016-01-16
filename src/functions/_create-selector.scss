@@ -14,7 +14,7 @@
 @function create-selector($type, $namestring, $options:null) {
 
   @if ($type == "block") {
-    @return _create-selector-block($namestring, map-get($options, type));
+    @return _create-selector-block($namestring, map-get($options, level));
   }
 
   @if ($type == "element") {
@@ -39,9 +39,9 @@
 // @param  {String}  $name
 // @param  {String=} $type - a block type
 // @return {String} 
-@function _create-selector-block($name, $type:null) {
+@function _create-selector-block($name, $level:null) {
   @return (
-    "." + _get-block-prefix-by-type($type) + $name
+    "." + _get-block-prefix-by-type($level) + $name
   );
 }
 
