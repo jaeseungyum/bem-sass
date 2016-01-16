@@ -443,7 +443,7 @@ Note that the order of your block levels is important. For example, the followin
 }
 ```
 ```
-Error: the `object` level block `media` should not be behind of of any `components` level blocks. Your block levels are: object, component
+Error: the `object` level block `media` should not be behind of any `components` level blocks. Your block levels are: object, component
 ```
 
 
