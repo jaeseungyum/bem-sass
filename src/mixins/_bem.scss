@@ -16,7 +16,7 @@
   $__bem-sass__: (
 
     // a logger to keep BEM entities immutable 
-    entities: (), 
+    entities-log: (), 
   
     // a logger to check block level order(ITCSS) 
     levels: (), 
@@ -89,7 +89,7 @@
 
   $selector-string: create-selector(block, $name, (type: $type));
 
-  @if bem-sass-exists(entities, $selector-string) {
+  @if bem-sass-exists(entities-log, $selector-string) {
     @error "Attempt to reassign `#{$selector-string}`"
   } 
 
@@ -98,7 +98,7 @@
   } 
 
   @if (
-    bem-sass-add(entities, $selector-string) and 
+    bem-sass-add(entities-log, $selector-string) and 
     bem-sass-add(levels, $type, $type == null)
   ) {
     #{$selector-string} {
@@ -121,11 +121,11 @@
   @at-root {
     $selector-string: create-selector(element, $name, (in-a-modifier: is-a-bem(modifier, &)));
 
-    @if bem-sass-exists(entities, $selector-string) {
+    @if bem-sass-exists(entities-log, $selector-string) {
       @error "Attempt to reassign `#{$selector-string}`"
     }
 
-    @if (bem-sass-add(entities, $selector-string)) {
+    @if (bem-sass-add(entities-log, $selector-string)) {
       #{$selector-string} {
         @content;
       }
@@ -146,11 +146,11 @@
   @at-root {
     $selector-string: create-selector(modifier, $name, (value: $value, in-an-element: is-a-bem(element, &)));
     
-    @if bem-sass-exists(entities, $selector-string) {
+    @if bem-sass-exists(entities-log, $selector-string) {
       @error "Attempt to reassign `#{$selector-string}`"
     }
 
-    @if bem-sass-add(entities, $selector-string) {
+    @if bem-sass-add(entities-log, $selector-string) {
       #{$selector-string} {
         @content;
       }

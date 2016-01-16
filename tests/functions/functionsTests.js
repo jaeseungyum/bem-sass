@@ -73,15 +73,15 @@ describe("BEM functions", function() {
     var func;
     beforeEach(function() {
       sassaby = SassabyVarz({
-        entities: ["block", "block__elem"]
+        entitiesLog: ["block", "block__elem"]
       });
       func = sassaby.func("bem-sass-exists");
     });
 
     it("tests whether a given BEM entity is already declared or not", function() { 
-      func.calledWithArgs("entities", "block").isTrue(); 
-      func.calledWithArgs("entities", "block__elem").isTrue(); 
-      func.calledWithArgs("entities", "block_mod").isFalse(); 
+      func.calledWithArgs("entities-log", "block").isTrue(); 
+      func.calledWithArgs("entities-log", "block__elem").isTrue(); 
+      func.calledWithArgs("entities-log", "block_mod").isFalse(); 
     });
   }); 
 }); 

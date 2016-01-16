@@ -8,7 +8,7 @@ module.exports = function(varz) {
     "blockTypes": null,
     "elementSep": null,
     "modifierSep": null,
-    "entities": null
+    "entitiesLog": null
   };
 
   return new Sassaby(

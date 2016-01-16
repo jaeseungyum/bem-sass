@@ -6,8 +6,8 @@
   modifier-sep: $modifierSep or "_"
 ));
 
-@if ($entities != null) {
-  @each $entity in $entities {
-    @if (bem-sass-add("entities", $entity)) {};
+@if ($entitiesLog != null) {
+  @each $entity in $entitiesLog {
+    @if (bem-sass-add("entities-log", $entity)) {};
   } 
 }
