@@ -8,7 +8,7 @@
 // @author  Yum<ym.jsng@gmail.com>
 // @access  public
 // @return {Map}
-@function get-bem-sass() { 
+@function bem-sass() { 
   @if not is-bem-sass-initialized() {
     @return null;
   } 
@@ -54,7 +54,7 @@
 @function bem-sass-get($attrs...) {
   @return (
     is-bem-sass-initialized() and 
-    map-deep-get(get-bem-sass(), $attrs...)
+    map-deep-get(bem-sass(), $attrs...)
   );
 } 
 
@@ -66,7 +66,7 @@
 // @param   {*} $value 
 // @return  {Boolean} 
 @function bem-sass-set($attrs, $value) {
-  @if (set-bem-sass(map-deep-set(get-bem-sass(), $attrs, $value))) {
+  @if (set-bem-sass(map-deep-set(bem-sass(), $attrs, $value))) {
     @return true;
   } @else {
     @return false;
