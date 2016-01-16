@@ -299,19 +299,11 @@ Sometimes you may need to define several block types to organize your css object
 /* Media object */
 @include block(media, "object") {
   /*...styles are here...*/
-
-  @include element(body) {
-    /*...styles are here...*/
-  }
 }
 
 /* Menu component */
 @include block(menu, "component") {
   /*...styles are here...*/
-
-  @include element(item) {
-    /*...styles are here...*/
-  }
 }
 ```
 
@@ -321,24 +313,18 @@ When compiled:
 .o-media {
   /*...styles are here...*/
 }
-.o-media__body {
-  /*...styles are here...*/
-}
 
 /* Menu component */
 .c-menu {
   /*...styles are here...*/
 }
-.c-menu__item {
-  /*...styles are here...*/
-}
 ```
 
-Note that the order of the block level is important. the following will cause an error:
+Note that the order of the block level is important. For example, the following will cause an error:
 
 ```scss
-/* Menu component */
-@include block(menu, "component") {
+/* Menu component */  
+@include block(menu, "component") { //  <--- BAD: Component is head of Object
   /*...styles are here...*/
 }
 
