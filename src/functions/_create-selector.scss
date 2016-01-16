@@ -8,26 +8,28 @@
 // Create valid CSS selector
 // @author Yum<ym.jsng@gmail.com>
 // @access public
-// @param  {String} $object-type
+// @param  {String} $type
 // @param  {String} $namestring
 // @return {String} 
-@function create-selector($object-type, $namestring, $options:null) {
+@function create-selector($type, $namestring, $options:null) {
 
-  @if ($object-type == "block") {
+  @if ($type == "block") {
     @return _create-selector-block($namestring, map-get($options, type));
   }
 
-  @if ($object-type == "element") {
+  @if ($type == "element") {
     @return _create-selector-element($namestring, map-get($options, in-a-modifier));
   }
 
-  @if ($object-type == "modifier") {
+  @if ($type == "modifier") {
     @return _create-selector-modifier($namestring, map-get($options, value), map-get($options, in-an-element));
   }
 
-  @if ($object-type == "shared-rules") {
+  @if ($type == "shared-rule") {
     @return _create-selector-shared-rules($namestring, map-get($options, context));
   }
+
+  @error "`#{$type}` is not a valid type for create-selector";
 }
 
 

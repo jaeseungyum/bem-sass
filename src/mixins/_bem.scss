@@ -87,7 +87,7 @@
 //  }
 @mixin block($name, $type:null) {
 
-  $selector-string: create-selector(block, $name, (type: $type));
+  $selector-string: create-selector("block", $name, (type: $type));
 
   @if bem-sass-exists(entities-log, $selector-string) {
     @error "Attempt to reassign `#{$selector-string}`"
@@ -119,7 +119,7 @@
   @if (is-a-bem(element, &)) { @error "element should not be within another element" }
 
   @at-root {
-    $selector-string: create-selector(element, $name, (in-a-modifier: is-a-bem(modifier, &)));
+    $selector-string: create-selector("element", $name, (in-a-modifier: is-a-bem(modifier, &)));
 
     @if bem-sass-exists(entities-log, $selector-string) {
       @error "Attempt to reassign `#{$selector-string}`"
@@ -144,7 +144,7 @@
   @if (is-a-bem(modifier, &)) { @error "modifier should not be within another modifier" }
 
   @at-root {
-    $selector-string: create-selector(modifier, $name, (value: $value, in-an-element: is-a-bem(element, &)));
+    $selector-string: create-selector("modifier", $name, (value: $value, in-an-element: is-a-bem(element, &)));
     
     @if bem-sass-exists(entities-log, $selector-string) {
       @error "Attempt to reassign `#{$selector-string}`"
@@ -204,20 +204,20 @@
 // Define common css rules to be shared with entities inside a given block
 // @acess   public
 // @author  Yum<ym.jsng@gmail.com>
-// @param   {String} $rule-name
-@mixin def-shared-rules($rule-name) {
+// @param   {String} $name
+@mixin def-shared-rules($name) {
 
   @if (not &) { @error "`def-shared-rules` should be inside of a block"; }
 
   $context: &; 
-  $selector-string: create-selector(shared-rules, $rule-name, (context: $context)); 
+  $selector-string: create-selector("shared-rule", $name, (context: $context)); 
 
   @if bem-sass-exists(shared-rules-log, $selector-string) {
-    @error "Attempt to reassign the common rules `#{$rule-name}` in `#{get-block($context)}`"
+    @error "Attempt to reassign the shared rule `#{$name}` in `#{get-block($context)}`"
   }
 
   @if (bem-sass-add(shared-rules-log, $selector-string)) {
-    @at-root #{create-selector("shared-rules", $rule-name, (context: $context))} {
+    @at-root #{create-selector("shared-rule", $name, (context: $context))} {
       @content
     }
   }
@@ -228,14 +228,14 @@
 // Get common css rules inside a given block
 // @acess   public
 // @author  Yum<ym.jsng@gmail.com>
-// @param   {String} $rule-name
-@mixin shared-rules($rule-name) {
+// @param   {String} $name
+@mixin shared-rules($name) {
   $context: &; 
   @if (not $context) { @error "`rules` should be inside of a block"; } 
 
-  $selector-string: create-selector(shared-rules, $rule-name, (context: $context)); 
+  $selector-string: create-selector("shared-rule", $name, (context: $context)); 
   @if (not bem-sass-exists("shared-rules-log", $selector-string)) {
-    @error "There are no common rules `#{$rule-name}` in `#{get-block($context)}`";
+    @error "There are no shared rule `#{$name}` in `#{get-block($context)}`";
   }
 
   @extend #{$selector-string};
