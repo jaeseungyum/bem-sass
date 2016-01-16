@@ -36,6 +36,7 @@
   "homepage": "https://github.com/jsng/bem-sass",
   "devDependencies": {
     "node-sass": "^3.4.2",
+    "object-assign": "^4.0.1",
     "sassaby": "https://github.com/jsng/sassaby.git"
   },
   "files": [
