@@ -48,6 +48,121 @@ When compiled:
 }
 ```
 
+
+## Custom Configurations
+You can configure bem-sass options by `configure-bem-sass` mixin. Using this mixin is optional. If there have been no custom configurations, the default options are exactly the same as below:
+```scss
+@include configure-bem-sass ((
+  default-prefix: "",
+  block-levels: (),
+  element-sep: "__",
+  modifier-sep: "_"
+));
+```
+
+#### ```default-prefix```
+Set the default prefix for `block` mixin.
+```scss
+@include configure-bem-sass((
+  default-prefix: "b-" // Set default block prefix to "b-"
+));
+
+/* Menu block */
+@include block(menu) {
+  /*...styles are here...*/
+  
+  @include element(item) {
+    /*...styles are here...*/
+  }
+}
+```
+
+When compiled:
+```css
+/* Menu block */
+.b-menu {
+  /*...styles here...*/
+}
+
+.b-menu__item {
+  /*...styles here...*/
+}
+```
+
+#### ```block-levels```
+Sometimes you may need to define several block types to organize your css object structure especially when you are considering a methodology like [ITCSS](https://speakerdeck.com/dafed/managing-css-projects-with-itcss). You can define your own several block levels by adding `level-name(string): prefix(string)` to `block-levels` map.
+
+```scss
+@include configure-bem-sass((
+  block-levels: (
+    object:    "o-",  
+    component: "c-"
+  )
+));
+
+/* Media object */
+@include block(media, "object") {
+  /*...styles are here...*/
+}
+
+/* Menu component */
+@include block(menu, "component") {
+  /*...styles are here...*/
+}
+```
+
+When compiled:
+```css
+/* Media object */
+.o-media {
+  /*...styles are here...*/
+}
+
+/* Menu component */
+.c-menu {
+  /*...styles are here...*/
+}
+```
+
+
+#### ```element-sep```, ```modifier-sep```
+You can set your own BEM element/modifier separators.
+
+```scss
+@include configure-bem-sass((
+  // Set separators like Medium.com
+  element-sep: "-",
+  modifier-sep: "--"
+));
+
+/* Promo block */
+@include block(promo) {
+  /*...styles are here...*/
+  
+  @include element(title) {
+    /*...styles are here...*/
+  }
+  
+  @include modifier(hero) {
+    /*...styles are here...*/
+  }
+}
+```
+
+When compiled:
+```css
+/* Promo block */
+.promo {
+  /*...styles are here...*/
+}
+.promo-title {
+  /*...styles are here...*/
+}
+.promo--hero {
+  /*...styles are here...*/
+}
+```
+
 ## Extended Details
 ### Boolean Modifier & Key-Value Modifier
 bem-sass supports key-value modifiers. When using `modifier`, passing a single argument generates a boolean modifier, whereas passing 2 arguments generates a key-value modifier.
@@ -245,135 +360,6 @@ To avoid this, bem-sass provides `def-shared-rules` and `shared-rules`.
 Note that `def-shared-rules` and `shared-rules` should be inside of a block.
 
 
-## Custom Configurations
-You can configure bem-sass options by `configure-bem-sass` mixin. Using this mixin is optional. If there have been no custom configurations, the default options are exactly the same as below:
-```scss
-@include configure-bem-sass ((
-  default-prefix: "",
-  block-levels: (),
-  element-sep: "__",
-  modifier-sep: "_"
-));
-```
-
-#### ```default-prefix```
-Set the default prefix for `block` mixin.
-```scss
-@include configure-bem-sass((
-  default-prefix: "b-" // Set default block prefix to "b-"
-));
-
-/* Menu block */
-@include block(menu) {
-  /*...styles are here...*/
-  
-  @include element(item) {
-    /*...styles are here...*/
-  }
-}
-```
-
-When compiled:
-```css
-/* Menu block */
-.b-menu {
-  /*...styles here...*/
-}
-
-.b-menu__item {
-  /*...styles here...*/
-}
-```
-
-#### ```block-levels```
-Sometimes you may need to define several block types to organize your css object structure especially when you are considering a methodology like [ITCSS](https://speakerdeck.com/dafed/managing-css-projects-with-itcss). You can define your own several block levels by adding `block type: prefix` pair to `block-levels` map.
-
-```scss
-@include configure-bem-sass((
-  block-levels: (
-    object:    "o-",  
-    component: "c-"
-  )
-));
-
-/* Media object */
-@include block(media, "object") {
-  /*...styles are here...*/
-}
-
-/* Menu component */
-@include block(menu, "component") {
-  /*...styles are here...*/
-}
-```
-
-When compiled:
-```css
-/* Media object */
-.o-media {
-  /*...styles are here...*/
-}
-
-/* Menu component */
-.c-menu {
-  /*...styles are here...*/
-}
-```
-
-Note that the order of the block level is important. For example, the following will cause an error:
-
-```scss
-/* Menu component */  
-@include block(menu, "component") { //  <--- BAD: Component is head of Object
-  /*...styles are here...*/
-}
-
-/* Media object */
-@include block(media, "object") {
-  /*...styles are here...*/
-}
-```
-```
-Error: the `object` media should not be behind of of any `components`s. Your block levels are: object, component
-```
-
-#### ```element-sep```, ```modifier-sep```
-You can set your own BEM element/modifier separators.
-
-```scss
-@include configure-bem-sass((
-  // Set separators like Medium.com
-  element-sep: "-",
-  modifier-sep: "--"
-));
-
-/* Promo block */
-@include block(promo) {
-  /*...styles are here...*/
-  
-  @include element(title) {
-    /*...styles are here...*/
-  }
-  
-  @include modifier(hero) {
-    /*...styles are here...*/
-  }
-}
-```
-
-When compiled:
-```css
-/* Promo block */
-.promo {
-  /*...styles are here...*/
-}
-.promo-title {
-  /*...styles are here...*/
-}
-.promo--hero {
-  /*...styles are here...*/
-}
-```
 
 ## Caveats
 
@@ -441,6 +427,25 @@ bem-sass ensures that every BEM entity you create is immutable. It prevents you 
 Error: in `element': Attempt to reassign `.nav__item` 
 Error: in `block': Attempt to reassign `.nav`
 ```
+
+### The Order of Block Levels Matters
+Note that the order of your block levels is important. For example, the following will cause an error:
+
+```scss
+/* Menu component */  
+@include block(menu, "component") { //  <--- BAD: Component is head of Object
+  /*...styles are here...*/
+}
+
+/* Media object */
+@include block(media, "object") {
+  /*...styles are here...*/
+}
+```
+```
+Error: the `object` level block `media` should not be behind of of any `components` level blocks. Your block levels are: object, component
+```
+
 
 
 ## See Also

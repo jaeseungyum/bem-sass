@@ -137,7 +137,7 @@
     $index-current: index($index-levels, $level);
     $index-lastest: index($index-levels, $lastest-level);
     @if $index-current < $index-lastest {
-      @error "the `#{$level}` #{$name} should not be behind of any `#{$lastest-level}`s. Your block levels are: #{$index-levels}";
+      @error "the `#{$level}` level block `#{$name}` should not be behind of any `#{$lastest-level}` level blocks. Your block levels are: #{$index-levels}";
     }
   }
   @return null;
