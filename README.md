@@ -4,17 +4,16 @@
 ![Build Status](https://img.shields.io/circleci/project/jsng/bem-sass.svg)
 
 
-`bem-sass` is a Sass library for organizing css objects. It helps you apply BEM methodology to write your own CSS with no compatibility issues with both RubySass(>= 3.4) and LibSass(>=3.3), and provides more flexible namespacing configurations.
+`bem-sass` is a Sass library for organizing CSS objects. It helps you apply BEM architecture to CSS you write with no compatibility issues with both RubySass(>= 3.4) and LibSass(>=3.3).
 
-`bem-sass` is heavily inspired by [Immutable CSS](http://csswizardry.com/2015/03/immutable-css/), and [ITCSS](http://itcss.io/) as well as the original BEM concept. Immutable CSS describes that CSS objects you created should never be reassigned throughout your project.
-ITCSS provides a good approach to manage CSS specificity issues that can happen even if you take advantages of BEM. These concepts will help you build more robust, secure css codebase at scale.
+`bem-sass` is heavily inspired by [Immutable CSS](http://csswizardry.com/2015/03/immutable-css/) and [ITCSS](http://itcss.io/) as well as the original BEM concept. It is an Sass-only implementation of both concepts.
 
 ## Quick Start
 + Install with [Bower](http://bower.io): ```bower install --save-dev bem-sass```
 + Install with [npm](https://www.npmjs.com): ```npm install -save-dev bem-sass```
 
 ## Basic Usages
-Once you import bem-sass to your project, you can simply build your own css object like below:
+Once you import `bem-sass` to your project, you can simply build your own css object like below:
 
 ```scss
 
@@ -166,6 +165,7 @@ When compiled:
 ## Extended Details
 ### Boolean Modifier & Key-Value Modifier
 bem-sass supports key-value modifiers. When using `modifier`, passing a single argument generates a boolean modifier, whereas passing 2 arguments generates a key-value modifier.
+
 ```scss
 // @see https://en.bem.info/method/naming-convention/#block-modifier
 
@@ -303,7 +303,7 @@ When compiled:
 ```
 
 ### Shared CSS Rules Between Elements
-Given that `nav__item` and `nav__link` have common css rules. Since bem-sass enforces immutability on every BEM entity, it seems that the only way to avoid an inevitable code duplication is using Sass placeholder and `@extend`.
+Given that `nav__item` and `nav__link` have common CSS rules. Since bem-sass enforces immutability on every BEM entity, it seems that the only way to avoid an inevitable code duplication is using Sass placeholder and `@extend`.
 
 ```scss
 @include block(nav) { 
