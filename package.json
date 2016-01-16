@@ -1,8 +1,8 @@
 {
   "name": "bem-sass",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "author": "",
-  "description": "a Sass library for BEM-style namespaced css",
+  "description": "a Sass library for organizing CSS objects",
   "main": "dist/_bem-sass.scss",
   "directories": {
     "test": "tests"
