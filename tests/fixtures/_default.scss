@@ -1,7 +1,7 @@
 @include init-bem-sass;
 @include configure-bem-sass((
   default-prefix: $defaultPrefix or "",
-  block-types: $blockTypes or (),
+  block-levels: $blockLevels or (),
   element-sep: $elementSep or "__",
   modifier-sep: $modifierSep or "_"
 ));

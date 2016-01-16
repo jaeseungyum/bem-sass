@@ -131,13 +131,13 @@
   @if (
     bem-sass-get(
       "config", 
-      "block-types", 
+      "block-levels", 
       $type
     )  == null
   ) {
     @error "block type `#{$type}` has not been declared";
   }
 
-  @return bem-sass-get("config", "block-types", $type);
+  @return bem-sass-get("config", "block-levels", $type);
 } 
 

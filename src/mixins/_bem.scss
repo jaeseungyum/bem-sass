@@ -30,7 +30,7 @@
     // configurations
     config: (
       default-prefix: unquote(""),
-      block-types: (),
+      block-levels: (),
       element-sep: unquote("__"),
       modifier-sep: unquote("_")
     ),
@@ -51,7 +51,7 @@
   @if is-bem-sass-configured() { @error "bem-sass is already configured"; } 
 
   @if $options { 
-    $options: unquote-map-values($options);
+    $options: unquote-map-values($options); 
 
     // Store default-prefix to logged-prefixes;
     @if (
@@ -60,8 +60,8 @@
     ) {};
 
     // Store prefixes of block types to logged-prefixes;
-    @if (map-has-key($options, "block-types")) {
-      @each $prefix in map-values(map-get($options, "block-types")) {
+    @if (map-has-key($options, "block-levels")) {
+      @each $prefix in map-values(map-get($options, "block-levels")) {
         @if (bem-sass-add("logged-prefixes", $prefix)) {};
       }
     }; 
@@ -71,7 +71,7 @@
       bem-sass-set("state" "configured", true)
     ) {};
   } 
-}
+} 
 
 
 // Generate BEM block selector 

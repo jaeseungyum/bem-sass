@@ -28,7 +28,7 @@
 
 @include configure-bem-sass((
   default-prefix: "b-",
-  block-types: (
+  block-levels: (
     object:      "ob-",
     component:   "c-",
     module:      "m",
@@ -88,7 +88,7 @@
   } 
 } 
 
-@each $type in map-keys(bem-sass-get("config", "block-types")) {
+@each $type in map-keys(bem-sass-get("config", "block-levels")) {
   @include shared-examples($type);
 }
 

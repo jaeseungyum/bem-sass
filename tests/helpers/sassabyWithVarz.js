@@ -5,7 +5,7 @@ module.exports = function(varz) {
 
   var varMap = {
     "defaultPrefix": null, 
-    "blockTypes": null,
+    "blockLevels": null,
     "elementSep": null,
     "modifierSep": null,
     "entitiesLog": null

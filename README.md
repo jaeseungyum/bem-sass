@@ -249,7 +249,7 @@ You can configure bem-sass options by `configure-bem-sass` mixin. Using this mix
 ```scss
 @include configure-bem-sass ((
   default-prefix: "",
-  block-types: (),
+  block-levels: (),
   element-sep: "__",
   modifier-sep: "_"
 ));
@@ -284,11 +284,11 @@ When compiled:
 }
 ```
 
-#### ```block-types```
-Sometimes you may need to define several block types to organize your css object structure especially when you are considering a methodology like [ITCSS](https://speakerdeck.com/dafed/managing-css-projects-with-itcss). You can define your own several block levels by adding `block type: prefix` pair to `block-types` map.
+#### ```block-levels```
+Sometimes you may need to define several block types to organize your css object structure especially when you are considering a methodology like [ITCSS](https://speakerdeck.com/dafed/managing-css-projects-with-itcss). You can define your own several block levels by adding `block type: prefix` pair to `block-levels` map.
 ```scss
 @include configure-bem-sass((
-  block-types: (
+  block-levels: (
     object:    "o-",  
     component: "c-"
   )
