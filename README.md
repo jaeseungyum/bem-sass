@@ -4,9 +4,10 @@
 ![Build Status](https://img.shields.io/circleci/project/jsng/bem-sass.svg)
 
 
-`bem-sass` is a Sass library for BEM-style naming convention. It helps you apply BEM methodology to write your own CSS with no compatibility issues with both RubySass(>= 3.4) and LibSass(>=3.3), and provides more flexible namespacing configurations.
+`bem-sass` is a Sass library for organizing css objects. It helps you apply BEM methodology to write your own CSS with no compatibility issues with both RubySass(>= 3.4) and LibSass(>=3.3), and provides more flexible namespacing configurations.
 
-`bem-sass` is also inspired by [Immutable CSS](http://csswizardry.com/2015/03/immutable-css/), which describes your specified css classes should never be overwritten. Applying this concept helps you build more robust, secure css codebase at scale by preventing cross-referencing css classes.
+`bem-sass` is heavily inspired by [Immutable CSS](http://csswizardry.com/2015/03/immutable-css/), and [ITCSS](http://itcss.io/) as well as the original BEM concept. Immutable CSS describes that CSS objects you created should never be reassigned throughout your project.
+ITCSS provides a good approach to manage CSS specificity issues that can happen even if you take advantages of BEM. These concepts will help you build more robust, secure css codebase at scale.
 
 ## Quick Start
 + Install with [Bower](http://bower.io): ```bower install --save-dev bem-sass```
@@ -286,6 +287,7 @@ When compiled:
 
 #### ```block-levels```
 Sometimes you may need to define several block types to organize your css object structure especially when you are considering a methodology like [ITCSS](https://speakerdeck.com/dafed/managing-css-projects-with-itcss). You can define your own several block levels by adding `block type: prefix` pair to `block-levels` map.
+
 ```scss
 @include configure-bem-sass((
   block-levels: (
@@ -330,6 +332,23 @@ When compiled:
 .c-menu__item {
   /*...styles are here...*/
 }
+```
+
+Note that the order of the block level is important. the following will cause an error:
+
+```scss
+/* Menu component */
+@include block(menu, "component") {
+  /*...styles are here...*/
+}
+
+/* Media object */
+@include block(media, "object") {
+  /*...styles are here...*/
+}
+```
+```
+Error: the `component` menu should not be ahead of any `object`s
 ```
 
 #### ```element-sep```, ```modifier-sep```
