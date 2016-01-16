@@ -1,5 +1,5 @@
 var path    = require("path");
-var SassabyVarz = require(path.resolve("tests/helpers/", "SassabyWithVarz"));
+var SassabyVarz = require(path.resolve("tests/helpers/", "sassabyWithVarz"));
 
 describe("BEM mixins", function() {
 
