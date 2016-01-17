@@ -1,12 +1,25 @@
 {
   "name": "bem-sass",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "homepage": "https://github.com/jsng/bem-sass",
   "authors": [
     "Yum Jaeseung <ym.jsng@gmail.com>"
   ],
   "description": "a Sass library for organizing CSS objects",
   "main": "dist/_bem-sass.scss",
+  "keywords": [
+    "bem",
+    "bemit",
+    "itcss",
+    "sass",
+    "scss",
+    "css",
+    "immutable",
+    "immutable-css",
+    "immutablecss",
+    "mixins",
+    "helpers"
+  ],
   "license": "MIT",
   "ignore": [
     "**/.*",

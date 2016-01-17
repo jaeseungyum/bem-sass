@@ -9,8 +9,8 @@
 `bem-sass` is heavily inspired by [Immutable CSS](http://csswizardry.com/2015/03/immutable-css/) and [ITCSS](http://itcss.io/) as well as the original BEM methodology. It is a pure Sass implementation of those concepts.
 
 ## Quick Start
-+ Install with [Bower](http://bower.io): ```bower install --save-dev bem-sass```
-+ Install with [npm](https://www.npmjs.com): ```npm install -save-dev bem-sass```
++ Install with [Bower](http://bower.io): ```bower install bem-sass --save-dev```
++ Install with [npm](https://www.npmjs.com): ```npm install bem-sass --save-dev```
 
 ## Basic Usages
 Once you import `bem-sass` to your project, you can simply build your own css object like below:
@@ -48,7 +48,7 @@ When compiled:
 ```
 
 
-## Custom Configurations
+## Configurations
 You can configure bem-sass options by `configure-bem-sass` mixin. Using this mixin is optional. If there have been no custom configurations, the default options are exactly the same as below:
 ```scss
 @include configure-bem-sass ((
@@ -61,6 +61,7 @@ You can configure bem-sass options by `configure-bem-sass` mixin. Using this mix
 
 #### ```default-prefix```
 Set the default prefix for `block` mixin.
+
 ```scss
 @include configure-bem-sass((
   default-prefix: "b-" // Set default block prefix to "b-"
@@ -125,7 +126,7 @@ When compiled:
 
 
 #### ```element-sep```, ```modifier-sep```
-You can set your own BEM element/modifier separators.
+You can set your own separators for element and modifier respectively.
 
 ```scss
 @include configure-bem-sass((
@@ -233,6 +234,7 @@ Elements could also get modified by their own modifiers.
   /*...the radio type menu item styles are here...*/
 }
 ```
+
 ### Using Cascades in BEM
 ```scss
 // @see https://en.bem.info/method/solved-problems/#using-cascades-in-bem
@@ -308,13 +310,13 @@ Given that `nav__item` and `nav__link` have common CSS rules. Since bem-sass enf
 ```scss
 @include block(nav) { 
 
-  %shared-rules {
+  %shared-rules { // <--- BAD: A placeholder inside block generates unwanted nested selectors
     display: inline-block;
     height: 100%;
   }
 
   @include element(item) {
-    @extend %shared-rules;
+    @extend %shared-rules; 
   }
 
   @include element(link) {
@@ -367,12 +369,12 @@ Note that `def-shared-rules` and `shared-rules` should be inside of a block.
 An element(or a modifier) is a part of a block. It has no standalone meaning without it's parent block.
 ```scss
 // @see https://en.bem.info/method/key-concepts/#element
-@include element(item) {
+@include element(item) { // <-- BAD: element without it's block
   /*...CSS declarations here...*/
 }
 
 // @see https://en.bem.info/faq/#how-do-i-make-global-modifiers-for-blocks
-@include modifier(theme, islands) {
+@include modifier(theme, islands) { // <- BAD: modifier without it's block
   /*...CSS declarations here...*/
 }
 ```
@@ -390,8 +392,7 @@ The existence of elements of elements is an antipattern because it hinders the a
 // @see https://en.bem.info/faq/#why-does-bem-not-recommend-using-elements-within-elements-block__elem1__elem2
 @include block(nav) {
   @include element(item) {
-    // Attempt to make elements of elements: BAD
-    @include element(link) {
+    @include element(link) { // <--- BAD: Attempt to make elements of elements
     }
   }
 }
@@ -412,14 +413,12 @@ bem-sass ensures that every BEM entity you create is immutable. It prevents you 
     /*...CSS declarations here...*/ 
   }
 
-  // Attempt to reassign the nav item styles: BAD
-  @include element(item) {
+  @include element(item) { //   <--- BAD: Attempt to reassign the nav item styles
     /*...CSS declarations here...*/ 
   }
 }
 
-// Attempt to reassign the nav block styles: BAD
-@include block(nav) {
+@include block(nav) { // <--- BAD: Attempt to reassign the nav block styles
   /*...CSS declarations here...*/ 
 }
 ```
