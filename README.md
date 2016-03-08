@@ -365,7 +365,7 @@ Note that `def-shared-rules` and `shared-rules` should be inside of a block.
 
 ## Caveats
 
-### Element and Modifier Cannot Be Used Stand-Alone
+### Element and Modifier Cannot be used Stand-Alone
 An element(or a modifier) is a part of a block. It has no standalone meaning without it's parent block.
 ```scss
 // @see https://en.bem.info/method/key-concepts/#element
@@ -392,7 +392,7 @@ The existence of elements of elements is an antipattern because it hinders the a
 // @see https://en.bem.info/faq/#why-does-bem-not-recommend-using-elements-within-elements-block__elem1__elem2
 @include block(nav) {
   @include element(item) {
-    @include element(link) { // <--- BAD: Attempt to make elements of elements
+    @include element(link) { // <--- BAD: Attempt to make an element within another element
     }
   }
 }
@@ -432,7 +432,7 @@ Note that the order of your block levels is important. For example, the followin
 
 ```scss
 /* Menu component */  
-@include block(menu, "component") { //  <--- BAD: Component is head of Object
+@include block(menu, "component") { //  <--- BAD: `component` is ahead of `object`
   /*...styles are here...*/
 }
 
