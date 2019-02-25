@@ -5,6 +5,7 @@
 
 
 BemSass is a Sass library that helps you organize your CSS codes. This library allows you to take advantage of BEM architecture, as you write your own CSS code without any compatibility issues with both RubySass(>= 3.4) and LibSass(>=3.3).
+
 `bem-sass` is heavily inspired by [Immutable CSS](http://csswizardry.com/2015/03/immutable-css/) and [ITCSS](http://itcss.io/) as well as the original BEM methodology. It is a pure Sass implementation of these concepts.
 
 ## Quick Start
