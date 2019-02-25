@@ -4,16 +4,15 @@
 ![Build Status](https://img.shields.io/circleci/project/jsng/bem-sass.svg)
 
 
-`bem-sass` is a Sass library for organizing CSS objects. It helps you apply BEM architecture to CSS you write with no compatibility issues with both RubySass(>= 3.4) and LibSass(>=3.3).
-
-`bem-sass` is heavily inspired by [Immutable CSS](http://csswizardry.com/2015/03/immutable-css/) and [ITCSS](http://itcss.io/) as well as the original BEM methodology. It is a pure Sass implementation of those concepts.
+BemSass is a Sass library that helps you organize your CSS codes. This library allows you to take advantage of BEM architecture, writing your own CSS code without any compatibility issues with both RubySass(>= 3.4) and LibSass(>=3.3).
+`bem-sass` is heavily inspired by [Immutable CSS](http://csswizardry.com/2015/03/immutable-css/) and [ITCSS](http://itcss.io/) as well as the original BEM methodology. It is a pure Sass implementation of these concepts.
 
 ## Quick Start
 + Install with [Bower](http://bower.io): ```bower install bem-sass --save-dev```
 + Install with [npm](https://www.npmjs.com): ```npm install bem-sass --save-dev```
 
-## Basic Usages
-Once you import `bem-sass` to your project, you can simply build your own css object like below:
+## Basic Usage
+Once you import BemSass to your project, you can simply write your own CSS code like below:
 
 ```scss
 
@@ -32,7 +31,7 @@ Once you import `bem-sass` to your project, you can simply build your own css ob
 }
 ```
 
-When compiled:
+When you compile the code above, the output will be like below.
 ```css
 .menu {
   /*...the menu block styles are here...*/
@@ -49,7 +48,7 @@ When compiled:
 
 
 ## Configurations
-You can configure bem-sass options by `configure-bem-sass` mixin. Using this mixin is optional. If there have been no custom configurations, the default options are exactly the same as below:
+You can modify the default settings with `configure-bem-sass` mixin.  This mixin is optional to use. If there is no custom configuration, the default settings will be exactly the same as below:
 ```scss
 @include configure-bem-sass ((
   default-prefix: "",
@@ -59,8 +58,8 @@ You can configure bem-sass options by `configure-bem-sass` mixin. Using this mix
 ));
 ```
 
-#### ```default-prefix```
-Set the default prefix for `block` mixin.
+#### Default Prefix
+You can set your own prefix for block definition by putting a string into the `default-prefix` key.
 
 ```scss
 @include configure-bem-sass((
@@ -77,7 +76,7 @@ Set the default prefix for `block` mixin.
 }
 ```
 
-When compiled:
+The compiled output will be like below:
 ```css
 /* Menu block */
 .b-menu {
@@ -89,8 +88,8 @@ When compiled:
 }
 ```
 
-#### ```block-levels```
-Sometimes you may need to define several block types to organize your css object structure especially when you are considering a methodology like [ITCSS](https://speakerdeck.com/dafed/managing-css-projects-with-itcss). You can define your own several block levels by adding `level-name(string): prefix(string)` to `block-levels` map.
+#### The Block Levels
+Using a methodology such as [ITCSS](https://speakerdeck.com/dafed/managing-css-projects-with-itcss) calls for the capability to define several block types to organize the different block levels. You can define your own block level by adding a valid key-value to the “block-levels” option in configurations.
 
 ```scss
 @include configure-bem-sass((
@@ -111,7 +110,7 @@ Sometimes you may need to define several block types to organize your css object
 }
 ```
 
-When compiled:
+The compiled output will be like below:
 ```css
 /* Media object */
 .o-media {
@@ -125,8 +124,8 @@ When compiled:
 ```
 
 
-#### ```element-sep```, ```modifier-sep```
-You can set your own separators for element and modifier respectively.
+#### Modifying Seperators
+You can modify the symbol for the element and the modifier separator respectively by modifying `element-sep`` and `modifier-sep`
 
 ```scss
 @include configure-bem-sass((
@@ -149,7 +148,7 @@ You can set your own separators for element and modifier respectively.
 }
 ```
 
-When compiled:
+When compiled, the output will be:
 ```css
 /* Promo block */
 .promo {
@@ -165,7 +164,7 @@ When compiled:
 
 ## Extended Details
 ### Boolean Modifier & Key-Value Modifier
-bem-sass supports key-value modifiers. When using `modifier`, passing a single argument generates a boolean modifier, whereas passing 2 arguments generates a key-value modifier.
+BemSass supports key-value modifiers. When using a modifier, you can pass a single argument to generate a boolean modifier, whereas passing 2 arguments generates a key-value modifier.
 
 ```scss
 // @see https://en.bem.info/method/naming-convention/#block-modifier
@@ -204,8 +203,8 @@ bem-sass supports key-value modifiers. When using `modifier`, passing a single a
 ```
 
 ### Element Modifier
+You can also modify elements by their own modifiers.
 
-Elements could also get modified by their own modifiers.
 ```scss
 // @see https://en.bem.info/method/naming-convention/#element-modifier
 
@@ -278,7 +277,7 @@ When compiled:
 ```
 
 ### Adjacent Sibling Elements in a Modifier
-Given that you want to add a top line to each item of a modified nav block except the first item. With `&` provided by the original Sass, you cannot achieve this requirement. In that kind of circumstance, you can use `adjacent-siblings` mixin.
+Let’s say that you want to add a top line to each of your list items except to the very first item. It won’t work with `&` provided by the original Sass. In that situation, you can use `adjacent-siblings` mixin to get around.
 
 ```scss
 @include block(nav) {
@@ -297,7 +296,7 @@ Given that you want to add a top line to each item of a modified nav block excep
   }
 }
 ```
-When compiled: 
+When compiled, the output will be like below: 
 ```css
 .nav_secondary > .nav__item + .nav__item {
   border-top: 1px solid rgb(0, 0, 0);
@@ -305,12 +304,12 @@ When compiled:
 ```
 
 ### Shared CSS Rules Between Elements
-Given that `nav__item` and `nav__link` have common CSS rules. Since bem-sass enforces immutability on every BEM entity, it seems that the only way to avoid an inevitable code duplication is using Sass placeholder and `@extend`.
+Let’s say that two elements have common CSS rules to share. The only way to avoid an unnecessary code duplication seems to be to use the Sass placeholder and @extend in that BemSass enforces immutability on every BEM entity.
 
 ```scss
 @include block(nav) { 
 
-  %shared-rules { // <--- BAD: A placeholder inside block generates unwanted nested selectors
+  %shared-rules { // <--- BAD: A placeholder inside block produces undesirable nested selectors
     display: inline-block;
     height: 100%;
   }
@@ -325,7 +324,7 @@ Given that `nav__item` and `nav__link` have common CSS rules. Since bem-sass enf
 }
 ```
 
-But when compiled, this produces unexpected nested selectors like below:
+But when you compile it, It won’t work as you expected it to be.
 ```css
 .nav .nav__item,
 .nav .nav__link {
@@ -359,14 +358,14 @@ To avoid this, bem-sass provides `def-shared-rules` and `shared-rules`.
   height: 100%;
 }
 ```
-Note that `def-shared-rules` and `shared-rules` should be inside of a block.
+Note that `def-shared-rules` and `shared-rules` should be inside a block.
 
 
 
 ## Caveats
 
 ### Element and Modifier Cannot be used Stand-Alone
-An element(or a modifier) is a part of a block. It has no standalone meaning without it's parent block.
+An element (or a modifier) is a part of a block. Outside its block scope, it has no valid meaning.
 ```scss
 // @see https://en.bem.info/method/key-concepts/#element
 @include element(item) { // <-- BAD: element without it's block
@@ -379,14 +378,14 @@ An element(or a modifier) is a part of a block. It has no standalone meaning wit
 }
 ```
 
-When compiled:
+When compiled, the output will be like below:
 ```
 Error: element should be inside of a block
 Error: modifier should be inside of a block
 ```
 
 ### Avoid Elements Within Elements
-The existence of elements of elements is an antipattern because it hinders the ability to change the internal structure of the block. bem-sass prevents you from creating those kind of invalid elements.
+The existence of elements within elements is an anti-pattern because it hinders the ability to change the internal structure of the block. BemSass keeps you from creating these kinds of invalid elements.
 
 ```scss
 // @see https://en.bem.info/faq/#why-does-bem-not-recommend-using-elements-within-elements-block__elem1__elem2
@@ -402,7 +401,7 @@ Error: element should not be within another element
 ```
 
 ### Keep BEM Entities Immutable
-bem-sass ensures that every BEM entity you create is immutable. It prevents you from reassigning css classes which in turn produces side effects.
+BemSass ensures that every BEM entity you create is immutable. It keeps you from redeclaring CSS classes which in turn causes potential side effects.
 
 ```scss
 // Nav block
