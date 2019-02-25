@@ -126,7 +126,7 @@ The compiled output will be like below:
 
 
 #### Modifying Seperators
-You can modify the symbol for the element and the modifier separator respectively by modifying `element-sep`` and `modifier-sep`
+You can modify the symbol for the element and the modifier separator respectively by modifying `element-sep` and `modifier-sep`
 
 ```scss
 @include configure-bem-sass((
